@@ -1,15 +1,16 @@
 # LaravelAndNextProject - (28-08-2024)
 
-![LaravelAndNextProject Banner](https://via.placeholder.com/1200x400?text=Laravel+and+Next.js+Project)
+![LaravelAndNextProject Banner](LaravelxNext.png)
 
 ## Introduction
 
-Welcome to **LaravelAndNextProject**! This is my personal project, developed by Võ Gia Huy, aimed at creating an efficient time management and planning website. The project is built with modern technology to provide an optimal user experience.
+Welcome to **LaravelAndNextProject**! This is our project, developed by Võ Gia Huy and Lê Nguyễn Bảo Trân, aimed at creating an efficient time management and planning website. The project is built with modern technology to provide an optimal user experience. Võ Gia Huy serves as the **Full Stack Developer**, responsible for developing all components of the project, while Lê Nguyễn Bảo Trân plays a crucial role in **Business Analysis**, ensuring that the project meets business needs and user experience expectations.
+
 
 ## 🚀 **Project Information**
 
 - **Frontend**: Next.js
-- **Backend**: Laravel (API)
+- **Backend**: Laravel(API)
 - **Database**: MySQL
 
 ## 💡 **Features**
@@ -29,7 +30,8 @@ Welcome to **LaravelAndNextProject**! This is my personal project, developed by 
 - **Personal Task Management**: Project managers can use it to organize their own tasks.
 
 
-## 📦 **Cài Đặt**
+
+## 📦 **Setup**
 
 1. **Clone Repository:**
 
@@ -39,7 +41,7 @@ Welcome to **LaravelAndNextProject**! This is my personal project, developed by 
    git clone https://github.com/vogiahuy257/LaravelAndNextProject.git
 ```
 
-2. **Cài Đặt Frontend:**
+2. **Setup Frontend:**
 
 - Navigate to the breeze-next directory and install dependencies:
 
@@ -48,7 +50,7 @@ Welcome to **LaravelAndNextProject**! This is my personal project, developed by 
     npm install
 ```
 
-3. **Cài Đặt Backend:**
+3. **Setup Backend:**
 
 - Navigate to the breeze-next directory and install dependencies:
 
@@ -57,7 +59,7 @@ Welcome to **LaravelAndNextProject**! This is my personal project, developed by 
     composer install
 ```
 
-- **Cấu Hình Database:**
+- **Database Configuration::**
 
 - Create a MySQL database and configure the connection details in the .env file located in the /api directory.
 
@@ -69,7 +71,7 @@ Welcome to **LaravelAndNextProject**! This is my personal project, developed by 
  php artisan migrate
 ```
 
-4. **Khởi chạy:**
+4. **Running the Application:**
 
 - Open two terminal tabs:
  
@@ -90,18 +92,32 @@ In the other terminal, start the frontend application:
 ```
  
 - **Open your browser and navigate to:**: http://localhost:3000
-- **Now, you are ready to use the application with both frontend and backend running.**
+# **Now, you are ready to use the application with both frontend and backend running.**
 
+## 🌐 **About Us**
 
-## 🌐 **About Me**
+### **Võ Gia Huy**
 
-- **Name**: Võ Gia Huy
+- **Role**: Full Stack Developer
 - **GitHub**: [vogiahuy257](https://github.com/vogiahuy257)
 - **Portfolio Page**: [VoGiaHuyProfolioReactjs](https://vogiahuy257.github.io/VoGiaHuyProfolioReactjs/)
-- **Facebook**: [Võ Gia Huy](https://www.facebook.com/profile.php?id=100023020324055)
+- **Facebook**: [Gia Huy Vo](https://www.facebook.com/profile.php?id=100023020324055)
+- **LinkedIn**: [Võ Gia Huy](https://www.linkedin.com/in/v%C3%B5-gia-huy-2045352bb/)
+
+### **Lê Nguyễn Bảo Trân**
+
+- **Role**: Business Analyst
+- **LinkedIn**: [Le Nguyen Bao Tran](https://www.linkedin.com/in/lenbtr/)
+- **Facebook**: [Bảo Trân (Cheese)](https://www.facebook.com/profile.php?id=61552261400890)
 
 ## 📞 **Contact**
 
-- **Email**: [vogiahuy257@gmail.com](mailto:vogiahuy257@gmail.com)
-- **Phone Number**: 0908335809
+### **Võ Gia Huy**
+  - **Email**: [vogiahuy257@gmail.com](mailto:vogiahuy257@gmail.com)
+  - **Phone Number**: 0908335809
+
+### **Lê Nguyễn Bảo Trân**
+  - **Email**: [lng3008@gmail.com](mailto:bao.tran@example.com)
+  - **Phone Number**: 0348033026
+
 
