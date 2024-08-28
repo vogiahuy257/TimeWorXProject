@@ -117,7 +117,7 @@ In the other terminal, start the frontend application:
   - **Phone Number**: 0908335809
 
 ### **Lê Nguyễn Bảo Trân**
-  - **Email**: [lng3008@gmail.com](mailto:bao.tran@example.com)
+  - **Email**: [lngbaotran3008@gmail.com](lngbaotran3008@gmail.com)
   - **Phone Number**: 0348033026
 
 
