@@ -2,7 +2,7 @@
 
 ![LaravelAndNextProject Banner](LaravelxNext.png)
 
-## Introduction
+## 💡 Introduction
 
 Welcome to **LaravelAndNextProject**! This is our project, developed by Võ Gia Huy and Lê Nguyễn Bảo Trân, aimed at creating an efficient time management and planning website. The project is built with modern technology to provide an optimal user experience. Võ Gia Huy serves as the **Full Stack Developer**, responsible for developing all components of the project, while Lê Nguyễn Bảo Trân plays a crucial role in **Business Analysis**, ensuring that the project meets business needs and user experience expectations.
 
