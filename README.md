@@ -92,7 +92,7 @@ In the other terminal, start the frontend application:
 ```
  
 - **Open your browser and navigate to:**: http://localhost:3000
-# **Now, you are ready to use the application with both frontend and backend running.**
+- **Now, you are ready to use the application with both frontend and backend running.**
 
 ## 🌐 **About Us**
 
