@@ -99,8 +99,8 @@ In the other terminal, start the frontend application:
 ### **Võ Gia Huy**
 
 - **Role**: Full Stack Developer
-- **GitHub**: [vogiahuy257](https://github.com/vogiahuy257)
-- **Portfolio Page**: [VoGiaHuyProfolioReactjs](https://vogiahuy257.github.io/VoGiaHuyProfolioReactjs/)
+- **GitHub**: [https://github.com/vogiahuy257](https://github.com/vogiahuy257)
+- **Portfolio Page**: [https://vogiahuy257.github.io/VoGiaHuyProfolioReactjs/](https://vogiahuy257.github.io/VoGiaHuyProfolioReactjs/)
 - **Facebook**: [Gia Huy Vo](https://www.facebook.com/profile.php?id=100023020324055)
 - **LinkedIn**: [Võ Gia Huy](https://www.linkedin.com/in/v%C3%B5-gia-huy-2045352bb/)
 
