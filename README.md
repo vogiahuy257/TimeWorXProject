@@ -1,6 +1,6 @@
 # TimeWorX Project - (28-08-2024)
 
-![TimeWorX Banner](LaravelxNext.png)
+![TimeWorX Banner](backgourd.png)
 
 ## 💡 Introduction
 
