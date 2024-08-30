@@ -4,7 +4,7 @@ import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
-import { useState } from 'react'; // Import useState to manage state
+import { useState } from 'react';
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -13,7 +13,7 @@ export default function Login({ status, canResetPassword }) {
         remember: false,
     });
 
-    const [showPassword, setShowPassword] = useState(false); // State to manage password visibility
+    const [showPassword, setShowPassword] = useState(false); 
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -37,7 +37,7 @@ export default function Login({ status, canResetPassword }) {
                         <h1>Sign in</h1>
                     </div>
                     <form onSubmit={submit}>
-                        <div className="block-element" data-label="Email">
+                        <div className={`block-element ${data.email ? 'focused' : ''}`} data-label="Email">
                             <TextInput
                                 id="email"
                                 type="email"
@@ -51,7 +51,7 @@ export default function Login({ status, canResetPassword }) {
                             <InputError message={errors.email} className="mt-2" />
                         </div>
 
-                        <div className='block-element' data-label="Password">
+                        <div className={`block-element ${data.email ? 'focused' : ''}`} data-label="Password">
                                 <TextInput
                                     id="password"
                                     type={showPassword ? "text" : "password"} // Toggle between text and password
@@ -72,7 +72,7 @@ export default function Login({ status, canResetPassword }) {
                         <div className="block-remember-me">
                             <Checkbox
                                 name="remember"
-                                className='remember-me'
+                                className='remember-me check-box'
                                 checked={data.remember}
                                 onChange={(e) => setData('remember', e.target.checked)}
                             />
