@@ -1,16 +1,16 @@
-# LaravelAndNextProject - (28-08-2024)
+# TimeWorX Project - (28-08-2024)
 
-![LaravelAndNextProject Banner](LaravelxNext.png)
+![TimeWorX Banner](LaravelxNext.png)
 
 ## 💡 Introduction
 
-Welcome to **LaravelAndNextProject**! This is our project, developed by Võ Gia Huy and Lê Nguyễn Bảo Trân, aimed at creating an efficient time management and planning website. The project is built with modern technology to provide an optimal user experience. Võ Gia Huy serves as the **Full Stack Developer**, responsible for developing all components of the project, while Lê Nguyễn Bảo Trân plays a crucial role in **Business Analysis**, ensuring that the project meets business needs and user experience expectations.
+Welcome to **TimeWorX Project**! This is our project, developed by Võ Gia Huy and Lê Nguyễn Bảo Trân, aimed at creating an efficient time management and planning website. The project is built with modern technology to provide an optimal user experience. Võ Gia Huy serves as the **Full Stack Developer**, responsible for developing all components of the project, while Lê Nguyễn Bảo Trân plays a crucial role in **Business Analysis**, ensuring that the project meets business needs and user experience expectations.
 
 
 ## 🚀 **Project Information**
 
-- **Frontend**: Next.js
-- **Backend**: Laravel(API)
+- **Frontend**: React.js, Vite.js
+- **Backend**: Laravel
 - **Database**: MySQL
 
 ## 💡 **Features**
