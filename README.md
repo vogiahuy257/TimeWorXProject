@@ -38,24 +38,23 @@ Welcome to **TimeWorX Project**! This is our project, developed by Võ Gia Huy a
 - First, clone the repository to your local machine:
 
 ```bash
-   git clone https://github.com/vogiahuy257/LaravelAndNextProject.git
+   git clone https://github.com/vogiahuy257/TimeWorXProject.git
+   cd TimeWorkX
 ```
 
 2. **Setup Frontend:**
 
-- Navigate to the breeze-next directory and install dependencies:
+- Navigate to the front-end directory and install dependencies:
 
 ```bash
-    cd breeze-next
-    npm install
+    npm install && npm run dev
 ```
 
 3. **Setup Backend:**
 
-- Navigate to the breeze-next directory and install dependencies:
+- Navigate to the back-end directory and install dependencies:
 
 ```bash
-    cd api
     composer install
 ```
 
@@ -91,7 +90,7 @@ In the other terminal, start the frontend application:
    npm install && npm run dev
 ```
  
-- **Open your browser and navigate to:**: http://localhost:3000
+- **Open your browser and navigate to:**: http://localhost:8000
 - **Now, you are ready to use the application with both frontend and backend running.**
 
 ## 🌐 **About Us**
