@@ -5,6 +5,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { useState } from 'react';
+import './css/login.css';
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -24,6 +25,10 @@ export default function Login({ status, canResetPassword }) {
         post(route('login'), {
             onFinish: () => reset('password'),
         });
+    };
+
+    const handleGoogleLogin = () => {
+        window.location.href = '/auth/google';
     };
 
     return (
@@ -52,20 +57,20 @@ export default function Login({ status, canResetPassword }) {
                         </div>
 
                         <div className={`block-element ${data.email ? 'focused' : ''}`} data-label="Password">
-                                <TextInput
-                                    id="password"
-                                    type={showPassword ? "text" : "password"} // Toggle between text and password
-                                    name="password"
-                                    value={data.password}
-                                    className="input"
-                                    autoComplete="current-password"
-                                    onChange={(e) => setData('password', e.target.value)}
-                                />
-                                <span className="toggle-password" onClick={togglePasswordVisibility}>
-                                    <i className="material-icons">
-                                        {showPassword ? "visibility_off" : "visibility"}
-                                    </i>
-                                </span>
+                            <TextInput
+                                id="password"
+                                type={showPassword ? "text" : "password"}
+                                name="password"
+                                value={data.password}
+                                className="input"
+                                autoComplete="current-password"
+                                onChange={(e) => setData('password', e.target.value)}
+                            />
+                            <span className="toggle-password" onClick={togglePasswordVisibility}>
+                                <i className="material-icons">
+                                    {showPassword ? "visibility_off" : "visibility"}
+                                </i>
+                            </span>
                             <InputError message={errors.password} className="mt-2" />
                         </div>
 
@@ -81,7 +86,18 @@ export default function Login({ status, canResetPassword }) {
 
                         <div className="block-button">
                             <PrimaryButton className="button" disabled={processing}> Log in </PrimaryButton>
+
                             <h1>or</h1>
+
+                            <PrimaryButton 
+                                className="button google-button" 
+                                onClick={handleGoogleLogin} 
+                                disabled={processing}
+                            >
+                                <img src="/image/Googlelogo.png" alt="Google Logo" className='Google-logo' />
+                                Log in with Google
+                            </PrimaryButton>
+                            
                             <div className="block-button-text">
                                 <p><a href="/forgot-password" className="forgot-password-link">Forgot your password?</a></p>
                                 <p>Don't have an account? <a href="/register" className="signup-link">Sign Up</a></p>
