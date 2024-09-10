@@ -5,7 +5,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { useState } from 'react';
-import './css/login.css';
+
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -56,7 +56,7 @@ export default function Login({ status, canResetPassword }) {
                             <InputError message={errors.email} className="mt-2" />
                         </div>
 
-                        <div className={`block-element ${data.email ? 'focused' : ''}`} data-label="Password">
+                        <div className={`block-element ${data.password ? 'focused' : ''}`} data-label="Password">
                             <TextInput
                                 id="password"
                                 type={showPassword ? "text" : "password"}

@@ -1,3 +1,65 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Global Styles */
+:root{
+    --color-yellow: #FABB18; 
+    --color-cream: #FEF8E8;
+    --color-black: #000000; 
+    --color-gray: rgb(92, 92, 92);
+    --color-white: #FFFFFF; 
+    --color-light-gray: #F9F9F9;
+
+    --color-shadow:rgba(85, 85, 85, 0.425);
+
+    /* Font Sizes */
+    --font-size-sSmall: 0.85rem; /* Tăng từ 0.7rem */
+    --font-size-small: 1rem; /* Tăng từ 0.875rem */
+    --font-size-medium: 1.2rem; /* Tăng từ 1rem */
+    --font-size-large: 1.5rem; /* Tăng từ 1.25rem */
+    --font-size-xlarge: 1.75rem; /* Tăng từ 1.5rem */
+    
+    /* Font Weights */
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 800;
+
+    /* Border Radius */
+    --border-radius-small: 4px;
+    --border-radius-medium: 8px;
+    --border-radius-large: 16px;
+}
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    width: 80px;
+    height: 80px;
+    top: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background-color: #000000;
+    color: white;
+}
+
+a{
+    color: rgb(8, 24, 255);
+    text-decoration: none;
+}
+
+a:hover
+{
+    color: var(--color-yellow);
+}

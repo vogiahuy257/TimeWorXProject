@@ -6,7 +6,7 @@ export default function Guest({ children }) {
         <div>
             <div >
                 <Link href="/" className='logo'>
-                    hello
+                    LOGO
                 </Link>
                 {children}
             </div>
