@@ -93,7 +93,7 @@ export default function Authenticated({ user, header, children }) {
                         <ul>
                             <li
                                 className={
-                                    url.startsWith('/dashboard') ? 'active' : ''
+                                    url == '/dashboard' ? 'active' : ''
                                 }
                             >
                                 <Link to='/dashboard'>
