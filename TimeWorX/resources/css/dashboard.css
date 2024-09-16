@@ -208,7 +208,8 @@
     margin-bottom: 10px;
 }
 
-#dashboard .block .block-menu-left.expanded .menu-mid li a svg
+#dashboard .block .block-menu-left.expanded .menu-mid li a svg,
+#dashboard .block .block-menu-left.expanded .menu-bot li a svg
 {
     transform: translateX(calc(-150% - 7px));
 }
