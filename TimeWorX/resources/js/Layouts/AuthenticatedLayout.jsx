@@ -138,10 +138,10 @@ export default function Authenticated({ user, header, children }) {
                             </li>
                             <li
                                 className={
-                                    url.startsWith('/dashboard/folder') ? 'active' : ''
+                                    url.startsWith('/dashboard/project') ? 'active' : ''
                                 }
                             >
-                                <Link to='/dashboard/folder'>
+                                <Link to='/dashboard/project'>
                                     <svg
                                         width="30"
                                         height="30"
@@ -157,7 +157,7 @@ export default function Authenticated({ user, header, children }) {
                                             strokeLinejoin="round"
                                         />
                                     </svg>
-                                    <p>Folder</p>
+                                    <p>Project</p>
                                 </Link>
                             </li>
                             <li

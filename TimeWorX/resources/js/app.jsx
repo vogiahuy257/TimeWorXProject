@@ -4,7 +4,8 @@ import '../css/login.css';
 import '../css/forgotpassword.css';
 import '../css/resetpassword.css';
 import '../css/dashboard.css';
-import '../css/edit.css'
+import '../css/edit.css';
+import '../css/dashboard-project.css';
 
 import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';

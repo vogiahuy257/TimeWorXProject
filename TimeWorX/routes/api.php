@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\API\ProjectController;
 
 
 /*
@@ -16,10 +16,6 @@ use App\Http\Controllers\Api\ProfileController;
 |
 */
 
-// API profile
-// Route::middleware('auth:sanctum')->prefix('profile')->group(function () {
-//     Route::get('/', [ProfileController::class, 'edit']);
-//     Route::patch('/', [ProfileController::class, 'update']);
-//     Route::delete('/', [ProfileController::class, 'destroy']);
-// });
+
+Route::apiResource('projects', ProjectController::class);
 
