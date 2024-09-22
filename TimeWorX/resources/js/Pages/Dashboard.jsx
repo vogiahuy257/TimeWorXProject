@@ -14,12 +14,12 @@ export default function Dashboard({ auth }) {
         <Router>
             <AuthenticatedLayout user={auth.user}>
                 <Routes>
-                    <Route path="/dashboard" element={<DashboardHome />} />
-                    <Route path="/dashboard/chat" element={<DashboardChat />} />
-                    <Route path="/dashboard/calendar" element={<DashboardCalendar />} />
-                    <Route path="/dashboard/project" element={<DashboardProject />} />
-                    <Route path="/dashboard/reports" element={<DashboardReport />} />
-                    <Route path="/dashboard/task" element={<DashboardTask />} />
+                    <Route path="/dashboard" element={<DashboardHome auth={auth} />} />
+                    <Route path="/dashboard/chat" element={<DashboardChat auth={auth} />} />
+                    <Route path="/dashboard/calendar" element={<DashboardCalendar auth={auth}/>} />
+                    <Route path="/dashboard/project" element={<DashboardProject auth={auth}/>} />
+                    <Route path="/dashboard/reports" element={<DashboardReport auth={auth}/>} />
+                    <Route path="/dashboard/task" element={<DashboardTask auth={auth}/>} />
                     <Route path="*" element={<DashboardNotFound />} />
                 </Routes>
             </AuthenticatedLayout>

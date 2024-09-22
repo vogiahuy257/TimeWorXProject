@@ -1,36 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import AvatarDropdown from "@/Components/AvatarDropdown";
-import axios from 'axios';
 
 export default function Authenticated({ user, header, children }) {
     const [darkMode, setDarkMode] = useState(false);
     const [expanded, setExpanded] = useState(false);
-
-    // useEffect(() => {
-    //     // Lấy trạng thái dark mode từ API khi component được tải
-    //     axios.get('/dashboard/get-theme')
-    //         .then(response => {
-    //             setDarkMode(response.data.dark_mode);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching theme:', error.response ? error.response.data : error.message);
-    //         });
-    // }, []);
-
-    // const toggleDarkMode = () => {
-    //     setDarkMode(prevDarkMode => {
-    //         const newDarkMode = !prevDarkMode;
-    //         axios.post('/dashboard/update-theme', { dark_mode: newDarkMode })
-    //             .then(response => {
-    //                 console.log('Theme updated');
-    //             })
-    //             .catch(error => {
-    //                 console.error('Error updating theme:', error.response ? error.response.data : error.message);
-    //             });
-    //         return newDarkMode;
-    //     });
-    // };
 
     const toggleDarkMode = () => {
         setDarkMode(!darkMode);

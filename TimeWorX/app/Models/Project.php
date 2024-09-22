@@ -56,4 +56,15 @@ class Project extends Model
     {
         return $this->belongsTo(User::class, 'project_manager');
     }
+
+    /**
+     * Scope a query to only include non-deleted projects.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeNonDeleted($query)
+    {
+        return $query->whereNull('deleted_at');
+    }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ProjectController extends Controller
 {
@@ -14,8 +15,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::where('project_manager', Auth::id())->get();
-        return response()->json(Project::all());
+        
     }
 
     /**
@@ -23,7 +23,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -36,10 +36,11 @@ class ProjectController extends Controller
             'project_description' => 'nullable|string',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date',
-            'project_priority' => 'nullable|string|max:20',
-            'project_status' => 'nullable|string|max:200',
-            'project_manager' => 'required|exists:users,id'
+            'user_id' => 'required|integer',
+            'project_status'=>'nullable|string|max:200',
         ]);
+        
+        $validated['project_manager'] = $request->user_id;
 
         $project = Project::create($validated);
         return response()->json($project, 201);
@@ -48,11 +49,20 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $user_id)
     {
-        $project = Project::findOrFail($id);
-        return response()->json($project);
+        $projects = Project::nonDeleted()->where('project_manager', $user_id)->get();
+        return response()->json($projects);
     }
+
+    //show all user delete
+
+    public function getDeletedProjects(string $user_id)
+    {
+        $projects = Project::onlyTrashed()->where('project_manager', $user_id)->get();
+        return response()->json($projects);
+    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -70,7 +80,7 @@ class ProjectController extends Controller
         $project = Project::findOrFail($id);
 
         // Check if the authenticated user is the project manager
-        if (Auth::id() !== $project->project_manager) {
+        if ($request->user_id != $project->project_manager) {
             return response()->json(['error' => 'Unauthorized'], 403);
         }
 
@@ -79,11 +89,12 @@ class ProjectController extends Controller
             'project_description' => 'nullable|string',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date',
-            'project_priority' => 'nullable|string|max:20',
-            'project_status' => 'nullable|string|max:200',
-            'project_manager' => 'required|exists:users,id'
+            'user_id' => 'required|integer',
+            'project_status'=>'nullable|string|max:200',
         ]);
 
+        // Ghi giá trị vào log
+        $validated['project_manager'] = $request->user_id;
         $project->update($validated);
         return response()->json($project);
     }
@@ -94,11 +105,6 @@ class ProjectController extends Controller
     public function destroy(string $id)
     {
         $project = Project::findOrFail($id);
-
-        // Check if the authenticated user is the project manager
-        if (Auth::id() != $project->project_manager) {
-            return response()->json(null, 204);
-        }
 
         $project->delete();
         return response()->json(null, 204);

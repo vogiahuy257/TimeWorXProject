@@ -39,7 +39,6 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
-            'hash' => false,
         ],
         'api' => [
             'driver' => 'sanctum',

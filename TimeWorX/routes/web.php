@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/dashboard/{any}', function () {
+Route::middleware('auth')->get('/dashboard/{any}', function () {
     return Inertia::render('Dashboard');
 })->where('any', '.*');
 

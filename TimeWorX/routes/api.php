@@ -19,3 +19,6 @@ use App\Http\Controllers\API\ProjectController;
 
 Route::apiResource('projects', ProjectController::class);
 
+Route::get('/projects/deleted/{user_id}', [ProjectController::class, 'getDeletedProjects']);
+
+

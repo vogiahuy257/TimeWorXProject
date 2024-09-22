@@ -13,7 +13,7 @@ export default forwardRef(function TextInput({ type = 'text', className = '', is
         <input
             {...props}
             type={type}
-            className={`rounded-md ${className}`}
+            className={` ${className}`}
             ref={input}
         />
     );

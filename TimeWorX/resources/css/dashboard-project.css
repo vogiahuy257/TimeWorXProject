@@ -32,7 +32,7 @@
 /* menu */
 
 
-#dashboard .block #main .content main #project #menu .btn-create a
+#dashboard .block #main .content main #project #menu .btn-create 
 {
    background-color: var(--color-black);
    padding: 12px 15px;
@@ -46,7 +46,7 @@
    transition: all 0.3s ease-in-out;
 }
 
-#dashboard .block #main .content main #project #menu .btn-create a:hover
+#dashboard .block #main .content main #project #menu .btn-create:hover
 {
     color: var(--color-black);
     background-color: var(--color-white);
@@ -65,7 +65,7 @@
     margin-right: 5px;
 }
 
-#dashboard .block #main .content main #project #menu .block-button-right .btn-delete a
+#dashboard .block #main .content main #project #menu .block-button-right .btn-delete
 {
    background-color: var(--color-white);
    padding: 10px 10px;
@@ -79,9 +79,9 @@
    transition: all 0.3s ease-in-out;
 }
 
-#dashboard .block #main .content main #project #menu .block-button-right .btn-delete a:hover
+#dashboard .block #main .content main #project #menu .block-button-right .btn-delete:hover
 {
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 #dashboard .block #main .content main #project #menu .block-button-right svg
@@ -91,6 +91,28 @@
 }
 
 /* main */
+
+/* #dashboard .block #main .content main #project #container
+{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-areas:
+    "containerMain deleteFrom"
+    "containerMain deleteFrom";
+    grid-template-columns: auto auto;
+    gap: 15px;
+}
+
+#dashboard .block #main .content main #project .deleted-projects-form
+{
+    grid-area: deleteFrom;
+}
+
+#dashboard .block #main .content main #project #mainContainer
+{
+    grid-area: containerMain;
+} */
 
 #dashboard .block #main .content main #project #container .menu
 {
@@ -127,203 +149,8 @@
    color: var(--color-black);
 }
 
-/* card */
-#dashboard .block #main .content main #project #container .block-project
+#dashboard .block #main .content main #project .custom_toast
 {
-    width: 100%;
-    height: 80%;
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    flex-wrap: wrap;
-} 
-
-#dashboard .block #main .content main #project #container .block-project .card.done {
-    --color-title: #31E563; /* Green for done */
+    position: fixed;
 }
 
-#dashboard .block #main .content main #project #container .block-project .card.to-do {
-    --color-title: #31AFE5; /* Blue for to-do */
-}
-
-#dashboard .block #main .content main #project #container .block-project .card.in-progress {
-    --color-title: #EED811; /* Yellow for in-progress */
-}
-
-#dashboard .block #main .content main #project #container .block-project .card.verify {
-    --color-title: #E53131; /* Red for verify */
-}
-
-#dashboard .block #main .content main #project #container .block-project .card
-{
-    --color-title: #000000;
-    width: 262px;
-    height: 180px;
-    position: relative;
-    color: var(--color-black);
-    margin-top: 25px;
-    margin-bottom: 25px;
-    transition: transform 0.3s ease-in-out,box-shadow 0.3s ease-in-out;
-    
-}
-
-#dashboard .block #main .content main #project #container .block-project .card:hover
-{
-    transform: translate3D(0, -10px, 0px);  
-    box-shadow: 0 60px 15px var(--color-shadow);
-}
-
-#dashboard .block #main .content main #project #container .block-project .card .card-title
-{
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   position: relative;
-   width: 100%;
-   height: 35px;
-}
-
-#dashboard .block #main .content main #project #container .block-project .card .card-title-text
-{
-    background-color: var(--color-title);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 110px;
-    height: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-top-left-radius: 13px;
-    border-top-right-radius: 13px;
-    font-size: 15px;
-}
-
-#dashboard .block #main .content main #project #container .block-project .card .card-title-text::before
-{
-    --size-box:20px;
-    position: absolute;
-    content: "";
-    background-color: transparent;
-    width: var(--size-box);
-    height: var(--size-box);
-    bottom: 0;
-    right:  calc(var(--size-box) * -1);
-    border-bottom-left-radius:  13px;
-    box-shadow: -5px 5px 0px var(--color-title);
-}
-
-#dashboard .block #main .content main #project #container .block-project .card .card-title-date
-{
-    font-size: 10px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: var(--color-black);
-    color: var(--color-white);
-    width: 139px;
-    height: 30px;
-    border-radius: var(--border-radius-large);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#dashboard .block #main .content main #project #container .block-project .card .card-header
-{
-    background-color: var(--color-white);
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    width: 100%;
-    height: 100%;
-    position: relative;
-    border: 3px solid var(--color-title);
-    border-bottom-left-radius: 13px;
-    border-bottom-right-radius: 13px;
-    border-top-right-radius: 13px;
-    flex-direction: column;
-}
-
-#dashboard .block #main .content main #project #container .block-project .card .card-header .text
-{
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    font-size: var(--font-size-large);
-    font-weight: var(--font-weight-medium);
-}
-
-#dashboard .block #main .content main #project #container .block-project .card .card-header .text p.description
-{
-    font-size: var(--font-size-small);
-    color: var(--color-black-gray);
-    font-weight: var(--font-weight-light);
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-#dashboard .block #main .content main #project #container .block-project .card .card-header .card-form
-{
-    color: var(--color-black);
-    display: flex;
-    position: absolute;
-    bottom: 15px;
-    gap: 10px;
-}
-
-#dashboard .block #main .content main #project #container .block-project .card .card-header .card-form svg{
-    width: 18px;
-}
-
-#dashboard .block #main .content main #project #container .block-project .card .card-header .card-form-view
-{
-    width: 100px;
-    height: 40px;
-    background-color: var(--color-black);
-    color: var(--color-white);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 13px;
-    transition: all 0.3s ease-in-out;
-}
-
-#dashboard .block #main .content main #project #container .block-project .card .card-header .card-form-view:hover
-{
-    color: var(--color-black);
-    background-color: var(--color-white);
-    border: 2px solid var(--color-black);
-}
-
-#dashboard .block #main .content main #project #container .block-project .card .card-header .card-form-edit,
-#dashboard .block #main .content main #project #container .block-project .card .card-header .card-form-delete
-{
-   border-radius: 13px;
-   width: 40px;
-   background-color: var(--color-light-blue);
-   color: var(--color-white);
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   transition: all 0.3s ease-in-out;
-}
-
-#dashboard .block #main .content main #project #container .block-project .card .card-header .card-form-edit:hover
-{
-    color: var(--color-black);
-    box-shadow: 0 0 10px var(--color-light-blue);
-}
-
-#dashboard .block #main .content main #project #container .block-project .card .card-header .card-form-delete
-{
-    background-color: var(--color-red);
-}
-
-#dashboard .block #main .content main #project #container .block-project .card .card-header .card-form-delete:hover
-{
-    color: var(--color-black);
-    box-shadow: 0 0 10px var(--color-red);
-}
