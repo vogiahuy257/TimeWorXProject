@@ -1,0 +1,147 @@
+/* Global Styles */
+:root{
+    --color-yellow: #FABB18; 
+    --color-cream: #FEF8E8;
+    --color-black: #000000; 
+    --color-black-gray: #383838; 
+    --color-gray: #D9D9D9;
+    --color-white: #FFFFFF; 
+    --color-whiteGray:#F4F8F7;
+    --color-light-gray: #F9F9F9;
+    --color-light-blue: #31AFE5;
+    --color-red: #E53131;
+    --color-green: rgb(3, 205, 3);
+    --background: linear-gradient(155deg,#FFFFFF,#D3D3D3);
+
+    --color-shadow:rgba(85, 85, 85, 0.425);
+
+    /* Font Sizes */
+    --font-size-sSmall: 0.7rem;
+    --font-size-small: 0.875rem;
+    --font-size-medium: 1rem;
+    --font-size-large: 1.25rem;
+    --font-size-xlarge: 1.5rem;
+    
+    /* Font Weights */
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 700;
+
+    /* Border Radius */
+    
+    --border-radius-sSmall: 8px;
+    --border-radius-small: 10px;
+    --border-radius-medium: 16px;
+    --border-radius-large: 28px;
+}
+
+#dashboard .block #main .content main #project-view #task-form
+{
+   background-color: rgba(0, 0, 0, 0.337);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%); 
+    z-index: 9999;
+}
+
+#dashboard .block #main .content main #project-view #task-form .task-form-container
+{
+    background-color: var(--color-white);
+    width: 70%;
+    max-width: 750px;
+    height: 600px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: var(--border-radius-medium);
+    padding: 30px;
+    color: var(--color-black);
+}
+
+#dashboard .block #main .content main #project-view #task-form .task-form-container form
+{
+   height: 100%;
+   display: flex;
+}
+
+#dashboard .block #main .content main #project-view #task-form .task-form-container form .task-form-header
+{
+    width: 80%;
+    border-right: 1px solid var(--color-gray);
+}
+
+#dashboard .block #main .content main #project-view #task-form .task-form-container form .task-form-header h2
+{
+    font-size: var(--font-size-large);
+    font-weight: var(--font-weight-bold);
+    padding-bottom: 10px;
+}
+
+#dashboard .block #main .content main #project-view #task-form .task-form-container form .form-group
+{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  font-weight: var(--font-weight-regular);
+}
+
+#dashboard .block #main .content main #project-view #task-form .task-form-container form .form-group:not(.time-group) input,
+#dashboard .block #main .content main #project-view #task-form .task-form-container form .form-group textarea
+{
+    width: 95%;
+    border-radius: var(--border-radius-small);
+    color: var(--color-black);
+}
+
+#dashboard .block #main .content main #project-view #task-form .task-form-container form .form-group.time-group input
+{
+    border-radius: var(--border-radius-small);
+    width: 100%;
+    max-width: 180px;
+    color: var(--color-black);
+}
+
+#dashboard .block #main .content main #project-view #task-form .task-form-container form .form-main
+{
+    padding-bottom: 10px;
+}
+
+#dashboard .block #main .content main #project-view #task-form .task-form-container form .user-list .user-item,
+#dashboard .block #main .content main #project-view #task-form .task-form-container form .user-list .user-info
+{
+  display: flex;
+  background-color: var(--color-white);
+}
+
+#dashboard .block #main .content main #project-view #task-form .task-form-container form .user-list .chat-button
+{
+    margin-left: auto;
+    margin-right: 15px;
+}
+
+#dashboard .block #main .content main #project-view #task-form .task-form-container form .user-list .chat-button svg
+{
+    color: var(--color-black);
+}
+
+#dashboard .block #main .content main #project-view #task-form .task-form-container form .user-list .user-item
+{
+    width: 80%;
+    border: 1px solid var(--color-black);
+    padding: 15px 0px;
+    border-radius: var(--border-radius-sSmall);
+    margin-top: 10px;
+}
+
+#dashboard .block #main .content main #project-view #task-form .task-form-container form .user-list .user-info img
+{
+    margin-left: 15px;
+    margin-right: 10px;
+    border-radius: 100%;
+}
