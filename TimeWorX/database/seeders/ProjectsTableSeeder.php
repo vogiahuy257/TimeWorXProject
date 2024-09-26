@@ -21,8 +21,8 @@ class ProjectsTableSeeder extends Seeder
                 'start_date' => '2024-01-01',
                 'end_date' => '2024-12-31',
                 'project_priority' => 'High',
-                'project_status' => 'Ongoing',
-                'project_manager' => 1,
+                'project_status' => 'verify',
+                'project_manager' => 2,
             ],
             [
                 'project_name' => 'Project Beta',
@@ -30,9 +30,28 @@ class ProjectsTableSeeder extends Seeder
                 'start_date' => '2024-06-01',
                 'end_date' => '2024-12-31',
                 'project_priority' => 'Medium',
-                'project_status' => 'Planning',
+                'project_status' => 'in-progress',
+                'project_manager' => 2,
+            ],
+            [
+                'project_name' => 'Project Gamma',
+                'project_description' => 'Description for Project Gamma.',
+                'start_date' => '2024-08-01',
+                'end_date' => '2024-12-15',
+                'project_priority' => 'Low',
+                'project_status' => 'to-do',
+                'project_manager' => 2,
+            ],
+            [
+                'project_name' => 'Project Delta',
+                'project_description' => 'Description for Project Delta.',
+                'start_date' => '2024-02-01',
+                'end_date' => '2024-11-30',
+                'project_priority' => 'High',
+                'project_status' => 'done',
                 'project_manager' => 2,
             ],
         ]);
+        
     }
 }

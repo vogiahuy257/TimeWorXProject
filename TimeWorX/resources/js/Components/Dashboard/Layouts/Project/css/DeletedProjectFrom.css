@@ -1,0 +1,104 @@
+/* Global Styles */
+:root{
+    --color-yellow: #FABB18; 
+    --color-cream: #FEF8E8;
+    --color-black: #000000; 
+    --color-black-gray: #383838; 
+    --color-gray: #D9D9D9;
+    --color-white: #FFFFFF; 
+    --color-whiteGray:#F4F8F7;
+    --color-light-gray: #F9F9F9;
+    --color-light-blue: #31AFE5;
+    --color-red: #E53131;
+    --background: linear-gradient(155deg,#FFFFFF,#D3D3D3);
+
+    --color-shadow:rgba(85, 85, 85, 0.425);
+
+    /* Font Sizes */
+    --font-size-sSmall: 0.7rem;
+    --font-size-small: 0.875rem;
+    --font-size-medium: 1rem;
+    --font-size-large: 1.25rem;
+    --font-size-xlarge: 1.5rem;
+    
+    /* Font Weights */
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 800;
+
+    /* Border Radius */
+    
+    --border-radius-sSmall: 8px;
+    --border-radius-small: 10px;
+    --border-radius-medium: 16px;
+    --border-radius-large: 28px;
+}
+
+
+#dashboard .block #main .content main #project .deleted-projects-form {
+    background-color: var(--color-white);
+    height: auto;
+    position: absolute;
+    top: 65px;
+    right: 10px;
+    width: 280px;
+    padding: 25px;
+    border-radius: var(--border-radius-medium);
+    opacity: 0; 
+    transform: translateX(20px); 
+    animation: fadeInUp 0.8s forwards; 
+    box-shadow: 0px 5px 8px var(--color-shadow);
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1; 
+        transform: translateX(0); 
+    }
+}
+
+#dashboard .block #main .content main #project .deleted-projects-form .header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#dashboard .block #main .content main #project .deleted-projects-form .header button
+{
+    margin-left: auto;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease; 
+}
+
+#dashboard .block #main .content main #project .deleted-projects-form .header button:hover
+{
+    transform: rotate(180deg);
+}
+
+#dashboard .block #main .content main #project .deleted-projects-form .list-delete-project li
+{
+   padding: 10px;
+   width: 100%;
+   background-color: var(--color-white);
+   color: var(--color-black);
+   border-radius: var(--border-radius-small);
+   margin-top: 10px ;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   text-align: center;
+}
+
+#dashboard .block #main .content main #project .deleted-projects-form .list-delete-project li .box-button
+{
+    margin-left: auto;
+}
+
+#dashboard .block #main .content main #project .deleted-projects-form .list-delete-project li .box-button button{
+    margin-left: 5px;
+}
+/* // restore */

@@ -49,11 +49,24 @@ class Project extends Model
         'end_date' => 'date',
     ];
 
+    protected $dates = ['deleted_at'];
+
     /**
      * Get the user that manages the project.
      */
     public function manager()
     {
         return $this->belongsTo(User::class, 'project_manager');
+    }
+
+    /**
+     * Scope a query to only include non-deleted projects.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeNonDeleted($query)
+    {
+        return $query->whereNull('deleted_at');
     }
 }

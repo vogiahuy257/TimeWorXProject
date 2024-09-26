@@ -4,26 +4,26 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import DashboardHome from '@/Components/Dashboard/Home';
 import DashboardChat from '@/Components/Dashboard/Chat';
 import DashboardCalendar from '@/Components/Dashboard/Calendar';
-import DashboardFolder from '@/Components/Dashboard/Folder';
+import DashboardProject from '@/Components/Dashboard/Project';
 import DashboardReport from '@/Components/Dashboard/Report';
 import DashboardTask from '@/Components/Dashboard/Task';
 import DashboardNotFound from '@/Components/Dashboard/NotFound';
-import Profile from './Profile/Edit';
+import DashboardProjectView from "@/Components/Dashboard/DashboardProjectView";
 
 export default function Dashboard({ auth }) {
     return (
         <Router>
             <AuthenticatedLayout user={auth.user}>
                 <Routes>
-                    <Route path="/dashboard" element={<DashboardHome />} />
-                    <Route path="/dashboard/chat" element={<DashboardChat />} />
-                    <Route path="/dashboard/calendar" element={<DashboardCalendar />} />
-                    <Route path="/dashboard/folder" element={<DashboardFolder />} />
-                    <Route path="/dashboard/reports" element={<DashboardReport />} />
-                    <Route path="/dashboard/task" element={<DashboardTask />} />
+                    <Route path="/dashboard" element={<DashboardHome auth={auth} />} />
+                    <Route path="/dashboard/chat" element={<DashboardChat auth={auth} />} />
+                    <Route path="/dashboard/calendar" element={<DashboardCalendar auth={auth}/>} />
+                    <Route path="/dashboard/project" element={<DashboardProject auth={auth}/>} />
+                    <Route path="/dashboard/reports" element={<DashboardReport auth={auth}/>} />
+                    <Route path="/dashboard/task" element={<DashboardTask auth={auth}/>} />
 
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="*" element={<DashboardNotFound />} />
+                    <Route path="/dashboard/projects/:project_id" element={<DashboardProjectView auth={auth} />} />
+                    <Route path="*" element={<DashboardNotFound auth={auth}/>} />
                 </Routes>
             </AuthenticatedLayout>
         </Router>

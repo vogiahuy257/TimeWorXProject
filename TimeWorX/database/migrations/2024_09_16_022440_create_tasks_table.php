@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tasks', function (Blueprint $table) {
-            $table->id('task_id'); // Primary key
+            $table->id('task_id'); 
             $table->foreignId('project_id')->constrained('projects', 'project_id')->onDelete('cascade'); // Foreign key to 'projects' table
-            $table->string('task_name', 100); // Task name
-            $table->text('task_description')->nullable(); // Task description
-            $table->integer('status_id'); // Status ID
-            $table->timestamps(); // created_at, updated_at
+            $table->string('task_name', 100); 
+            $table->text('task_description')->nullable(); 
+            $table->string('status_key', 20)->nullable();
+            $table->date('deadline')->nullable(); 
+            $table->timestamps();
             $table->foreignId('assigned_to_user_id')->nullable()->constrained('users', 'id')->onDelete('set null'); // Foreign key to 'users' table
             $table->softDeletes();
-            $table->string('task_status_name', 200)->nullable(); // Task status name
         });
     }
 

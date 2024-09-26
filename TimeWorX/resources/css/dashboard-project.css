@@ -1,0 +1,150 @@
+
+
+
+#dashboard .block #main .content main #project svg
+{
+    background-repeat: no-repeat;
+}
+
+/* grid area */
+
+#dashboard .block #main .content main #project {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-areas:
+    "menu"
+    "main";
+    grid-template-columns: 1fr;
+    grid-template-rows: 75px 1fr;
+}
+
+#dashboard .block #main .content main #project #menu {
+    grid-area: menu;
+    display: flex;
+    align-items: center;
+}
+
+#dashboard .block #main .content main #project #container {
+    grid-area: main;
+}
+
+/* menu */
+
+
+#dashboard .block #main .content main #project #menu .btn-create 
+{
+   background-color: var(--color-black);
+   padding: 12px 15px;
+   color: var(--color-white);
+   border-radius: var(--border-radius-medium);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border: 2px solid var(--color-black);
+   font-weight: var(--font-weight-regular);
+   transition: all 0.3s ease-in-out;
+}
+
+#dashboard .block #main .content main #project #menu .btn-create:hover
+{
+    color: var(--color-black);
+    background-color: var(--color-white);
+}
+
+#dashboard .block #main .content main #project #menu .block-button-left svg
+{
+    width: 25px;
+    height: 25px;
+    margin-left: 5px;
+}
+
+#dashboard .block #main .content main #project #menu .block-button-right
+{
+    margin-left: auto;
+    margin-right: 5px;
+}
+
+#dashboard .block #main .content main #project #menu .block-button-right .btn-delete
+{
+   background-color: var(--color-white);
+   padding: 10px 10px;
+   color: var(--color-black);
+   border-radius: var(--border-radius-medium);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border: 2px solid var(--color-black);
+   font-weight: var(--font-weight-regular);
+   transition: all 0.3s ease-in-out;
+}
+
+#dashboard .block #main .content main #project #menu .block-button-right .btn-delete:hover
+{
+  transform: scale(1.1);
+}
+
+#dashboard .block #main .content main #project #menu .block-button-right svg
+{
+  width: 24px;
+  height: 24px;
+}
+
+/* main */
+
+/* #dashboard .block #main .content main #project #container
+{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-areas:
+    "containerMain deleteFrom"
+    "containerMain deleteFrom";
+    grid-template-columns: auto auto;
+    gap: 15px;
+}
+
+#dashboard .block #main .content main #project .deleted-projects-form
+{
+    grid-area: deleteFrom;
+}
+
+#dashboard .block #main .content main #project #mainContainer
+{
+    grid-area: containerMain;
+} */
+
+#dashboard .block #main .content main #project #container .menu
+{
+    display: flex;
+    align-items: center;
+}
+
+#dashboard .block #main .content main #project #container .menu .block-text
+{
+    font-size: var(--font-size-large);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-black);
+}
+
+#dashboard .block #main .content main #project #container .menu .block-search
+{
+    margin-left: auto;
+    position: relative;
+}
+
+#dashboard .block #main .content main #project #container .menu .block-search input{
+    position: relative;
+    height: 30px;
+    border-radius: var(--border-radius-medium);
+    background-color: var(--color-white);
+}
+
+#dashboard .block #main .content main #project #container .menu .block-search button
+{
+   position: absolute;
+   top: 50%;
+   right: 10px;
+   transform: translateY(-50%);
+   color: var(--color-black);
+}

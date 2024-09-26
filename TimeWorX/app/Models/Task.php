@@ -1,65 +1,54 @@
 <?php
-
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 class Task extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
-    /**
-     * The name of the table associated with the model.
-     *
-     * @var string
-     */
     protected $table = 'tasks';
 
-    /**
-     * The primary key associated with the table.
-     *
-     * @var string
-     */
     protected $primaryKey = 'task_id';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'project_id',
         'task_name',
         'task_description',
-        'status_id',
+        'status_key',
         'assigned_to_user_id',
-        'task_status_name',
+        'deadline', // Thêm cột 'deadline' vào danh sách fillable
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected $casts = [
-        'status_id' => 'integer',
+    // Đảm bảo các cột ngày tháng được xử lý tự động dưới dạng đối tượng Carbon
+    protected $dates = [
+        'deleted_at',
+        'deadline', // Xác định 'deadline' là một cột ngày tháng
     ];
 
-    /**
-     * Get the project that owns the task.
-     */
-    public function project()
+    // Quan hệ nhiều-nhiều với User
+    public function users()
     {
-        return $this->belongsTo(Project::class, 'project_id');
+        return $this->belongsToMany(User::class, 'task_user', 'task_id', 'user_id');
     }
 
-    /**
-     * Get the user that the task is assigned to.
-     */
-    public function assignedTo()
+    // Quan hệ một-nhiều với User (người được giao nhiệm vụ)
+    public function assignedUser()
     {
         return $this->belongsTo(User::class, 'assigned_to_user_id');
+    }
+
+    // Lấy số lượng người dùng liên quan đến task này
+    public function userCount()
+    {
+        return $this->users()->count();
+    }
+
+    // Định nghĩa hàm để lấy định dạng ngày deadline (nếu cần)
+    public function getFormattedDeadlineAttribute()
+    {
+        return Carbon::parse($this->deadline)->format('d/m/Y');
     }
 }
