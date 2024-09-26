@@ -148,9 +148,3 @@
    transform: translateY(-50%);
    color: var(--color-black);
 }
-
-#dashboard .block #main .content main #project .custom_toast
-{
-    position: fixed;
-}
-

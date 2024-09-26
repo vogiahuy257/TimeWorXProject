@@ -23,7 +23,7 @@
     --color-whiteGray:#232323;
     --color-black-gray: #d2d2d2; 
     --background: linear-gradient(155deg, #232222, #373737);
-    --color-shadow:#121212df;
+    --color-shadow:#424242df;
 }
 
 #dashboard img{
@@ -446,5 +446,42 @@
     background-color: #2d3748;
 }
 
-/* edit profiler */
+
+#dashboard .block #main .content main .custom_toast
+{
+    position: fixed;
+    padding: 10px;
+    width: 350px;
+}
+
+#dashboard .block #main .content main #customToastInfo
+{
+    margin-left: 5px
+}
+
+#dashboard .block #main .content main #customToastInfo .box-btn
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#dashboard .block #main .content main #customToastInfo .box-btn button{
+    background-color: var(--color-light-blue);
+    color: var(--color-white);
+    margin: 0px 5px;
+    padding: 1px 10px;
+    border-radius: 5px;
+}
+
+#dashboard .block #main .content main #customToastInfo .box-btn button.btn-no
+{
+    background-color: var(--color-red);
+}
+
+#dashboard .block #main .content main #customToastInfo .box-btn button:hover
+{
+    box-shadow: 0 0 2px var(--color-black);
+}
 

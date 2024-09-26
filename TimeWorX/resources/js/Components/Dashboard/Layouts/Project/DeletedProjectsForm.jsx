@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./css/DeletedProjectFrom.css";
 
 const DeletedProjectsForm = ({ auth , onClose }) => {
@@ -12,12 +14,34 @@ const DeletedProjectsForm = ({ auth , onClose }) => {
                     setDeletedProjects(response.data);
                 })
                 .catch(error => {
-                    console.error('Error fetching deleted projects:', error.response ? error.response.data : error.message);
+                    toast.error(`Error fetching deleted projects: ${error.response ? error.response.data : error.message}`);
                 });
         };
 
         fetchDeletedProjects();
     }, []);
+
+    const restoreProject = (projectId) => {
+        axios.get(`/api/projects/restore/${projectId}`)
+            .then(response => {
+                toast.success(response.data.message);
+                setDeletedProjects(prev => prev.filter(p => p.project_id !== projectId));
+            })
+            .catch(error => {
+                toast.error(`Error restoring project: ${error.response ? error.response.data : error.message}`);
+            });
+    };
+    
+    const permanentlyDeleteProject = (projectId) => {
+        axios.delete(`/api/projects/permanently-delete/${projectId}`)
+            .then(response => {
+                toast.success(response.data.message);
+                setDeletedProjects(prev => prev.filter(p => p.project_id !== projectId));
+            })
+            .catch(error => {
+                toast.error(`Error permanently deleting project: ${error.response ? error.response.data : error.message}`);
+            });
+    };
 
     return (
         <div className="deleted-projects-form">
@@ -45,7 +69,8 @@ const DeletedProjectsForm = ({ auth , onClose }) => {
                                     <path d="M8 6V4C8 2.89543 8.89543 2 10 2H14C15.1046 2 16 2.89543 16 4V6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                                     <path d="M19 6V20C19 21.1046 18.1046 22 17 22H7C5.89543 22 5 21.1046 5 20V6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                                 </svg>
-                            </button></div>
+                            </button>
+                            </div>
                         </li>
                     ))}
                 </ul>

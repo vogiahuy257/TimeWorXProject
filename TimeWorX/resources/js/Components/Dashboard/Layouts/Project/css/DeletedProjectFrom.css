@@ -100,8 +100,5 @@
 
 #dashboard .block #main .content main #project .deleted-projects-form .list-delete-project li .box-button button{
     margin-left: 5px;
-    align-items: center;
-    display: flex;
-    text-align: center;
-    flex-direction: column;
 }
+/* // restore */

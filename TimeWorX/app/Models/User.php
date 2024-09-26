@@ -45,4 +45,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // Quan hệ nhiều-nhiều với Task
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class, 'task_user', 'user_id', 'task_id');
+    }
 }

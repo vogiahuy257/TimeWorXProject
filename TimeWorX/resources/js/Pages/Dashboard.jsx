@@ -8,6 +8,7 @@ import DashboardProject from '@/Components/Dashboard/Project';
 import DashboardReport from '@/Components/Dashboard/Report';
 import DashboardTask from '@/Components/Dashboard/Task';
 import DashboardNotFound from '@/Components/Dashboard/NotFound';
+import DashboardProjectView from "@/Components/Dashboard/DashboardProjectView";
 
 export default function Dashboard({ auth }) {
     return (
@@ -20,7 +21,9 @@ export default function Dashboard({ auth }) {
                     <Route path="/dashboard/project" element={<DashboardProject auth={auth}/>} />
                     <Route path="/dashboard/reports" element={<DashboardReport auth={auth}/>} />
                     <Route path="/dashboard/task" element={<DashboardTask auth={auth}/>} />
-                    <Route path="*" element={<DashboardNotFound />} />
+
+                    <Route path="/dashboard/projects/:project_id" element={<DashboardProjectView auth={auth} />} />
+                    <Route path="*" element={<DashboardNotFound auth={auth}/>} />
                 </Routes>
             </AuthenticatedLayout>
         </Router>

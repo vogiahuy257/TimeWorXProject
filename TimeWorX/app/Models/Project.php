@@ -49,6 +49,8 @@ class Project extends Model
         'end_date' => 'date',
     ];
 
+    protected $dates = ['deleted_at'];
+
     /**
      * Get the user that manages the project.
      */

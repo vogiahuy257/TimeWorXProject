@@ -1,9 +1,8 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+
 import PrimaryButton from '@/Components/PrimaryButton';
 import { Head } from '@inertiajs/react';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import CardProject from '@/Components/Dashboard/Layouts/Project/CardProject';
 import CreateProjectForm from '@/Components/Dashboard/Layouts/Project/CreateProjectForm'; 
 import { ToastContainer, toast } from 'react-toastify';
@@ -51,16 +50,28 @@ export default function Folder({ auth }) {
     };
 
     const handleDelete = (projectId) => {
-        if (window.confirm('Are you sure you want to delete this project?')) {
-            axios.delete(`/api/projects/${projectId}`)
-                .then(() => {
-                    setProjects(projects.filter(project => project.project_id !== projectId));
-                    toast.success('Project deleted successfully!');
-                })
-                .catch(error => {
-                    console.error('Error deleting project:', error.response ? error.response.data : error.message);
-                });
-        }
+        toast.info(
+            <div id='customToastInfo'>
+                <p>Are you sure you want to delete this project?</p>
+                <div className='box-btn'>
+                    <button  onClick={() => confirmDelete(projectId)}>Yes</button>
+                    <button onClick={()=>toast.dismiss()} className='btn-no'>No</button>
+                </div>
+            </div>,
+            { autoClose: false }
+        );
+    };
+    
+    const confirmDelete = (projectId) => {
+        axios.delete(`/api/projects/${projectId}`)
+            .then(() => {
+                setProjects(projects.filter(project => project.project_id !== projectId));
+                toast.dismiss(); 
+                toast.success('Project deleted successfully!');
+            })
+            .catch(error => {
+                toast.error(`Error deleting project: ${error.response ? error.response.data : error.message}`);
+            });
     };
 
     const handleCreate = () => {
@@ -83,7 +94,7 @@ export default function Folder({ auth }) {
                     setIsFormOpen(false);  // Đóng form
                 })
                 .catch(error => {
-                    console.error('Error updating project:', error.response ? error.response.data : error.message);
+                    toast.error('Error updating project:', error.response ? error.response.data : error.message);
                 });
         }
         else
@@ -95,7 +106,7 @@ export default function Folder({ auth }) {
                     setIsFormOpen(false);  // Đóng form
                 })
                 .catch(error => {
-                    console.error('Error creating project:', error.response ? error.response.data : error.message);
+                    toast.error('Error creating project:', error.response ? error.response.data : error.message);
                 });
         }
     };

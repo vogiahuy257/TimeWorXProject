@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import React from 'react';
 import './css/CardProject.css';
 
 export default function CardProject({ project, formatDateRange, handleDelete,handleEdit}) {
@@ -21,7 +22,7 @@ export default function CardProject({ project, formatDateRange, handleDelete,han
                 </div>
 
                 <div className='card-form'>
-                    <Link className='card-form-view' to={`/projects/${project.project_id}`}>
+                    <Link className='card-form-view' to={`/dashboard/projects/${project.project_id}`}>
                         <h1>View</h1>
                     </Link>
 

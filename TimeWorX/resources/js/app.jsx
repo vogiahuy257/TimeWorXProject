@@ -6,6 +6,7 @@ import '../css/resetpassword.css';
 import '../css/dashboard.css';
 import '../css/edit.css';
 import '../css/dashboard-project.css';
+import '../css/dashboard-project-view.css';
 
 import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';

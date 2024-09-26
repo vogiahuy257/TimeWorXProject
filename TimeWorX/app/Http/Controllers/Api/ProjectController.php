@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -108,5 +107,21 @@ class ProjectController extends Controller
 
         $project->delete();
         return response()->json(null, 204);
+    }
+
+    public function permanentlyDeleteProject(string $id)
+    {
+        $project = Project::onlyTrashed()->findOrFail($id);
+        $project->forceDelete();
+        
+        return response()->json(['message' => 'Project permanently deleted'], 200);
+    }
+
+    public function restoreProject(string $id)
+    {
+        $project = Project::onlyTrashed()->findOrFail($id);
+        $project->restore();
+    
+        return response()->json(['message' => 'Project restored successfully'], 200);
     }
 }
