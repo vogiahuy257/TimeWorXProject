@@ -48,13 +48,14 @@ const TaskForm = () => {
                             <textarea
                                 id="description"
                                 value={description}
+                                className="custom-scrollbar"
                                 onChange={(e) => setDescription(e.target.value)}
                             ></textarea>
                         </div>
                         </div>
 
-                        <div className="user-list">
-                            {[1, 2, 3].map((user, index) => (
+                        <div className="user-list custom-scrollbar">
+                            {[1, 2, 3,4,5,6].map((user, index) => (
                                 <div className="user-item" key={index}>
                                     <div className="user-info">
                                         <span className="user-icon">
@@ -82,17 +83,17 @@ const TaskForm = () => {
                             <path d="M7.5 7.5L22.5 22.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                     </PrimaryButton>
-                    <PrimaryButton className="add-user-button">
-                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <PrimaryButton className="add-user-button flex">
+                        <svg className="mr-1" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="12.5" cy="10" r="6.25" fill="currentColor"/>
                         <path d="M23.75 12.5L23.75 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                         <path d="M27.5 16.25L20 16.25" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                         <path d="M21.4388 25.4757C22.0099 25.3463 22.3523 24.7527 22.1 24.2244C21.4107 22.7814 20.2752 21.5133 18.8024 20.5582C16.9943 19.3856 14.779 18.75 12.5 18.75C10.221 18.75 8.00569 19.3856 6.19764 20.5582C4.72482 21.5133 3.58929 22.7813 2.90002 24.2244C2.64766 24.7527 2.99015 25.3463 3.56119 25.4757L3.66506 25.4992C9.48138 26.8164 15.5186 26.8164 21.3349 25.4992L21.4388 25.4757Z" fill="currentColor"/>
                         </svg>
-                        <p>Add User</p>
+                        <p className="font-medium text-sm">Add User</p>
                     </PrimaryButton>
 
-                    <button type="submit" className="save-button">
+                    <button type="submit" className="save-button mt-auto mb-2">
                         Save
                     </button>
                     </div>
