@@ -6,12 +6,17 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import TaskForm from './Layouts/Project/TaskForm';
 
 const DashboardProjectView = ({ auth }) => {
     const navigate = useNavigate();
     const { project_id } = useParams();
     const [project, setProject] = useState(null);
+    const [isFormOpen, setIsFormOpen] = useState(false); 
 
+    const toggleForm = () => {
+        setIsFormOpen(!isFormOpen);
+    };
 
     const [tasks, setTasks] = useState({
         'to-do': [],
@@ -136,7 +141,7 @@ const DashboardProjectView = ({ auth }) => {
                                     <h1>{columnId}</h1>
                                     <div className="block-task-list">
                                         {/* Button to add new task */}
-                                        <PrimaryButton className='task-add-card'>
+                                        <PrimaryButton className='task-add-card' onClick={toggleForm}>
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M12 6L12 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                                                 <path d="M18 12L6 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
@@ -187,6 +192,11 @@ const DashboardProjectView = ({ auth }) => {
                     ))}
                 </DragDropContext>
             </main>
+
+             {/* Hiển thị TaskForm */}
+             {isFormOpen && (
+                <TaskForm />
+            )}
         </section>
     );
 };

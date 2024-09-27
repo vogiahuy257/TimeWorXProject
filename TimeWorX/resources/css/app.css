@@ -30,7 +30,7 @@
     --font-weight-light: 300;
     --font-weight-regular: 400;
     --font-weight-medium: 500;
-    --font-weight-bold: 800;
+    --font-weight-bold: 700;
 
     /* Border Radius */
     
@@ -77,3 +77,25 @@ li
     list-style: none;
 }
 
+@layer utilities {
+
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 5px; 
+    }
+  
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: var(--color-whiteGray); 
+        border-radius: var(--border-radius-medium); 
+    }
+  
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: var(--color-black); 
+        cursor: pointer;
+        border-radius: var(--border-radius-medium);
+    }
+  
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: var(--color-black-gray);
+    }
+  }
+  
