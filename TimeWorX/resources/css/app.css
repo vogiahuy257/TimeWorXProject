@@ -7,29 +7,37 @@
     --color-yellow: #FABB18; 
     --color-cream: #FEF8E8;
     --color-black: #000000; 
-    --color-gray: rgb(92, 92, 92);
+    --color-black-gray: #383838; 
+    --color-gray: #D9D9D9;
     --color-white: #FFFFFF; 
+    --color-whiteGray:#F4F8F7;
     --color-light-gray: #F9F9F9;
+    --color-light-blue: #31AFE5;
+    --color-red: #E53131;
+    --color-green: rgb(3, 205, 3);
+    --background: linear-gradient(155deg,#FFFFFF,#D3D3D3);
 
     --color-shadow:rgba(85, 85, 85, 0.425);
 
     /* Font Sizes */
-    --font-size-sSmall: 0.85rem; /* Tăng từ 0.7rem */
-    --font-size-small: 1rem; /* Tăng từ 0.875rem */
-    --font-size-medium: 1.2rem; /* Tăng từ 1rem */
-    --font-size-large: 1.5rem; /* Tăng từ 1.25rem */
-    --font-size-xlarge: 1.75rem; /* Tăng từ 1.5rem */
+    --font-size-sSmall: 0.7rem;
+    --font-size-small: 0.875rem;
+    --font-size-medium: 1rem;
+    --font-size-large: 1.25rem;
+    --font-size-xlarge: 1.5rem;
     
     /* Font Weights */
     --font-weight-light: 300;
     --font-weight-regular: 400;
     --font-weight-medium: 500;
-    --font-weight-bold: 800;
+    --font-weight-bold: 700;
 
     /* Border Radius */
-    --border-radius-small: 4px;
-    --border-radius-medium: 8px;
-    --border-radius-large: 16px;
+    
+    --border-radius-sSmall: 8px;
+    --border-radius-small: 10px;
+    --border-radius-medium: 16px;
+    --border-radius-large: 28px;
 }
 
 
@@ -63,3 +71,31 @@ a:hover
 {
     color: var(--color-yellow);
 }
+
+li
+{
+    list-style: none;
+}
+
+@layer utilities {
+
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 5px; 
+    }
+  
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: var(--color-whiteGray); 
+        border-radius: var(--border-radius-medium); 
+    }
+  
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: var(--color-black); 
+        cursor: pointer;
+        border-radius: var(--border-radius-medium);
+    }
+  
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: var(--color-black-gray);
+    }
+  }
+  
