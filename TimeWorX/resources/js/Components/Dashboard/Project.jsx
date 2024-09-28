@@ -15,17 +15,20 @@ export default function Folder({ auth }) {
     const [isFormOpen, setIsFormOpen] = useState(false);  
     const [editProject, setEditProject] = useState([]); 
 
-   
+
+    const fetchProjectData = async () => {
+        try {
+            const response = await axios.get(`/api/projects/${auth.user.id}`);
+            setProjects(response.data);
+        } catch (error) {
+            toast.error('Error fetching projects:', error.response ? error.response.data : error.message);
+        }
+    };
+    
     useEffect(() => {
-        // gọi phương thức show trong ProjectController
-        axios.get(`/api/projects/${auth.user.id}`)
-            .then(response => {
-                setProjects(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching projects:', error.response ? error.response.data : error.message);
-            });
+        fetchProjectData();
     }, []);
+    
 
     const handleDeletedFormToggle = () => {
         setIsDeletedFormOpen(!isDeletedFormOpen);  
@@ -177,6 +180,7 @@ export default function Folder({ auth }) {
                 {isDeletedFormOpen && (
                     <DeletedProjectsForm
                         auth={auth}
+                        resetPage={fetchProjectData}
                         onClose={handleDeletedFormToggle}
                     />
                 )}

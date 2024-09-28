@@ -14,11 +14,12 @@ class ProjectControllerView extends Controller
     {
     }
 
+
     public function show($id)
     {
         $project = Project::findOrFail($id);
 
-        $tasks = Task::where('project_id', $id)->get();
+        $tasks = Task::where('project_id', $id)->with('users')->get();
 
         $response = [
             'project' => [
@@ -40,14 +41,57 @@ class ProjectControllerView extends Controller
                 $response['tasks'][$statusKey][] = [
                     'id' => strval($task->task_id), 
                     'content' => $task->task_name, 
+                    'description' => $task->task_description,
                     'user_count' => $task->users->count(), 
+                    'users' => $task->users->map(function ($user) {
+                        return [
+                            'id' => $user->id,
+                            'name' => $user->name, 
+                        ];
+                    }),
                     'deadline' => $task->deadline,
+                    'status' => $task->status_key,
                 ];
             }
         }
 
         return response()->json($response);
     }
+
+    public function createTaskToProject(Request $request, $id)
+    {
+        $request->validate([
+            'task_name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'required|string|in:to-do,in-progress,verify,done', 
+            'deadline' => 'required|date', 
+            'users' => 'nullable|array', 
+            'users.*' => 'exists:users,id',
+        ]);
+    
+        $project = Project::find($id);
+    
+        if (!$project) {
+            return response()->json(['error' => 'Không tìm thấy dự án'], 404);
+        }
+    
+        $task = new Task([
+            'task_name' => $request->input('task_name'),
+            'project_id' => $id, 
+            'task_description' => $request->input('description'),
+            'status_key' => $request->input('status'),
+            'deadline' => $request->input('deadline'),
+        ]);
+
+        $task->save();
+    
+        if ($request->has('users')) {
+            $task->users()->attach($request->input('users'));
+        }
+    
+        return response()->json();
+    }
+    
 
     // Tạo dự án mới
     public function store(Request $request)
@@ -74,7 +118,10 @@ class ProjectControllerView extends Controller
         }
 
         $request->validate([
-            'status' => 'required|string',
+            'task_name' => 'sometimes|string|max:255',
+            'deadline' => 'sometimes|date',
+            'description' => 'nullable|string',
+            'status' => 'sometimes|string',
         ]);
 
         $task->status_key = $request->input('status');
@@ -82,6 +129,36 @@ class ProjectControllerView extends Controller
 
         return response()->json();
     }
+
+    public function updateTaskProject(Request $request, $projectId, $taskId)
+    {
+        // Validate incoming request data
+        $validatedData = $request->validate([
+            'task_name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'required|string|in:to-do,in-progress,verify,done',
+            'deadline' => 'nullable|date',
+            'users' => 'nullable|array'
+        ]);
+
+        $task = Task::where('task_id', $taskId)->where('project_id', $projectId)->firstOrFail();
+
+        // Update the task with the validated data
+        $task->update([
+            'task_name' => $validatedData['task_name'],
+            'description' => $validatedData['description'],
+            'status' => $validatedData['status'],
+            'deadline' => $validatedData['deadline'],
+        ]);
+
+        // Sync the users related to the task
+        if (isset($validatedData['users'])) {
+            $task->users()->sync($validatedData['users']);
+        }
+
+        return response()->json();
+    }
+
 
     // Xóa dự án
     public function destroy($id)

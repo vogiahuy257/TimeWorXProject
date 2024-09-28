@@ -13,7 +13,21 @@ const DashboardProjectView = ({ auth }) => {
     const { project_id } = useParams();
     const [project, setProject] = useState(null);
     const [isFormOpen, setIsFormOpen] = useState(false); 
+    const [selectedTask, setSelectedTask] = useState(null);
+    const [taskStatus, setTaskStatus] = useState(null);
 
+    const handleAddTask = (status) => {
+        setSelectedTask(null);
+        setTaskStatus(status);
+        toggleForm(); 
+    };
+
+    const handleViewClick = (task) => {
+        setSelectedTask(task);
+        setTaskStatus(task.status);
+        toggleForm();
+    };
+    
     const toggleForm = () => {
         setIsFormOpen(!isFormOpen);
     };
@@ -67,23 +81,23 @@ const DashboardProjectView = ({ auth }) => {
         }
     };
 
-    useEffect(() => {
-        const fetchProjectData = async () => {
-            try {
-                const response = await axios.get(`/api/project-view/${project_id}`);
-                const projectData = response.data;
-                setProject(projectData.project);
-                setTasks({
-                    'to-do': projectData.tasks['to-do'] || [],
-                    'in-progress': projectData.tasks['in-progress'] || [],
-                    'verify': projectData.tasks['verify'] || [],
-                    'done': projectData.tasks['done'] || [],
-                });
-            } catch (error) {
-                toast.error('Error fetching project details or tasks');
-            }
-        };
+    const fetchProjectData = async () => {
+        try {
+            const response = await axios.get(`/api/project-view/${project_id}`);
+            const projectData = response.data;
+            setProject(projectData.project);
+            setTasks({
+                'to-do': projectData.tasks['to-do'] || [],
+                'in-progress': projectData.tasks['in-progress'] || [],
+                'verify': projectData.tasks['verify'] || [],
+                'done': projectData.tasks['done'] || [],
+            });
+        } catch (error) {
+            toast.error('Error fetching project details or tasks');
+        }
+    };
 
+    useEffect(() => {
         fetchProjectData();
     }, [project_id]);
 
@@ -141,50 +155,49 @@ const DashboardProjectView = ({ auth }) => {
                                     <h1>{columnId}</h1>
                                     <div className="block-task-list">
                                         {/* Button to add new task */}
-                                        <PrimaryButton className='task-add-card' onClick={toggleForm}>
+                                        <PrimaryButton className='task-add-card' onClick={() => handleAddTask(columnId)}>
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M12 6L12 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                                                 <path d="M18 12L6 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                                             </svg>
                                             <p>Add a card</p>
                                         </PrimaryButton>
-
-                                        {tasks[columnId].map((task, index) => (
-                                            <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
-                                                {(provided) => (
-                                                    <div 
-                                                        className="task-card"
-                                                        ref={provided.innerRef}
-                                                        {...provided.draggableProps}
-                                                        {...provided.dragHandleProps}
-                                                    >
-                                                        <div className='task-card-content'>
-                                                            <p>{task.content}</p>
-                                                            <PrimaryButton className='btn-view'>
-                                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
-                                                                <path d="M20.188 10.9343C20.5762 11.4056 20.7703 11.6412 20.7703 12C20.7703 12.3588 20.5762 12.5944 20.188 13.0657C18.7679 14.7899 15.6357 18 12 18C8.36427 18 5.23206 14.7899 3.81197 13.0657C3.42381 12.5944 3.22973 12.3588 3.22973 12C3.22973 11.6412 3.42381 11.4056 3.81197 10.9343C5.23206 9.21014 8.36427 6 12 6C15.6357 6 18.7679 9.21014 20.188 10.9343Z" stroke="currentColor" strokeWidth="2"/>
-                                                            </svg>
-                                                            </PrimaryButton>
-                                                        </div>
-                                                        <div className='task-card-element'>
-                                                            <div className='task-element element-left'>
-                                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <path d="M11.4635 11.3199C11.7859 11.2527 11.978 10.9152 11.8178 10.6274C11.4645 9.99297 10.908 9.43544 10.1961 9.01056C9.27918 8.46335 8.15577 8.16675 7.00007 8.16675C5.84436 8.16675 4.72095 8.46335 3.80407 9.01055C3.09215 9.43543 2.53563 9.99296 2.18238 10.6274C2.02214 10.9152 2.21419 11.2527 2.53667 11.3199C5.48064 11.9334 8.51949 11.9334 11.4635 11.3199Z" fill="currentColor"/>
-                                                                <circle cx="6.99992" cy="4.66667" r="2.91667" fill="currentColor"/>
-                                                            </svg>
-                                                                <span className='user-number'>{task.user_count}</span>
+                                            {tasks[columnId].map((task, index) => (
+                                                <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
+                                                    {(provided) => (
+                                                        <div 
+                                                            className="task-card"
+                                                            ref={provided.innerRef}
+                                                            {...provided.draggableProps}
+                                                            {...provided.dragHandleProps}
+                                                        >
+                                                            <div className='task-card-content'>
+                                                                <p>{task.content}</p>
+                                                                <PrimaryButton className='btn-view' onClick={() => handleViewClick(task)}>
+                                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
+                                                                    <path d="M20.188 10.9343C20.5762 11.4056 20.7703 11.6412 20.7703 12C20.7703 12.3588 20.5762 12.5944 20.188 13.0657C18.7679 14.7899 15.6357 18 12 18C8.36427 18 5.23206 14.7899 3.81197 13.0657C3.42381 12.5944 3.22973 12.3588 3.22973 12C3.22973 11.6412 3.42381 11.4056 3.81197 10.9343C5.23206 9.21014 8.36427 6 12 6C15.6357 6 18.7679 9.21014 20.188 10.9343Z" stroke="currentColor" strokeWidth="2"/>
+                                                                </svg>
+                                                                </PrimaryButton>
                                                             </div>
-                                                            <div className='task-element element-right'>
-                                                                <p>deadline:</p>
-                                                                <p>{task.deadline || 'N/A'}</p>
+                                                            <div className='task-card-element'>
+                                                                <div className='task-element element-left'>
+                                                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M11.4635 11.3199C11.7859 11.2527 11.978 10.9152 11.8178 10.6274C11.4645 9.99297 10.908 9.43544 10.1961 9.01056C9.27918 8.46335 8.15577 8.16675 7.00007 8.16675C5.84436 8.16675 4.72095 8.46335 3.80407 9.01055C3.09215 9.43543 2.53563 9.99296 2.18238 10.6274C2.02214 10.9152 2.21419 11.2527 2.53667 11.3199C5.48064 11.9334 8.51949 11.9334 11.4635 11.3199Z" fill="currentColor"/>
+                                                                    <circle cx="6.99992" cy="4.66667" r="2.91667" fill="currentColor"/>
+                                                                </svg>
+                                                                    <span className='user-number'>{task.user_count}</span>
+                                                                </div>
+                                                                <div className='task-element element-right'>
+                                                                    <p>deadline:</p>
+                                                                    <p>{task.deadline || 'N/A'}</p>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                )}
-                                            </Draggable>
-                                        ))}
-                                        {provided.placeholder}
+                                                    )}
+                                                </Draggable>
+                                            ))}
+                                            {provided.placeholder}
                                     </div>
                                 </div>
                             )}
@@ -195,7 +208,9 @@ const DashboardProjectView = ({ auth }) => {
 
              {/* Hiển thị TaskForm */}
              {isFormOpen && (
-                <TaskForm />
+                <TaskForm 
+                    onClose={toggleForm} projectId={project_id} refreshTasks={fetchProjectData} task={selectedTask} task_status={taskStatus}
+                />
             )}
         </section>
     );

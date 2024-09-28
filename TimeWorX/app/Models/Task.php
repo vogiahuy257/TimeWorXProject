@@ -19,7 +19,7 @@ class Task extends Model
         'task_description',
         'status_key',
         'assigned_to_user_id',
-        'deadline', // Thêm cột 'deadline' vào danh sách fillable
+        'deadline', 
     ];
 
     // Đảm bảo các cột ngày tháng được xử lý tự động dưới dạng đối tượng Carbon

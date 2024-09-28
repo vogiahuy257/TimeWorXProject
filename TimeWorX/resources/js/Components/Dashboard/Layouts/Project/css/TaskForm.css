@@ -162,9 +162,14 @@
     background-color: var(--color-white);
     color: var(--color-black);
     border: 2px solid var(--color-black);
-    box-shadow: 2px 3px 0 var(--color-black);
     transform: translate(0,0);
     transition: box-shadow 0.1s ease-in-out,transform 0.1s ease-in-out;
+}
+
+#dashboard .block #main .content main #project-view #task-form .task-form-button .add-user-button:hover
+{
+    transform: translate(-2px,-3px);
+    box-shadow: 2px 3px 0 var(--color-black);
 }
 
 #dashboard .block #main .content main #project-view #task-form .task-form-button .add-user-button
@@ -180,12 +185,17 @@
     background-color: var(--color-whiteGray);
     color: var(--color-black);
     border: 2px solid var(--color-light-blue);
+}
+
+#dashboard .block #main .content main #project-view #task-form .task-form-button .save-button:hover
+{
+    transform: translate(-2px,-3px);
     box-shadow: 2px 3px 0 var(--color-light-blue);
 }
 
 #dashboard .block #main .content main #project-view #task-form .task-form-button .add-user-button:active,
 #dashboard .block #main .content main #project-view #task-form .task-form-button .save-button:active
 {
-    transform: translate(2px,3px);
+    transform: translate(0,0);
     box-shadow: none;
 }
