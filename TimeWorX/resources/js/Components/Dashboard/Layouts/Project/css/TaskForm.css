@@ -199,3 +199,46 @@
     transform: translate(0,0);
     box-shadow: none;
 }
+
+#dashboard .block #main .content main #project-view #task-form .task-form-button .user-box
+{
+    margin: auto;
+    position: absolute;
+    top: 24%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+#dashboard .block #main .content main #project-view #task-form .task-form-button .user-box ul
+{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+}
+
+#dashboard .block #main .content main #project-view #task-form .task-form-button .user-box ul li
+{
+    display: flex;  
+    align-items: center;
+    width: 100%;
+}
+
+#dashboard .block #main .content main #project-view #task-form .task-form-button .user-box ul li input
+{
+    margin-left: auto;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#dashboard .block #main .content main #project-view #task-form .task-form-button .user-box h3
+{
+    font-weight: var(--font-weight-medium);
+}

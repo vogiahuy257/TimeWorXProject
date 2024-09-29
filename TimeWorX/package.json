@@ -20,6 +20,7 @@
         "vite": "^5.0"
     },
     "dependencies": {
+        "@szhsin/react-menu": "^4.2.2",
         "react-beautiful-dnd": "^13.1.1",
         "react-router-dom": "^6.26.2",
         "react-toastify": "^10.0.5"

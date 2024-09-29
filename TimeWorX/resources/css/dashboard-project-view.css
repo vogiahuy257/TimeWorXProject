@@ -269,7 +269,7 @@
     padding: 12px 10px;
 }
 
-#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-view,
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group,
 #dashboard .block #main .content main #project-view main .block-task .task-card .element-right
 {
     margin-left: auto;
@@ -298,7 +298,23 @@
 
 #dashboard .block #main .content main #project-view main .block-task .task-card:hover
 {
-  transform: translateY(-10px);   
-  box-shadow: 0px 10px 8px var(--color-shadow);
+  transform: translateY(-2px);   
+  box-shadow: 0px 8px 8px var(--color-shadow);
 }
 
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group
+{
+    display: flex;
+    gap: 2px;
+    transition: all 0.2s ease-in-out;
+}
+
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-view:hover
+{
+   color: var(--color-status);
+}
+
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-delete:hover
+{
+    color: var(--color-green);
+}

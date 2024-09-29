@@ -160,17 +160,17 @@ class ProjectControllerView extends Controller
     }
 
 
-    // Xóa dự án
+    // Xóa task
     public function destroy($id)
     {
-        $project = Project::find($id);
+        $task = Task::find($id);
 
-        if (!$project) {
-            return response()->json(['error' => 'Project not found'], 404);
+        if (!$task) {
+            return response()->json(['error' => 'Task không tồn tại'], 404);
         }
 
-        $project->delete();
+        $task->delete();
 
-        return response()->json(['message' => 'Project deleted successfully']);
+        return response()->json();
     }
 }

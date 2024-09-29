@@ -27,6 +27,25 @@ const DashboardProjectView = ({ auth }) => {
         setTaskStatus(task.status);
         toggleForm();
     };
+
+    //xoa task
+    const handleDeleteTask = async (task) => {
+        try {
+            const response = await fetch(`/api/project-view/${task.id}`, {
+                method: 'DELETE',
+            });
+    
+            if (response.ok) {
+                fetchProjectData();
+                toast.success(`${task.content} task completed !`);
+            } else {
+                const errorData = await response.json();
+                toast.error(errorData.error);
+            }
+        } catch (error) {
+            toast.error('An error occurred while deleting the task.');
+        }
+    };
     
     const toggleForm = () => {
         setIsFormOpen(!isFormOpen);
@@ -175,12 +194,21 @@ const DashboardProjectView = ({ auth }) => {
                                                         >
                                                             <div className='task-card-content'>
                                                                 <p>{task.content}</p>
-                                                                <PrimaryButton className='btn-view' onClick={() => handleViewClick(task)}>
-                                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
-                                                                    <path d="M20.188 10.9343C20.5762 11.4056 20.7703 11.6412 20.7703 12C20.7703 12.3588 20.5762 12.5944 20.188 13.0657C18.7679 14.7899 15.6357 18 12 18C8.36427 18 5.23206 14.7899 3.81197 13.0657C3.42381 12.5944 3.22973 12.3588 3.22973 12C3.22973 11.6412 3.42381 11.4056 3.81197 10.9343C5.23206 9.21014 8.36427 6 12 6C15.6357 6 18.7679 9.21014 20.188 10.9343Z" stroke="currentColor" strokeWidth="2"/>
-                                                                </svg>
-                                                                </PrimaryButton>
+                                                                <div className='btn-group'>
+                                                                    <PrimaryButton className='btn-view' onClick={() => handleViewClick(task)}>
+                                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
+                                                                        <path d="M20.188 10.9343C20.5762 11.4056 20.7703 11.6412 20.7703 12C20.7703 12.3588 20.5762 12.5944 20.188 13.0657C18.7679 14.7899 15.6357 18 12 18C8.36427 18 5.23206 14.7899 3.81197 13.0657C3.42381 12.5944 3.22973 12.3588 3.22973 12C3.22973 11.6412 3.42381 11.4056 3.81197 10.9343C5.23206 9.21014 8.36427 6 12 6C15.6357 6 18.7679 9.21014 20.188 10.9343Z" stroke="currentColor" strokeWidth="2"/>
+                                                                    </svg>
+                                                                    </PrimaryButton>
+                                                                    {columnId == 'done' && (
+                                                                    <PrimaryButton className='btn-delete'  onClick={() => handleDeleteTask(task)}>
+                                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M7 11.8784C7.94144 12.5631 9.82432 14.4459 10.5946 15.7297C11.536 13.6757 13.9324 9.05405 16.5 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                                        </svg>
+                                                                    </PrimaryButton>
+                                                                    )}
+                                                                </div>
                                                             </div>
                                                             <div className='task-card-element'>
                                                                 <div className='task-element element-left'>

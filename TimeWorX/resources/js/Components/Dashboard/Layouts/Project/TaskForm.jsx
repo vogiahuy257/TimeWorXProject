@@ -163,19 +163,17 @@ const TaskForm = ({onClose, projectId, refreshTasks, task, task_status }) => {
                     </PrimaryButton>
                     {isUserBoxVisible && (
                             <div className="user-box">
-                                <h3>Select Users</h3>
+                                <h3>Users list</h3>
                                 <ul>
                                     {users.map((user) => (
                                         <li key={user.id}>
-                                            <label>
+                                                <p>{user.name}</p>
                                                 <input
                                                     type="checkbox"
                                                     value={user.id}
                                                     checked={selectedUsers.some(selectedUser => selectedUser.id == user.id)}
                                                     onChange={() => handleUserSelection(user)}
                                                 />
-                                                {user.name}
-                                            </label>
                                         </li>
                                     ))}
                                 </ul>
