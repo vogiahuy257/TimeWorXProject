@@ -66,7 +66,7 @@
 {
    font-size: var(--font-size-large);
    font-weight: var(--font-weight-medium);
-   margin-left: 20px;
+   margin-left: 15px;
 }
 
 #dashboard .block #main .content main #project-view .block-project .block-element-right
@@ -121,6 +121,8 @@
     flex-direction: column;
     min-height: auto; 
     height: auto; 
+    position: relative;
+    margin-top: 60px;
 }
 
 #dashboard .block #main .content main #project-view main .block-task.to-do{
@@ -138,18 +140,6 @@
 #dashboard .block #main .content main #project-view main .block-task.done{
     --color-status: var(--color-green);
 }
-
-#dashboard .block #main .content main #project-view main .block-task h1{
-    background-color: var(--color-status);
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 40px;
-    border-top-left-radius: var(--border-radius-small);
-    border-top-right-radius: var(--border-radius-small);
-}
-
 
 #dashboard .block #main .content main #project-view main .block-task .block-task-list
 {
@@ -175,9 +165,10 @@
 #dashboard .block #main .content main #project-view main .block-task .block-task-list {
     -ms-overflow-style: none;
     scrollbar-width: none;
+    position: relative;
+    border-top-right-radius: var(--border-radius-sSmall);
 }
 
-#dashboard .block #main .content main #project-view main .block-task .task-add-card,
 #dashboard .block #main .content main #project-view main .block-task .task-card
 {
     display: flex;
@@ -190,11 +181,67 @@
     transition: box-shadow 0.2s ease;
 }
 
-#dashboard .block #main .content main #project-view main .block-task .task-add-card:hover,
-#dashboard .block #main .content main #project-view main .block-task .task-add-card:focus
+#dashboard .block #main .content main #project-view main .block-task .block-task-header
 {
-   background-color: var(--color-white);
-   box-shadow: 0px 6px 8px var(--color-shadow);
+    position: absolute;
+    top: -40px;
+    left: 0;
+    z-index: 999;
+    display: flex;
+    height: 40px;
+    width: 100%;
+}
+
+#dashboard .block #main .content main #project-view main .block-task .block-task-header h1
+{
+    width: 50%;
+    background-color: var(--color-status);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--font-size-medium);
+    font-weight: var(--font-weight-medium);
+    border-top-left-radius: var(--border-radius-sSmall);
+    border-top-right-radius: var(--border-radius-sSmall);
+    position: relative;
+}
+
+#dashboard .block #main .content main #project-view main .block-task .block-task-header h1::before
+{
+    position: absolute;
+    content: "";
+    background-color: transparent;
+    width: 15px;
+    height: 15px;
+    bottom: 0;
+    right: -15px;
+    border-bottom-left-radius: var(--border-radius-sSmall);
+    box-shadow: -10px 0px 1px var(--color-status);
+}
+
+#dashboard .block #main .content main #project-view main .block-task .block-task-header .task-add-card
+{
+    width: 50%;
+    height: 33px;
+    background-color: var(--color-white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    margin-bottom: auto;
+    border-radius: var(--border-radius-sSmall);
+    transition: .2s ease-in-out;
+}
+
+#dashboard .block #main .content main #project-view main .block-task .block-task-header .task-add-card:hover
+{
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
+
+#dashboard.dark-mode .block #main .content main #project-view main .block-task .block-task-header .task-add-card:hover
+{
+    box-shadow: 0px 0px 10px var(--color-black);
 }
 
 #dashboard .block #main .content main #project-view main .block-task .task-card
