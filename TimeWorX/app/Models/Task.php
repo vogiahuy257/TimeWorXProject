@@ -25,7 +25,7 @@ class Task extends Model
     // Đảm bảo các cột ngày tháng được xử lý tự động dưới dạng đối tượng Carbon
     protected $dates = [
         'deleted_at',
-        'deadline', // Xác định 'deadline' là một cột ngày tháng
+        'deadline', 
     ];
 
     // Quan hệ nhiều-nhiều với User

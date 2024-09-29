@@ -29,6 +29,12 @@ Route::get('/projects/restore/{id}', [ProjectController::class, 'restoreProject'
 Route::apiResource('project-view', ProjectControllerView::class);
 Route::post('/project-view/{project_id}/tasks', [ProjectControllerView::class, 'createTaskToProject']);
 Route::put('/project-view/{projectId}/tasks/{taskId}', [ProjectControllerView::class, 'updateTaskProject']);
+// Thêm các route để xử lý các task đã bị xóa mềm:
+Route::get('/project-view/{projectId}/deleted-tasks', [ProjectControllerView::class, 'getDeletedTasks']);
+Route::put('/project-view/tasks/{taskId}/restore', [ProjectControllerView::class, 'restoreTask']); 
+Route::delete('/project-view/tasks/{taskId}/force-delete', [ProjectControllerView::class, 'forceDeleteTask']); 
+// lấy danh sách user có tham gia trong task đó
+Route::get('/project-view/{project_id}/users', [ProjectControllerView::class, 'getUsersByProject']);
 
 
 //Route User

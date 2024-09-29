@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ProjectControllerView extends Controller
@@ -173,4 +174,55 @@ class ProjectControllerView extends Controller
 
         return response()->json();
     }
+
+    public function getDeletedTasks($projectId)
+    {
+        $deletedTasks = Task::onlyTrashed()->where('project_id', $projectId)->with('users')->get();
+
+        return response()->json($deletedTasks);
+    }
+
+    public function restoreTask($id)
+    {
+        $task = Task::onlyTrashed()->find($id);
+
+        if (!$task) {
+            return response()->json(['error' => 'Task không tồn tại'], 404);
+        }
+
+        $task->restore();
+
+        return response()->json();
+    }
+
+    public function forceDeleteTask($id)
+    {
+        $task = Task::onlyTrashed()->find($id);
+
+        if (!$task) {
+            return response()->json(['error' => 'Task không tồn tại'], 404);
+        }
+
+        $task->forceDelete(); // Xóa vĩnh viễn task.
+
+        return response()->json();
+    }
+
+    public function getUsersByProject($projectId)
+    {
+        $userIds = Task::where('project_id', $projectId)
+        ->with('users')
+        ->get()
+        ->pluck('users')
+        ->flatten()
+        ->pluck('id')
+        ->unique();
+
+        // Fetch unique users from the list of user IDs
+        $users = User::whereIn('id', $userIds)->get(['id', 'name']);
+
+        return response()->json($users);
+    }
+
+
 }

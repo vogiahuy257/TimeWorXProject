@@ -7,6 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import TaskForm from './Layouts/Project/TaskForm';
+import DeletedTasks from './Layouts/Project/DeletedTasks';
+import TaskUsers from './Layouts/Project/TaskUsersForm';
 
 const DashboardProjectView = ({ auth }) => {
     const navigate = useNavigate();
@@ -15,6 +17,16 @@ const DashboardProjectView = ({ auth }) => {
     const [isFormOpen, setIsFormOpen] = useState(false); 
     const [selectedTask, setSelectedTask] = useState(null);
     const [taskStatus, setTaskStatus] = useState(null);
+    const [showDeletedTasks, setShowDeletedTasks] = useState(false);
+    const [showUserList, setShowUserList] = useState(false);
+
+    const toggleDeletedTasks = () => {
+        setShowDeletedTasks(!showDeletedTasks);
+    };
+
+    const toggleUserList = () => {
+        setShowUserList(!showUserList);
+    };
 
     const handleAddTask = (status) => {
         setSelectedTask(null);
@@ -28,7 +40,6 @@ const DashboardProjectView = ({ auth }) => {
         toggleForm();
     };
 
-    //xoa task
     const handleDeleteTask = async (task) => {
         try {
             const response = await fetch(`/api/project-view/${task.id}`, {
@@ -142,7 +153,7 @@ const DashboardProjectView = ({ auth }) => {
                     </div>
                 </div>
                 <div className='block-element-right'>
-                    <PrimaryButton className='btn btn-person'>
+                    <PrimaryButton onClick={toggleUserList} className='btn btn-person'>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="12" cy="9" r="4" fill="currentColor"/>
                             <circle cx="17" cy="9" r="3" fill="currentColor"/>
@@ -152,7 +163,7 @@ const DashboardProjectView = ({ auth }) => {
                             <path d="M12 14C15.7087 14 16.6665 17.301 16.9139 19.0061C16.9932 19.5526 16.5523 20 16 20H8C7.44772 20 7.00684 19.5526 7.08614 19.0061C7.33351 17.301 8.29134 14 12 14Z" fill="currentColor"/>
                         </svg>
                     </PrimaryButton>
-                    <PrimaryButton className='btn btn-history'>
+                    <PrimaryButton onClick={toggleDeletedTasks} className='btn btn-history'>
                         <svg width="25" height="25" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M3 13.1429V17.7143C3 18.9767 4.00736 20 5.25 20H18.75C19.9926 20 21 18.9767 21 17.7143V13.1429M3 13.1429L5.82751 5.48315C6.15683 4.59102 6.99635 4 7.93425 4H16.0657C17.0037 4 17.8432 4.59102 18.1725 5.48315L21 13.1429M3 13.1429H7.5L9 14.7429H15L16.5 13.1429H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
@@ -236,12 +247,23 @@ const DashboardProjectView = ({ auth }) => {
                 </DragDropContext>
             </main>
 
+            {/* Hiển thị History */}
+            {showDeletedTasks && <DeletedTasks resetPage={fetchProjectData} projectId={project.id} />}
+
+            {/* Show the user list */}
+            {showUserList && (
+                <TaskUsers 
+                    projectId={project.id} 
+                    onClose={toggleUserList} 
+                />
+            )}
+
              {/* Hiển thị TaskForm */}
              {isFormOpen && (
                 <TaskForm 
                     onClose={toggleForm} projectId={project_id} refreshTasks={fetchProjectData} task={selectedTask} task_status={taskStatus}
                 />
-            )}
+             )}
         </section>
     );
 };
