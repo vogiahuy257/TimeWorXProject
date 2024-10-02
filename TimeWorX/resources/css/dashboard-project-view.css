@@ -25,7 +25,7 @@
     background-color: var(--color-black);
     color: var(--color-white);
     display: flex;
-    padding: 5px 8px;
+    padding: 8px 8px;
     border-radius: var(--border-radius-small);
     text-align: center;
     align-items: center;
@@ -95,10 +95,40 @@
     box-shadow: 2px 2px 0px var(--color-black);
 }
 
-#dashboard .block #main .content main #project-view .block-project .block-element-right .btn-history:hover
+#dashboard .block #main .content main #project-view .block-project .block-element-right .btn-history
 {
-    background-color: var(--color-white);
-    color: var(--color-black);
+    position: relative;
+}
+
+#dashboard .block #main .content main #project-view .block-project .block-element-right .btn-history svg{
+    transform: translateY(0);
+}
+
+#dashboard .block #main .content main #project-view .block-project .block-element-right .btn-history::after
+{
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    content: 'history';
+    font-size: 9px;
+    font-weight: var(--font-weight-medium);
+    opacity: 0;
+}
+
+#dashboard .block #main .content main #project-view .block-project .block-element-right .btn-history::after,
+#dashboard .block #main .content main #project-view .block-project .block-element-right .btn-history svg
+{
+    transition: transform 0.3s ease-in-out,opacity 0.4s ease-in-out;
+}
+
+#dashboard .block #main .content main #project-view .block-project .block-element-right .btn-history:hover svg{
+    transform: translateY(-5px);
+}
+
+#dashboard .block #main .content main #project-view .block-project .block-element-right .btn-history:hover::after
+{
+   opacity: 1;
 }
 
 #dashboard .block #main .content main #project-view .block-project .block-element-right .btn-person:active {
@@ -307,6 +337,52 @@
     display: flex;
     gap: 2px;
     transition: all 0.2s ease-in-out;
+}
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-comment
+{
+    padding: 5px;
+}
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-comment,
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-view,
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-delete{
+    position: relative;
+}
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-comment::after,
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-view::after,
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-delete::after
+{
+    position: absolute;
+    background-color: var(--color-black);
+    color: var(--color-white);
+    top: -30%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    padding: 3px 5px;
+    font-size: var(--font-size-sSmall);
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out,top 0.3s ease-in-out;
+}
+
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-view::after
+{
+    content: 'view';
+}
+
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-delete::after
+{
+    content: 'archive';
+}
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-comment::after
+{
+    content: 'chat';
+}
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-comment:hover:after,
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-view:hover::after,
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-delete:hover::after
+{
+    opacity: 1;
+    top: -50%;
 }
 
 #dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-view:hover

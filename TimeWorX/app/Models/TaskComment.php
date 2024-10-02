@@ -25,6 +25,13 @@ class TaskComment extends Model
     protected $primaryKey = 'comment_id';
 
     /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = true;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -33,6 +40,7 @@ class TaskComment extends Model
         'task_id',
         'comment_text',
         'user_id',
+        'is_manager_comment', // Thêm trường này để cho phép phân biệt bình luận của người quản lý
     ];
 
     /**
@@ -43,6 +51,7 @@ class TaskComment extends Model
     protected $casts = [
         'created_at' => 'datetime',
         'deleted_at' => 'datetime',
+        'is_manager_comment' => 'boolean', // Đảm bảo trường này được cast đúng kiểu dữ liệu
     ];
 
     /**

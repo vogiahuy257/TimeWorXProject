@@ -41,9 +41,8 @@ return [
             'provider' => 'users',
         ],
         'api' => [
-            'driver' => 'sanctum',
+            'driver' => 'session',
             'provider' => 'users',
-            'hash' => false,
         ],
     ],
 

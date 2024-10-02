@@ -1,0 +1,102 @@
+
+/* Global Styles */
+:root{
+    --color-yellow: #FABB18; 
+    --color-cream: #FEF8E8;
+    --color-black: #000000; 
+    --color-black-gray: #383838; 
+    --color-gray: #D9D9D9;
+    --color-white: #FFFFFF; 
+    --color-whiteGray:#F4F8F7;
+    --color-light-gray: #F9F9F9;
+    --color-light-blue: #31AFE5;
+    --color-red: #E53131;
+    --color-green: rgb(3, 205, 3);
+    --background: linear-gradient(155deg,#FFFFFF,#D3D3D3);
+
+    --color-shadow:rgba(85, 85, 85, 0.425);
+
+    /* Font Sizes */
+    --font-size-sSmall: 0.7rem;
+    --font-size-small: 0.875rem;
+    --font-size-medium: 1rem;
+    --font-size-large: 1.25rem;
+    --font-size-xlarge: 1.5rem;
+    
+    /* Font Weights */
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 700;
+
+    /* Border Radius */
+    
+    --border-radius-sSmall: 8px;
+    --border-radius-small: 10px;
+    --border-radius-medium: 16px;
+    --border-radius-large: 28px;
+}
+#dashboard #home {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-areas:
+        "header header"
+        "meeting content";
+    grid-template-columns: 400px auto;
+    grid-template-rows: 180px auto;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Điều chỉnh các vùng của layout */
+#dashboard #home .box-header {
+    grid-area: header;
+}
+
+#dashboard #home .box-meeting {
+    grid-area: meeting;
+}
+
+#dashboard #home .box-content {
+    grid-area: content;
+}
+
+/* Responsive cho màn hình nhỏ hơn (ví dụ: dưới 1024px) */
+@media (max-width: 1024px) {
+    #dashboard #home {
+        grid-template-columns: 300px auto; /* Giảm kích thước cột đầu tiên */
+    }
+}
+
+/* Responsive cho màn hình nhỏ hơn (ví dụ: dưới 768px) */
+@media (max-width: 768px) {
+    #dashboard #home {
+        grid-template-columns: 1fr; /* Chuyển sang 1 cột */
+        grid-template-areas:
+            "header"
+            "meeting"
+            "content"; /* Thay đổi bố cục để các phần nằm trên nhau */
+    }
+
+    #dashboard #home .box-meeting {
+        grid-area: meeting;
+    }
+
+    #dashboard #home .box-content {
+        grid-area: content;
+    }
+}
+
+#dashboard #home .box
+{
+    background-color: var(--color-white);
+    box-shadow: inset 0px 0px 5px var(--color-shadow);
+    border-radius: var(--border-radius-sSmall);
+    margin: 10px;
+}
+
+#dashboard #home .box-meeting .meeting-header
+{
+    align-items: center;
+    padding: 15px 35px;
+}

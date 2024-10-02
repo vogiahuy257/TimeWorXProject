@@ -136,9 +136,11 @@ const DashboardProjectView = ({ auth }) => {
     }
 
     return (
+        <>
+        
+        <ToastContainer className="custom_toast"/>
         <section id='project-view'>
             <Head title={`${project.name}`} />
-            <ToastContainer className="custom_toast"/>
 
             {/* Menu */}
             <div className="block-project">
@@ -190,7 +192,7 @@ const DashboardProjectView = ({ auth }) => {
                                                 <path d="M12 6L12 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                                                 <path d="M18 12L6 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                                             </svg>
-                                            <p>Add a card</p>
+                                            <p>Add card</p>
                                         </PrimaryButton>
                                         </div>
                                     <div className="block-task-list">
@@ -212,12 +214,20 @@ const DashboardProjectView = ({ auth }) => {
                                                                         <path d="M20.188 10.9343C20.5762 11.4056 20.7703 11.6412 20.7703 12C20.7703 12.3588 20.5762 12.5944 20.188 13.0657C18.7679 14.7899 15.6357 18 12 18C8.36427 18 5.23206 14.7899 3.81197 13.0657C3.42381 12.5944 3.22973 12.3588 3.22973 12C3.22973 11.6412 3.42381 11.4056 3.81197 10.9343C5.23206 9.21014 8.36427 6 12 6C15.6357 6 18.7679 9.21014 20.188 10.9343Z" stroke="currentColor" strokeWidth="2"/>
                                                                     </svg>
                                                                     </PrimaryButton>
-                                                                    {columnId == 'done' && (
-                                                                    <PrimaryButton className='btn-delete'  onClick={() => handleDeleteTask(task)}>
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path d="M7 11.8784C7.94144 12.5631 9.82432 14.4459 10.5946 15.7297C11.536 13.6757 13.9324 9.05405 16.5 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                                                        </svg>
-                                                                    </PrimaryButton>
+                                                                    {columnId == 'done' ? 
+                                                                    (
+                                                                        <PrimaryButton className='btn-delete'  onClick={() => handleDeleteTask(task)}>
+                                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                            <path d="M7 11.8784C7.94144 12.5631 9.82432 14.4459 10.5946 15.7297C11.536 13.6757 13.9324 9.05405 16.5 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                                            </svg>
+                                                                        </PrimaryButton>
+                                                                    ): 
+                                                                    (
+                                                                        <PrimaryButton className='btn-comment' onClick={() => {}}>
+                                                                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                            <path d="M7.1999 7.20002H15.5999M7.1999 12H11.9999M11.6869 16.5913L6.67816 21.6V16.5913H4.7999C3.47442 16.5913 2.3999 15.5168 2.3999 14.1913V4.80003C2.3999 3.47454 3.47442 2.40002 4.7999 2.40002H19.1999C20.5254 2.40002 21.5999 3.47454 21.5999 4.80002V14.1913C21.5999 15.5168 20.5254 16.5913 19.1999 16.5913H11.6869Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                                            </svg>
+                                                                        </PrimaryButton>
                                                                     )}
                                                                 </div>
                                                             </div>
@@ -265,6 +275,7 @@ const DashboardProjectView = ({ auth }) => {
                 />
              )}
         </section>
+        </>
     );
 };
 

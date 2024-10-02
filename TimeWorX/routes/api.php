@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\API\ProjectControllerView;
 use App\Http\Controllers\API\UserController;
-
+use App\Http\Controllers\API\TaskController;
+use App\Http\Controllers\API\PersonalPlanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,16 @@ Route::delete('/project-view/tasks/{taskId}/force-delete', [ProjectControllerVie
 // lấy danh sách user có tham gia trong task đó
 Route::get('/project-view/{project_id}/users', [ProjectControllerView::class, 'getUsersByProject']);
 
+//Task
+Route::apiResource('tasks', TaskController::class);
+
+//PersonalPlanController
+Route::apiResource('personal-plans', PersonalPlanController::class);
+// Route để cập nhật trạng thái của personal plan
+Route::put('/personal-plans/{id}/status', [PersonalPlanController::class, 'updateStatus']);
+Route::get('/personal-plans/trashed/{user_id}', [PersonalPlanController::class, 'trashed']);
+Route::post('/personal-plans/{id}/restore', [PersonalPlanController::class, 'restore']);
+Route::delete('/personal-plans/{id}/force-delete', [PersonalPlanController::class, 'forceDelete']);
 
 //Route User
 Route::apiResource('users', UserController::class);

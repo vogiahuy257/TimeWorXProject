@@ -50,7 +50,7 @@ class ProjectControllerView extends Controller
                             'name' => $user->name, 
                         ];
                     }),
-                    'deadline' => $task->deadline,
+                    'deadline' => $task->formatted_deadline,
                     'status' => $task->status_key,
                 ];
             }

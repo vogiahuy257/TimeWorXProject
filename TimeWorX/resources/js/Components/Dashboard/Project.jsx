@@ -78,12 +78,12 @@ export default function Folder({ auth }) {
     };
 
     const handleCreate = () => {
-        setIsFormOpen(true);  // Mở form tạo mới
+        setIsFormOpen(true); 
         setEditProject(null);  
     };
 
     const handleEdit = (project) => {
-        setIsFormOpen(true);  // Mở form chỉnh sửa
+        setIsFormOpen(true);  
         setEditProject(project); 
     };
 
@@ -94,7 +94,7 @@ export default function Folder({ auth }) {
             axios.put(`/api/projects/${editProject.project_id}`, projectData)
                 .then(response => {
                     setProjects(projects.map(p => p.project_id === response.data.project_id ? response.data : p));
-                    setIsFormOpen(false);  // Đóng form
+                    setIsFormOpen(false); 
                 })
                 .catch(error => {
                     toast.error('Error updating project:', error.response ? error.response.data : error.message);

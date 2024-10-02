@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder
                 'email' => '2224802010822@student.tdmu.edu.vn',
                 'password' => Hash::make('12345678'),
                 'profile_picture' => 'path/to/profile.jpg',
-                'role' => 'Admin',
+                'role' => 'User',
             ],
             [
                 'name' => 'Huy',
@@ -33,9 +33,16 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'Cheese',
                 'email' => '2224802010476@student.tdmu.edu.vn',
-                'password' => Hash::make('22042004'),
+                'password' => Hash::make('30082004'),
                 'profile_picture' => 'path/to/profile2.jpg',
                 'role' => 'Admin',
+            ],
+            [
+                'name' => 'Trân',
+                'email' => 'lngbaotran2204@gmail.com',
+                'password' => Hash::make('30082004'),
+                'profile_picture' => 'path/to/profile2.jpg',
+                'role' => 'User',
             ],
         ]);
     }
