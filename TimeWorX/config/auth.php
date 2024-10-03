@@ -41,8 +41,9 @@ return [
             'provider' => 'users',
         ],
         'api' => [
-            'driver' => 'session',
+            'driver' => 'token', // Sử dụng token driver cho API
             'provider' => 'users',
+            'hash' => false, // Nếu bạn không hash token trong database
         ],
     ],
 

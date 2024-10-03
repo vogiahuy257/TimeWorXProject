@@ -10,11 +10,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import DeletedProjectsForm from '@/Components/Dashboard/Layouts/Project/DeletedProjectsForm'; 
 
 export default function Folder({ auth }) {
+    
     const [projects, setProjects] = useState([]);
     const [isDeletedFormOpen, setIsDeletedFormOpen] = useState(false);
     const [isFormOpen, setIsFormOpen] = useState(false);  
     const [editProject, setEditProject] = useState([]); 
-
 
     const fetchProjectData = async () => {
         try {
@@ -27,7 +27,7 @@ export default function Folder({ auth }) {
     
     useEffect(() => {
         fetchProjectData();
-    }, []);
+    }, [auth]);
     
 
     const handleDeletedFormToggle = () => {

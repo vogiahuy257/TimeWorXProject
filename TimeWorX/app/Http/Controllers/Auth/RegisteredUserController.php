@@ -43,7 +43,11 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
-
+        $user = Auth::user();
+        
+        $token = $user->createToken('timeworx')->plainTextToken;
+        $request->session()->put('token', $token);
+        $user->createToken('timeworx')->plainTextToken;
         Auth::login($user);
         
 

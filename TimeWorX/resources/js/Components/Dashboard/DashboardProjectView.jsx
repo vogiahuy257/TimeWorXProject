@@ -9,6 +9,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import TaskForm from './Layouts/Project/TaskForm';
 import DeletedTasks from './Layouts/Project/DeletedTasks';
 import TaskUsers from './Layouts/Project/TaskUsersForm';
+import TaskComments from './Layouts/Project/TaskComments';
 
 const DashboardProjectView = ({ auth }) => {
     const navigate = useNavigate();
@@ -19,6 +20,12 @@ const DashboardProjectView = ({ auth }) => {
     const [taskStatus, setTaskStatus] = useState(null);
     const [showDeletedTasks, setShowDeletedTasks] = useState(false);
     const [showUserList, setShowUserList] = useState(false);
+    const [showComments,setShowComments] = useState(false);
+
+
+    const toggleComment = () => {
+        setShowComments(!showComments);
+    };
 
     const toggleDeletedTasks = () => {
         setShowDeletedTasks(!showDeletedTasks);
@@ -26,6 +33,12 @@ const DashboardProjectView = ({ auth }) => {
 
     const toggleUserList = () => {
         setShowUserList(!showUserList);
+    };
+
+    const handleCommentClick = (task) => 
+    {
+        setSelectedTask(task);
+        toggleComment();
     };
 
     const handleAddTask = (status) => {
@@ -42,11 +55,10 @@ const DashboardProjectView = ({ auth }) => {
 
     const handleDeleteTask = async (task) => {
         try {
-            const response = await fetch(`/api/project-view/${task.id}`, {
-                method: 'DELETE',
-            });
+
+            const response = await axios.delete(`/api/project-view/${task.id}`);
     
-            if (response.ok) {
+            if (response) {
                 fetchProjectData();
                 toast.success(`${task.content} task completed !`);
             } else {
@@ -223,7 +235,7 @@ const DashboardProjectView = ({ auth }) => {
                                                                         </PrimaryButton>
                                                                     ): 
                                                                     (
-                                                                        <PrimaryButton className='btn-comment' onClick={() => {}}>
+                                                                        <PrimaryButton className='btn-comment' onClick={() => handleCommentClick(task)}>
                                                                             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                             <path d="M7.1999 7.20002H15.5999M7.1999 12H11.9999M11.6869 16.5913L6.67816 21.6V16.5913H4.7999C3.47442 16.5913 2.3999 15.5168 2.3999 14.1913V4.80003C2.3999 3.47454 3.47442 2.40002 4.7999 2.40002H19.1999C20.5254 2.40002 21.5999 3.47454 21.5999 4.80002V14.1913C21.5999 15.5168 20.5254 16.5913 19.1999 16.5913H11.6869Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                                                                             </svg>
@@ -265,6 +277,14 @@ const DashboardProjectView = ({ auth }) => {
                 <TaskUsers 
                     projectId={project.id} 
                     onClose={toggleUserList} 
+                />
+            )}
+
+            {/* Hiển thị bình luận */}
+            {showComments && (
+                <TaskComments 
+                    taskId={selectedTask.id} 
+                    onClose={() => setShowComments(false)} 
                 />
             )}
 

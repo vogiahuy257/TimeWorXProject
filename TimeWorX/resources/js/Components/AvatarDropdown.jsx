@@ -29,13 +29,15 @@ const AvatarDropdown = () => {
                 <Dropdown.Link
                     href="/profile"
                     className="button"
+                    as="button"
                 >
                     <span>Profiler</span>
                 </Dropdown.Link>
                 <Dropdown.Link
-                    href="/logout"
+                    href={route('logout')}
                     method="post"
                     className="button"
+                     as="button"
                 >
                   <span>Logout</span>
                 </Dropdown.Link>
