@@ -20,7 +20,7 @@ use App\Http\Controllers\API\PersonalPlanController;
 |
 */
 
-Route::middleware(['auth:sanctum'])->group(function () {
+// Route::middleware(['auth:sanctum'])->group(function () {
     // Route Project
     Route::apiResource('projects', ProjectController::class);
     Route::get('/projects/deleted/{user_id}', [ProjectController::class, 'getDeletedProjects']);
@@ -50,4 +50,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // Route User
     Route::apiResource('users', UserController::class);
-});
+// });
