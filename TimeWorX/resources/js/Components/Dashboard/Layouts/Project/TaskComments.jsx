@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import PrimaryButton from '@/Components/PrimaryButton';
+import TextareaAutosize from 'react-textarea-autosize';
 import './css/TaskComments.css';
 
 const TaskComments = ({ taskId, onClose }) => {
@@ -62,28 +63,116 @@ const TaskComments = ({ taskId, onClose }) => {
                 </div>
 
                 {/* list comments */}
-                <div className="task-comments-list">
+                <section className="task-comments-list">
+
                     <div className='comments user-comments'>
-                        <p className="comments-text">
-                            Đây là bình luận của user
-                        </p>
-                        <p className='comments-date'>
-                            03-10-2024 8:00pm
-                        </p>
+                        <div className='comments-content'>
+                            <p className="comments-text">
+                                Đây là bình luận của user Đây là bình luận của user Đây là bình luận của user Đây là bình luận của user Đây là bình luận của user Đây là bình luận của user Đây là bình luận của user
+                            </p>
+                            <p className='comments-date'>
+                                03-10-2024 8:00pm
+                            </p>
+                        </div>
                     </div>
-                    <div className='comments manager-comments'>
-                        <p className="comments-text">
-                            Đây là bình luận của manager
-                        </p>
-                        <p className='comments-date'>
-                            03-10-2024 8:00pm
-                        </p>
+
+                    <div className='comments user-comments'>
+                        <div className='comments-content'>
+                            <p className="comments-text">
+                                Đây là bình luận của user Đây là bình luận của user Đây là bình luận của user Đây là bình luận của user Đây là bình luận của user Đây là bình luận của user Đây là bình luận của user
+                            </p>
+                            <p className='comments-date'>
+                                03-10-2024 8:00pm
+                            </p>
+                        </div>
                     </div>
-                </div>
+
+                    <div className='comments comments-left'>
+                        <div className='comments-content'>
+                            <p className="comments-text">
+                                Đây là bình luận của manager
+                            </p>
+                            <p className='comments-date'>
+                                03-10-2024 8:00pm
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='comments user-comments'>
+                        <div className='comments-content'>
+                            <p className="comments-text">
+                                Đây là bình luận của user
+                            </p>
+                            <p className='comments-date'>
+                                03-10-2024 8:00pm
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='comments comments-left'>
+                        <div className='comments-content'>
+                            <p className="comments-text">
+                                Đây là bình luận của manager
+                            </p>
+                            <p className='comments-date'>
+                                03-10-2024 8:00pm
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='comments user-comments'>
+                        <div className='comments-content'>
+                            <p className="comments-text">
+                                Đây là bình luận của user
+                            </p>
+                            <p className='comments-date'>
+                                03-10-2024 8:00pm
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='comments comments-left'>
+                        <div className='comments-content'>
+                            <p className="comments-text">
+                                Đây là bình luận của manager
+                            </p>
+                            <p className='comments-date'>
+                                03-10-2024 8:00pm
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='comments user-comments'>
+                        <div className='comments-content'>
+                            <p className="comments-text">
+                                Đây là bình luận của user
+                            </p>
+                            <p className='comments-date'>
+                                03-10-2024 8:00pm
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='comments comments-left'>
+                        <div className='comments-content'>
+                            <p className="comments-text">
+                                Đây là bình luận của manager
+                            </p>
+                            <p className='comments-date'>
+                                03-10-2024 8:00pm
+                            </p>
+                        </div>
+                    </div>
+
+                </section>
 
                 <div className='task-comments-post'>
                     <form action="">
-                        <input className='input' type="text" />
+                        <TextareaAutosize
+                            minRows={1}  // Chiều cao ban đầu là 1 dòng
+                            maxRows={3} 
+                            className='custom-textArea'
+                        />
                         <PrimaryButton type="submit" className='btn'>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M21.0704 2.92949L10.4064 13.5935M3.27109 8.23517L19.877 2.47394C20.8996 2.11915 21.8807 3.10028 21.526 4.12291L15.7647 20.7288C15.37 21.8664 13.7726 21.8976 13.3338 20.7763L10.6969 14.0375C10.5652 13.701 10.2989 13.4347 9.96235 13.303L3.22363 10.6661C2.10229 10.2273 2.13348 8.62985 3.27109 8.23517Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
