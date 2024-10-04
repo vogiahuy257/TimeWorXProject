@@ -57,4 +57,24 @@ class PersonalPlan extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+     /**
+     * Accessor for formatted start date.
+     *
+     * @return string|null
+     */
+    public function getFormattedStartDateAttribute()
+    {
+        return  $this->start_date->format('d-m-Y');
+    }
+
+    /**
+     * Accessor for formatted end date.
+     *
+     * @return string|null
+     */
+    public function getFormattedEndDateAttribute()
+    {
+        return $this->end_date->format('d-m-Y');
+    }
 }

@@ -17,8 +17,8 @@ export default function CardProject({ project, formatDateRange, handleDelete,han
 
             <div className='card-header'>
                 <div className='text'>
-                    <p>{project.project_name}</p>
-                    <p className='description'>{project.project_description}</p>
+                    <p className='line-clamp-2'>{project.project_name}</p>
+                    <p className='description line-clamp-2'>{project.project_description}</p>
                 </div>
 
                 <div className='card-form'>

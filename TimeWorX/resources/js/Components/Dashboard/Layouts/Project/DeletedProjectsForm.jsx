@@ -4,7 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "./css/DeletedProjectFrom.css";
 
-const DeletedProjectsForm = ({ auth , onClose }) => {
+const DeletedProjectsForm = ({ auth ,resetPage, onClose }) => {
     
     const [deletedProjects, setDeletedProjects] = useState([]);
     useEffect(() => {
@@ -26,10 +26,11 @@ const DeletedProjectsForm = ({ auth , onClose }) => {
             .then(response => {
                 toast.success(response.data.message);
                 setDeletedProjects(prev => prev.filter(p => p.project_id !== projectId));
+                resetPage();
             })
             .catch(error => {
                 toast.error(`Error restoring project: ${error.response ? error.response.data : error.message}`);
-            });
+            });  
     };
     
     const permanentlyDeleteProject = (projectId) => {
@@ -56,7 +57,7 @@ const DeletedProjectsForm = ({ auth , onClose }) => {
                 <ul>
                     {deletedProjects.map(project => (
                         <li key={project.project_id}>
-                            {project.project_name}
+                            <p className='line-clamp-1 w-24'>{project.project_name}</p>
                             <div className='box-button'>
                             <button onClick={() => restoreProject(project.project_id)}>
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -123,4 +123,19 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+     /*
+    |--------------------------------------------------------------------------
+    | Laravel Sanctum Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Register the Sanctum service provider
+    |
+    */
+
+    'providers' => [
+        // Other Service Providers
+
+        Laravel\Sanctum\SanctumServiceProvider::class,
+    ],
+
 ];

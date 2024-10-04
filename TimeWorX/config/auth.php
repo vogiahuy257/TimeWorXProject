@@ -41,9 +41,9 @@ return [
             'provider' => 'users',
         ],
         'api' => [
-            'driver' => 'sanctum',
+            'driver' => 'token', // Sử dụng token driver cho API
             'provider' => 'users',
-            'hash' => false,
+            'hash' => false, // Nếu bạn không hash token trong database
         ],
     ],
 

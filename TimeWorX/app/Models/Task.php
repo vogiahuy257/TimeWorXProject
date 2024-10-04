@@ -19,13 +19,13 @@ class Task extends Model
         'task_description',
         'status_key',
         'assigned_to_user_id',
-        'deadline', // Thêm cột 'deadline' vào danh sách fillable
+        'deadline', 
     ];
 
     // Đảm bảo các cột ngày tháng được xử lý tự động dưới dạng đối tượng Carbon
     protected $dates = [
         'deleted_at',
-        'deadline', // Xác định 'deadline' là một cột ngày tháng
+        'deadline', 
     ];
 
     // Quan hệ nhiều-nhiều với User
@@ -49,6 +49,6 @@ class Task extends Model
     // Định nghĩa hàm để lấy định dạng ngày deadline (nếu cần)
     public function getFormattedDeadlineAttribute()
     {
-        return Carbon::parse($this->deadline)->format('d/m/Y');
+        return Carbon::parse($this->deadline)->format('d-m-Y');
     }
 }

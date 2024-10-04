@@ -10,22 +10,25 @@ import 'react-toastify/dist/ReactToastify.css';
 import DeletedProjectsForm from '@/Components/Dashboard/Layouts/Project/DeletedProjectsForm'; 
 
 export default function Folder({ auth }) {
+    
     const [projects, setProjects] = useState([]);
     const [isDeletedFormOpen, setIsDeletedFormOpen] = useState(false);
     const [isFormOpen, setIsFormOpen] = useState(false);  
     const [editProject, setEditProject] = useState([]); 
 
-   
+    const fetchProjectData = async () => {
+        try {
+            const response = await axios.get(`/api/projects/${auth.user.id}`);
+            setProjects(response.data);
+        } catch (error) {
+            toast.error('Error fetching projects:', error.response ? error.response.data : error.message);
+        }
+    };
+    
     useEffect(() => {
-        // gọi phương thức show trong ProjectController
-        axios.get(`/api/projects/${auth.user.id}`)
-            .then(response => {
-                setProjects(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching projects:', error.response ? error.response.data : error.message);
-            });
-    }, []);
+        fetchProjectData();
+    }, [auth]);
+    
 
     const handleDeletedFormToggle = () => {
         setIsDeletedFormOpen(!isDeletedFormOpen);  
@@ -75,12 +78,12 @@ export default function Folder({ auth }) {
     };
 
     const handleCreate = () => {
-        setIsFormOpen(true);  // Mở form tạo mới
+        setIsFormOpen(true); 
         setEditProject(null);  
     };
 
     const handleEdit = (project) => {
-        setIsFormOpen(true);  // Mở form chỉnh sửa
+        setIsFormOpen(true);  
         setEditProject(project); 
     };
 
@@ -91,7 +94,7 @@ export default function Folder({ auth }) {
             axios.put(`/api/projects/${editProject.project_id}`, projectData)
                 .then(response => {
                     setProjects(projects.map(p => p.project_id === response.data.project_id ? response.data : p));
-                    setIsFormOpen(false);  // Đóng form
+                    setIsFormOpen(false); 
                 })
                 .catch(error => {
                     toast.error('Error updating project:', error.response ? error.response.data : error.message);
@@ -177,6 +180,7 @@ export default function Folder({ auth }) {
                 {isDeletedFormOpen && (
                     <DeletedProjectsForm
                         auth={auth}
+                        resetPage={fetchProjectData}
                         onClose={handleDeletedFormToggle}
                     />
                 )}

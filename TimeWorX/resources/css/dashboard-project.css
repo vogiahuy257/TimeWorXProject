@@ -90,30 +90,6 @@
   height: 24px;
 }
 
-/* main */
-
-/* #dashboard .block #main .content main #project #container
-{
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-areas:
-    "containerMain deleteFrom"
-    "containerMain deleteFrom";
-    grid-template-columns: auto auto;
-    gap: 15px;
-}
-
-#dashboard .block #main .content main #project .deleted-projects-form
-{
-    grid-area: deleteFrom;
-}
-
-#dashboard .block #main .content main #project #mainContainer
-{
-    grid-area: containerMain;
-} */
-
 #dashboard .block #main .content main #project #container .menu
 {
     display: flex;
