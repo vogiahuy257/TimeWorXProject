@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('task_comments', function (Blueprint $table) {
-            $table->id('comment_id'); // Primary key
+            $table->id('comment_id');
             $table->foreignId('task_id')->constrained('tasks', 'task_id')->onDelete('cascade'); // Foreign key to 'tasks' table
-            $table->text('comment_text'); // Comment text
-            $table->timestamp('created_at')->useCurrent(); // Created at
+            $table->text('comment_text'); 
+            $table->timestamp('created_at')->useCurrent(); 
+            $table->timestamp('updated_at')->nullable();
             $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade'); // Foreign key to 'users' table (người bình luận)
             $table->boolean('is_manager_comment')->default(false);
             $table->softDeletes();

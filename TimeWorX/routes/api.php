@@ -8,6 +8,7 @@ use App\Http\Controllers\API\ProjectControllerView;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\TaskController;
 use App\Http\Controllers\API\PersonalPlanController;
+use App\Http\Controllers\API\TaskCommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,10 @@ use App\Http\Controllers\API\PersonalPlanController;
 
     // Task
     Route::apiResource('tasks', TaskController::class);
+
+    //Task Comment
+    Route::apiResource('task-comments', TaskCommentController::class)->except(['index']);
+    Route::get('tasks/{taskId}/comments', [TaskCommentController::class, 'index']);
 
     // PersonalPlanController
     Route::apiResource('personal-plans', PersonalPlanController::class);
