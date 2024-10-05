@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Task;
+use App\Models\User;
 use App\Models\PersonalPlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -48,7 +49,8 @@ class TaskController extends Controller
     public function show($id)
     {
         $userId = $id;
-        $tasks = Task::where('assigned_to_user_id', $userId)->get();
+        $user = User::find($userId);
+        $tasks = $user->tasks; 
         $personalPlans = PersonalPlan::where('user_id', $userId)->get();
 
         $response = [

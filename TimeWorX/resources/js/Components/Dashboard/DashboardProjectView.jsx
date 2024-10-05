@@ -285,6 +285,7 @@ const DashboardProjectView = ({ auth }) => {
                 <TaskComments 
                     taskId={selectedTask.id} 
                     onClose={() => setShowComments(false)} 
+                    isManagerComment = {true}
                 />
             )}
 
