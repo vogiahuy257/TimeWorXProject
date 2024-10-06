@@ -21,7 +21,7 @@ class PersonalPlansTableSeeder extends Seeder
                 'plan_description' => 'Description for Plan A.',
                 'start_date' => '2024-01-01',
                 'end_date' => '2024-06-30',
-                'plan_status' => 'Active',
+                'plan_status' => 'to-do',
                 'plan_priority' => 'High',
             ],
             [
@@ -30,7 +30,7 @@ class PersonalPlansTableSeeder extends Seeder
                 'plan_description' => 'Description for Plan B.',
                 'start_date' => '2024-03-01',
                 'end_date' => '2024-12-31',
-                'plan_status' => 'Pending',
+                'plan_status' => 'in-progress',
                 'plan_priority' => 'Medium',
             ],
         ]);

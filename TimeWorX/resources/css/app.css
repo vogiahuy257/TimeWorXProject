@@ -6,16 +6,18 @@
 :root{
     --color-yellow: #FABB18; 
     --color-cream: #FEF8E8;
-    --color-black: #000000; 
+    --color-black: rgb(0, 0, 0); 
+    --color-black-rgb: 0, 0, 0;
     --color-black-gray: #383838; 
     --color-gray: #D9D9D9;
-    --color-white: #FFFFFF; 
+    --color-white: rgb(255, 255, 255);
+    --color-white-rgb: 255, 255, 255; 
     --color-whiteGray:#F4F8F7;
     --color-light-gray: #F9F9F9;
     --color-light-blue: #31AFE5;
     --color-red: #E53131;
     --color-green: rgb(3, 205, 3);
-    --background: linear-gradient(155deg,#FFFFFF,#D3D3D3);
+    --background: linear-gradient(155deg,#FFFFFF,#d3d3d3);
 
     --color-shadow:rgba(85, 85, 85, 0.425);
 

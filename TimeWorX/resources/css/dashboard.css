@@ -21,6 +21,8 @@
     --color-gray: #292B2C;
     --color-white: #151515; 
     --color-whiteGray:#232323;
+    --color-black-rgb: 255, 255, 255;
+    --color-white-rgb: 0, 0, 0; 
     --color-black-gray: #d2d2d2; 
     --background: linear-gradient(155deg, #232222, #373737);
     --color-shadow:#424242df;
@@ -33,9 +35,9 @@
 
 #dashboard .block
 {
-    width: 80%;
+    width: 85%;
     height: 100%;
-    max-height: 670px;
+    max-height: 690px;
     background-color: var(--color-whiteGray);
     position: relative;
     top: 50%;
@@ -454,12 +456,12 @@
     width: 350px;
 }
 
-#dashboard .block #main .content main #customToastInfo
+#dashboard #customToastInfo
 {
     margin-left: 5px
 }
 
-#dashboard .block #main .content main #customToastInfo .box-btn
+#dashboard #customToastInfo .box-btn
 {
   display: flex;
   justify-content: center;
@@ -467,7 +469,7 @@
   text-align: center;
 }
 
-#dashboard .block #main .content main #customToastInfo .box-btn button{
+#dashboard #customToastInfo .box-btn button{
     background-color: var(--color-light-blue);
     color: var(--color-white);
     margin: 0px 5px;
@@ -475,12 +477,12 @@
     border-radius: 5px;
 }
 
-#dashboard .block #main .content main #customToastInfo .box-btn button.btn-no
+#dashboard #customToastInfo .box-btn button.btn-no
 {
     background-color: var(--color-red);
 }
 
-#dashboard .block #main .content main #customToastInfo .box-btn button:hover
+#dashboard #customToastInfo .box-btn button:hover
 {
     box-shadow: 0 0 2px var(--color-black);
 }

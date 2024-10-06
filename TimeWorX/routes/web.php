@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -12,10 +13,15 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('cheese');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+Route::get('/dashboard', function (Request $request) {
+
+    $token = $request->session()->get('sanctum_token');
+
+    return Inertia::render('Dashboard',[
+        'token' => $token,
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -24,8 +30,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware('auth')->get('/dashboard/{any}', function () {
+Route::get('/dashboard/{any}', function () {
     return Inertia::render('Dashboard');
 })->where('any', '.*');
+
+// Route::middleware('auth')->get('/api/token', function (Request $request) {
+//     $token = $request->session()->get('sanctum_token');
+//     return response()->json([
+//         'token' => $token
+//     ]);
+// });
 
 require __DIR__.'/auth.php';
