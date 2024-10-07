@@ -1,3 +1,5 @@
+
+
 /* card */
 #dashboard .block #main .content main #project #container .block-project
 {
@@ -10,24 +12,24 @@
 } 
 
 #dashboard .block #main .content main #project #container .block-project .card.done {
-    --color-title: #31E563; /* Green for done */
+    --color-title: var(--color-green); /* Green for done */
 }
 
 #dashboard .block #main .content main #project #container .block-project .card.to-do {
-    --color-title: #31AFE5; /* Blue for to-do */
+    --color-title: var(--color-light-blue); /* Blue for to-do */
 }
 
 #dashboard .block #main .content main #project #container .block-project .card.in-progress {
-    --color-title: #EED811; /* Yellow for in-progress */
+    --color-title: var(--color-yellow); /* Yellow for in-progress */
 }
 
 #dashboard .block #main .content main #project #container .block-project .card.verify {
-    --color-title: #E53131; /* Red for verify */
+    --color-title: var(--color-red); /* Red for verify */
 }
 
 #dashboard .block #main .content main #project #container .block-project .card
 {
-    --color-title: #000000;
+    --color-title: var(--color-black);
     width: 262px;
     height: 180px;
     position: relative;
@@ -199,3 +201,38 @@
     color: var(--color-black);
     box-shadow: 0 0 10px var(--color-red);
 }
+
+/* custom - notification */
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom-late-task,
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom-near-task {
+    border-radius: var(--border-radius-medium);
+    font-size: var(--font-size-small);
+    position: relative;
+    width: 50px;
+    height: 25px;
+}
+
+
+/* custom-late-task */
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom-late-task {
+    background-color: rgba(var(--color-red-rgb), 0.3);
+    color: var(--color-red);
+}
+
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom-late-task p {
+    color: var(--color-red);
+    margin-left: 2px;
+}
+
+/* custom-near-task */
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom-near-task {
+    background-color: rgba(var(--color-yellow-rgb), 0.3);
+    color: var(--color-yellow);
+}
+
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom-near-task p {
+    color: var(--color-yellow);
+    margin-left: 2px;
+}
+
+

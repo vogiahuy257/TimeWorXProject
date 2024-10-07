@@ -141,7 +141,7 @@ const DashboardProjectView = ({ auth }) => {
 
     useEffect(() => {
         fetchProjectData();
-    }, [project_id]);
+    }, []);
 
     if (!project) {
         return <p>Loading project details...</p>;
@@ -210,9 +210,10 @@ const DashboardProjectView = ({ auth }) => {
                                     <div className="block-task-list">
                                             {tasks[columnId].map((task, index) => (
                                                 <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
+                                                    {/* is_late && is_near_deadline deadline  */}
                                                     {(provided) => (
                                                         <div 
-                                                            className="task-card"
+                                                        className={`task-card ${columnId === 'done' ? null : task.is_late ? "is_late" : task.is_near_deadline ? "is_near_deadline" : ""}`}
                                                             ref={provided.innerRef}
                                                             {...provided.draggableProps}
                                                             {...provided.dragHandleProps}
@@ -243,7 +244,7 @@ const DashboardProjectView = ({ auth }) => {
                                                                     )}
                                                                 </div>
                                                             </div>
-                                                            <div className='task-card-element'>
+                                                            <div className='task-card-element '>
                                                                 <div className='task-element element-left'>
                                                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                     <path d="M11.4635 11.3199C11.7859 11.2527 11.978 10.9152 11.8178 10.6274C11.4645 9.99297 10.908 9.43544 10.1961 9.01056C9.27918 8.46335 8.15577 8.16675 7.00007 8.16675C5.84436 8.16675 4.72095 8.46335 3.80407 9.01055C3.09215 9.43543 2.53563 9.99296 2.18238 10.6274C2.02214 10.9152 2.21419 11.2527 2.53667 11.3199C5.48064 11.9334 8.51949 11.9334 11.4635 11.3199Z" fill="currentColor"/>

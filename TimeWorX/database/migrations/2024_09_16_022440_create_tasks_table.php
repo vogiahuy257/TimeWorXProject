@@ -18,6 +18,8 @@ return new class extends Migration
             $table->text('task_description')->nullable(); 
             $table->string('status_key', 20)->nullable();
             $table->date('deadline')->nullable(); 
+            $table->boolean('is_late')->default(false); // Trễ deadline
+            $table->boolean('is_near_deadline')->default(false); // Gần hết hạn deadline
             $table->timestamps();
             $table->foreignId('assigned_to_user_id')->nullable()->constrained('users', 'id')->onDelete('set null'); // Foreign key to 'users' table
             $table->softDeletes();

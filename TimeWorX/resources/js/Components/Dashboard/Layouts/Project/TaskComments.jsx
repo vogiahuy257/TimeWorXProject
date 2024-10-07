@@ -81,6 +81,7 @@ const TaskComments = ({ taskId, onClose,isManagerComment }) => {
 
             {/* menu-left */}
             <div className="task-comments-menu">
+                {/* button close and Task Name */}
                 <div className='task-header'>
                     <PrimaryButton className='btn-close' onClick={onClose}>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -89,18 +90,26 @@ const TaskComments = ({ taskId, onClose,isManagerComment }) => {
                     </PrimaryButton>
                     <h1> Task Name </h1>
                 </div>
+                {/* user list */}
                 <div className="comments-user-list">
                     <ul>
-                    {commentsData.map((data, index) => (
-                                <li
-                                    key={data.user.id}
-                                    className={selectedUser && selectedUser.id === data.user.id ? 'active' : ''}
-                                    onClick={() => handleUserSelect(data.user)}
-                                >
-                                    <img src="/image/y.jpg" alt="" />
-                                    <p>{data.user.name}</p>
-                                </li>
-                            ))}
+                    {isManagerComment ? (
+                        commentsData.map((data, index) => (
+                            <li
+                                key={data.user.id}
+                                className={selectedUser && selectedUser.id === data.user.id ? 'active' : ''}
+                                onClick={() => handleUserSelect(data.user)}
+                            >
+                                <img src="/image/y.jpg" alt="" />
+                                <p>{data.user.name}</p>
+                            </li>
+                        ))
+                    ) : (
+                        <li>
+                            <img className='active' src="/image/boss.jpg" alt="" />
+                            <p>Boss</p>
+                        </li> 
+                    )}
                     </ul>
                 </div>
             </div>
@@ -110,9 +119,10 @@ const TaskComments = ({ taskId, onClose,isManagerComment }) => {
 
             {selectedUser && (
                         <>
+                            {/* logo user */}
                             <div className="task-comments-header">
-                                <img src="/image/y.jpg" alt="" />
-                                <h1>{selectedUser.name}</h1>
+                                <img src={isManagerComment ? '/image/y.jpg' : '/image/boss.jpg'} alt="" />
+                                <h1>{isManagerComment ? (selectedUser.name) : ("Boss")}</h1>
                             </div>
 
                             {/* list comments */}

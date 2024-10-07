@@ -9,6 +9,7 @@ use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\TaskController;
 use App\Http\Controllers\API\PersonalPlanController;
 use App\Http\Controllers\API\TaskCommentController;
+use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,8 @@ use App\Http\Controllers\API\TaskCommentController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
 
 // Route::middleware(['auth:sanctum'])->group(function () {
     // Route Project

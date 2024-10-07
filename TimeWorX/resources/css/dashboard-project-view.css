@@ -319,6 +319,13 @@
     border-bottom-left-radius: var(--border-radius-sSmall);
     border-bottom-right-radius: var(--border-radius-sSmall);
     color: #222222;
+    position: relative;
+}
+
+#dashboard .block #main .content main #project-view main .block-task .task-card-element.pesonal-plan
+{
+    --color-status: var(--color-black);
+    color: var(--color-white);
 }
 
 #dashboard .block #main .content main #project-view main .block-task .task-card
@@ -338,6 +345,54 @@
     gap: 2px;
     transition: all 0.2s ease-in-out;
 }
+
+/* custom is_late_deadline */
+#dashboard .block #main .content main #project-view main .block-task .task-card.is_late,
+#dashboard .block #main .content main #project-view main .block-task .task-card.is_near_deadline
+{
+    margin-top: 18px;
+}
+
+#dashboard .block #main .content main #project-view main .block-task .task-card.is_late .task-card-content,
+#dashboard .block #main .content main #project-view main .block-task .task-card.is_near_deadline .task-card-content
+{
+    position: relative;
+    border-top-left-radius: var(--border-radius-sSmall);
+    border-top-right-radius: var(--border-radius-sSmall);
+}
+
+#dashboard .block #main .content main #project-view main .block-task .task-card.is_late .task-card-content
+{
+    background-color: rgba(var(--color-red-rgb),0.1);
+}
+
+#dashboard .block #main .content main #project-view main .block-task .task-card.is_near_deadline .task-card-content
+{
+    background-color: rgba(var(--color-yellow-rgb), 0.2);
+}
+
+#dashboard .block #main .content main #project-view main .block-task .task-card.is_late .task-card-content::before,
+#dashboard .block #main .content main #project-view main .block-task .task-card.is_near_deadline .task-card-content::before 
+{
+    content: "Deadline missed !";
+    position: absolute;
+    top: -10px;
+    right: 2px;
+    font-size: var(--font-size-sSmall);
+    color: var(--color-red);
+    background-color: rgba(var(--color-red-rgb), 0.2);
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+#dashboard .block #main .content main #project-view main .block-task .task-card.is_near_deadline .task-card-content::before
+{
+    content: "Near deadline !";
+    color: var(--color-yellow);
+    background-color: rgba(var(--color-yellow-rgb), 0.2);
+}
+
+
 #dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-comment
 {
     padding: 5px;

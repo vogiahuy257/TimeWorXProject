@@ -158,20 +158,10 @@ export default function Task({ auth }) {
             <div className="block-project">
                 <div className='block-element-left'>
                     <div className='block-project-name'>
-                        <h1>My Task</h1>
+                        <h1>Your Project: </h1>
                     </div>
                 </div>
                 <div className='block-element-right'>
-                    {/* <PrimaryButton onClick={toggleUserList} className='btn btn-person'>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="9" r="4" fill="currentColor"/>
-                            <circle cx="17" cy="9" r="3" fill="currentColor"/>
-                            <circle cx="7" cy="9" r="3" fill="currentColor"/>
-                            <path fillRule="evenodd" clipRule="evenodd" d="M17.5685 18H19.895C20.4867 18 20.9403 17.4901 20.7966 16.9162C20.4284 15.4458 19.448 13 17 13C16.114 13 15.4201 13.3205 14.8781 13.7991C16.3858 14.7773 17.1654 16.4902 17.5685 18Z" fill="currentColor"/>
-                            <path fillRule="evenodd" clipRule="evenodd" d="M9.12197 13.7991C8.57989 13.3205 7.88609 13 7 13C4.55208 13 3.57166 15.4458 3.20343 16.9162C3.05971 17.4901 3.51335 18 4.10498 18H6.43155C6.83464 16.4902 7.61422 14.7773 9.12197 13.7991Z" fill="currentColor"/>
-                            <path d="M12 14C15.7087 14 16.6665 17.301 16.9139 19.0061C16.9932 19.5526 16.5523 20 16 20H8C7.44772 20 7.00684 19.5526 7.08614 19.0061C7.33351 17.301 8.29134 14 12 14Z" fill="currentColor"/>
-                        </svg>
-                    </PrimaryButton> */}
                     <PrimaryButton onClick={toggleDeletedTasks} className='btn btn-history'>
                         <svg width="25" height="25" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M3 13.1429V17.7143C3 18.9767 4.00736 20 5.25 20H18.75C19.9926 20 21 18.9767 21 17.7143V13.1429M3 13.1429L5.82751 5.48315C6.15683 4.59102 6.99635 4 7.93425 4H16.0657C17.0037 4 17.8432 4.59102 18.1725 5.48315L21 13.1429M3 13.1429H7.5L9 14.7429H15L16.5 13.1429H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -207,7 +197,7 @@ export default function Task({ auth }) {
                                                 <Draggable key={`${task.type}-${task.id}`} draggableId={`${task.type}-${task.id}`} index={index}>
                                                     {(provided) => (
                                                         <div 
-                                                            className="task-card"
+                                                            className={`task-card ${ columnId === 'done' ? null : task.is_late ? "is_late" : task.is_near_deadline ? "is_near_deadline" : ""}`}
                                                             ref={provided.innerRef}
                                                             {...provided.draggableProps}
                                                             {...provided.dragHandleProps}
@@ -242,14 +232,21 @@ export default function Task({ auth }) {
                                                                 )}
                                                                 </div>
                                                             </div>
-                                                            <div className='task-card-element'>
-                                                                <div className='task-element element-left'>
-                                                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path d="M11.4635 11.3199C11.7859 11.2527 11.978 10.9152 11.8178 10.6274C11.4645 9.99297 10.908 9.43544 10.1961 9.01056C9.27918 8.46335 8.15577 8.16675 7.00007 8.16675C5.84436 8.16675 4.72095 8.46335 3.80407 9.01055C3.09215 9.43543 2.53563 9.99296 2.18238 10.6274C2.02214 10.9152 2.21419 11.2527 2.53667 11.3199C5.48064 11.9334 8.51949 11.9334 11.4635 11.3199Z" fill="currentColor"/>
-                                                                    <circle cx="6.99992" cy="4.66667" r="2.91667" fill="currentColor"/>
-                                                                </svg>
-                                                                    <span className='user-number'>{task.user_count}</span>
-                                                                </div>
+                                                            <div className={task.type == 'personalPlan' ? 'task-card-element pesonal-plan' : 'task-card-element'}>
+                                                                {/* number user to task */}
+                                                                {
+                                                                    task.type == 'personalPlan' ? null :
+                                                                    (
+                                                                        <div className='task-element element-left'>
+                                                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path d="M11.4635 11.3199C11.7859 11.2527 11.978 10.9152 11.8178 10.6274C11.4645 9.99297 10.908 9.43544 10.1961 9.01056C9.27918 8.46335 8.15577 8.16675 7.00007 8.16675C5.84436 8.16675 4.72095 8.46335 3.80407 9.01055C3.09215 9.43543 2.53563 9.99296 2.18238 10.6274C2.02214 10.9152 2.21419 11.2527 2.53667 11.3199C5.48064 11.9334 8.51949 11.9334 11.4635 11.3199Z" fill="currentColor"/>
+                                                                                <circle cx="6.99992" cy="4.66667" r="2.91667" fill="currentColor"/>
+                                                                            </svg>
+                                                                            <span className='user-number'>{task.user_count}</span>
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                                
                                                                 <div className='task-element element-right'>
                                                                     <p>deadline:</p>
                                                                     <p>{task.type == 'personalPlan' ? task.end_date : task.deadline || 'N/A'}</p>

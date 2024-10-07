@@ -4,7 +4,8 @@
 
 /* Global Styles */
 :root{
-    --color-yellow: #FABB18; 
+    --color-yellow: rgb(241, 194, 27); 
+    --color-yellow-rgb: 241, 194, 27;
     --color-cream: #FEF8E8;
     --color-black: rgb(0, 0, 0); 
     --color-black-rgb: 0, 0, 0;
@@ -12,11 +13,12 @@
     --color-gray: #D9D9D9;
     --color-white: rgb(255, 255, 255);
     --color-white-rgb: 255, 255, 255; 
-    --color-whiteGray:#F4F8F7;
+    --color-whiteGray:rgb(244, 248, 247);
     --color-light-gray: #F9F9F9;
-    --color-light-blue: #31AFE5;
-    --color-red: #E53131;
-    --color-green: rgb(3, 205, 3);
+    --color-light-blue: #2459cd;
+    --color-red: rgb(218, 30, 40);
+    --color-red-rgb: 218, 30, 40;
+    --color-green: rgb(37, 162, 73);
     --background: linear-gradient(155deg,#FFFFFF,#d3d3d3);
 
     --color-shadow:rgba(85, 85, 85, 0.425);

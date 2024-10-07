@@ -20,6 +20,7 @@ export default function Folder({ auth }) {
         try {
             const response = await axios.get(`/api/projects/${auth.user.id}`);
             setProjects(response.data);
+            console.log(projects);
         } catch (error) {
             toast.error('Error fetching projects:', error.response ? error.response.data : error.message);
         }

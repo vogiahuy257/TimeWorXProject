@@ -69,6 +69,9 @@ class TaskController extends Controller
         ];
 
         foreach ($tasks as $task) {
+            
+            $task->checkDeadlineStatus();
+
             $statusKey = $task->status_key ?? 'to-do'; 
             if (array_key_exists($statusKey, $response['tasks'])) {
                 $response['tasks'][$statusKey][] = [
@@ -84,6 +87,8 @@ class TaskController extends Controller
                     }),
                     'deadline' => $task->formatted_deadline,
                     'status' => $task->status_key,
+                    'is_late' => $task->is_late,
+                    'is_near_deadline' => $task->is_near_deadline,
                 ];
             }
         }
