@@ -138,6 +138,7 @@ export default function Task({ auth }) {
             setTasks(mergedTasks);
             const totalTaskCount = Object.values(mergedTasks).flat().length;
             setTotalTaskCount(totalTaskCount);
+            console.log(mergedTasks);
         } catch (error) {
             toast.error('Error fetching project details or tasks');
         }
@@ -158,7 +159,7 @@ export default function Task({ auth }) {
             <div className="block-project">
                 <div className='block-element-left'>
                     <div className='block-project-name'>
-                        <h1>Your Project: </h1>
+                        <h1>Your Task</h1>
                     </div>
                 </div>
                 <div className='block-element-right'>
@@ -203,6 +204,7 @@ export default function Task({ auth }) {
                                                             {...provided.dragHandleProps}
                                                         >
                                                             <div className='task-card-content'>
+                                                                <p className='project-name'>{task.type == 'personalPlan' ? null : task.project_name}</p>
                                                                 <p>{task.type == 'personalPlan' ? task.name :task.content}</p>
                                                                 <div className='btn-group'>
                                                                 {task.type === 'personalPlan' ? 

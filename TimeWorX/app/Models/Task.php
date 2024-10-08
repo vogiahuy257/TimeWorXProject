@@ -22,6 +22,18 @@ class Task extends Model
         'deadline', 
     ];
 
+     // Quan hệ belongsTo với model Project
+     public function project()
+     {
+         return $this->belongsTo(Project::class, 'project_id');
+     }
+ 
+     // Hàm lấy tên của project
+     public function getProjectName()
+     {
+         return $this->project() ? $this->project->project_name : null;
+     }
+
     // Đảm bảo các cột ngày tháng được xử lý tự động dưới dạng đối tượng Carbon
     protected $dates = [
         'deleted_at',

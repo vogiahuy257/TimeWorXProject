@@ -77,6 +77,7 @@ class TaskController extends Controller
                 $response['tasks'][$statusKey][] = [
                     'id' => strval($task->task_id), 
                     'content' => $task->task_name, 
+                    'project_name' => $task->getProjectName(),
                     'description' => $task->task_description,
                     'user_count' => $task->users->count(), 
                     'users' => $task->users->map(function ($user) {

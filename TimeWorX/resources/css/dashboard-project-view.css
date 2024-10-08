@@ -346,6 +346,12 @@
     transition: all 0.2s ease-in-out;
 }
 
+
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content
+{
+    position: relative;
+}
+
 /* custom is_late_deadline */
 #dashboard .block #main .content main #project-view main .block-task .task-card.is_late,
 #dashboard .block #main .content main #project-view main .block-task .task-card.is_near_deadline
@@ -356,7 +362,6 @@
 #dashboard .block #main .content main #project-view main .block-task .task-card.is_late .task-card-content,
 #dashboard .block #main .content main #project-view main .block-task .task-card.is_near_deadline .task-card-content
 {
-    position: relative;
     border-top-left-radius: var(--border-radius-sSmall);
     border-top-right-radius: var(--border-radius-sSmall);
 }
@@ -377,12 +382,22 @@
     content: "Deadline missed !";
     position: absolute;
     top: -10px;
-    right: 2px;
+    right: 8px;
     font-size: var(--font-size-sSmall);
     color: var(--color-red);
     background-color: rgba(var(--color-red-rgb), 0.2);
     padding: 2px 5px;
     border-radius: 3px;
+}
+
+/* custom project name to task */
+
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .project-name{
+    position: absolute;
+    font-size: calc(var(--font-size-sSmall) + 1px);
+    top: -8px;
+    left: 8px;
+    font-weight: var(--font-weight-medium);
 }
 
 #dashboard .block #main .content main #project-view main .block-task .task-card.is_near_deadline .task-card-content::before
