@@ -1,48 +1,49 @@
+
+
 /* card */
 #dashboard .block #main .content main #project #container .block-project
 {
     width: 100%;
-    height: 80%;
     display: flex;
-    gap: 15px;
-    justify-content: center;
+    gap: 18px;
+    justify-content: flex-start;
     flex-wrap: wrap;
 } 
 
 #dashboard .block #main .content main #project #container .block-project .card.done {
-    --color-title: #31E563; /* Green for done */
+    --color-title: var(--color-green); /* Green for done */
 }
 
 #dashboard .block #main .content main #project #container .block-project .card.to-do {
-    --color-title: #31AFE5; /* Blue for to-do */
+    --color-title: var(--color-light-blue); /* Blue for to-do */
 }
 
 #dashboard .block #main .content main #project #container .block-project .card.in-progress {
-    --color-title: #EED811; /* Yellow for in-progress */
+    --color-title: var(--color-yellow); /* Yellow for in-progress */
 }
 
 #dashboard .block #main .content main #project #container .block-project .card.verify {
-    --color-title: #E53131; /* Red for verify */
+    --color-title: var(--color-red); /* Red for verify */
 }
 
 #dashboard .block #main .content main #project #container .block-project .card
 {
-    --color-title: #000000;
+    --color-title: var(--color-black);
     width: 262px;
-    height: 180px;
+    height: 150px;
     position: relative;
     color: var(--color-black);
     margin-top: 25px;
     margin-bottom: 25px;
     transition: transform 0.3s ease-in-out,box-shadow 0.3s ease-in-out;
     cursor: pointer;
-    
+    margin-left: 8px;
 }
 
 #dashboard .block #main .content main #project #container .block-project .card:hover
 {
-    transform: translate3D(0, -20px, 0px);  
-    box-shadow: 0 60px 10px var(--color-shadow);
+    transform: translate3D(0, -10px, 0px);  
+    box-shadow: 0 50px 10px var(--color-shadow);
 }
 
 #dashboard .block #main .content main #project #container .block-project .card .card-title
@@ -66,8 +67,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-top-left-radius: 13px;
-    border-top-right-radius: 13px;
+    border-top-left-radius: var(--border-radius-small);
+    border-top-right-radius: var(--border-radius-small);
     font-size: 15px;
 }
 
@@ -81,7 +82,7 @@
     height: var(--size-box);
     bottom: 0;
     right:  calc(var(--size-box) * -1);
-    border-bottom-left-radius:  13px;
+    border-bottom-left-radius:  var(--border-radius-small);
     box-shadow: -5px 5px 0px var(--color-title);
 }
 
@@ -95,7 +96,7 @@
     color: var(--color-white);
     width: 139px;
     height: 30px;
-    border-radius: var(--border-radius-large);
+    border-radius: var(--border-radius-medium);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -111,10 +112,22 @@
     height: 100%;
     position: relative;
     border: 3px solid var(--color-title);
-    border-bottom-left-radius: 13px;
-    border-bottom-right-radius: 13px;
-    border-top-right-radius: 13px;
+    border-bottom-left-radius: var(--border-radius-small);
+    border-bottom-right-radius: var(--border-radius-small);
+    border-top-right-radius: var(--border-radius-small);
     flex-direction: column;
+}
+
+#dashboard .block #main .content main #project #container .block-project .card .card-header::before
+{
+   content: "";
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 8%;
+   height: 10%;
+   border-top-left-radius: var(--border-radius-small);
+   box-shadow: -2px -5px 0 var(--color-title);
 }
 
 #dashboard .block #main .content main #project #container .block-project .card .card-header .text
@@ -123,79 +136,164 @@
     top: 10px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
+    width: 90%;
     font-size: var(--font-size-large);
     font-weight: var(--font-weight-medium);
+    display: flex;
+    flex-direction: column;
+    height: 85%;
 }
 
 #dashboard .block #main .content main #project #container .block-project .card .card-header .text p.description
 {
-    font-size: var(--font-size-small);
+    font-size: var(--font-size-sSmall);
     color: var(--color-black-gray);
     font-weight: var(--font-weight-light);
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
+/* form edit and delete */
 #dashboard .block #main .content main #project #container .block-project .card .card-header .card-form
 {
-    color: var(--color-black);
     display: flex;
-    position: absolute;
-    bottom: 15px;
-    gap: 10px;
+    align-items: center;
 }
 
-#dashboard .block #main .content main #project #container .block-project .card .card-header .card-form svg{
-    width: 18px;
-}
-
-#dashboard .block #main .content main #project #container .block-project .card .card-header .card-form-view
+#dashboard .block #main .content main #project #container .block-project .card .card-header .btn-form
 {
-    width: 100px;
-    height: 40px;
+    display: flex;
+    margin-left: auto;
+    gap: 6px;
+}
+
+#dashboard .block #main .content main #project #container .block-project .card .card-header .btn
+{
     background-color: var(--color-black);
     color: var(--color-white);
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 13px;
-    transition: all 0.3s ease-in-out;
+    border-radius: 6px;
 }
 
-#dashboard .block #main .content main #project #container .block-project .card .card-header .card-form-view:hover
+#dashboard .block #main .content main #project #container .block-project .card .card-header .btn svg
 {
-    color: var(--color-black);
-    background-color: var(--color-white);
-    border: 2px solid var(--color-black);
-}
-
-#dashboard .block #main .content main #project #container .block-project .card .card-header .card-form-edit,
-#dashboard .block #main .content main #project #container .block-project .card .card-header .card-form-delete
-{
-   border-radius: 13px;
-   width: 40px;
-   background-color: var(--color-light-blue);
-   color: var(--color-white);
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   transition: all 0.3s ease-in-out;
+    width: 62%;
 }
 
 #dashboard .block #main .content main #project #container .block-project .card .card-header .card-form-edit:hover
 {
-    color: var(--color-black);
-    box-shadow: 0 0 10px var(--color-light-blue);
-}
-
-#dashboard .block #main .content main #project #container .block-project .card .card-header .card-form-delete
-{
-    background-color: var(--color-red);
+    background-color: var(--color-light-blue);
+    color: #ffffff;
+    box-shadow: 0 0 4px var(--color-light-blue);
 }
 
 #dashboard .block #main .content main #project #container .block-project .card .card-header .card-form-delete:hover
 {
-    color: var(--color-black);
-    box-shadow: 0 0 10px var(--color-red);
+    background-color: var(--color-red);
+    color: #ffffff;
+    box-shadow: 0 0 4px var(--color-red);
 }
+
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom_complete
+{
+    font-size: var(--font-size-small);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    width: 28%;
+    position: relative;
+    border-radius: var(--border-radius-sSmall);
+}
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom_complete svg
+{
+    padding: 4px;
+    height: 100%;
+    color: var(--color-white);
+    background-color: var(--color-green);
+    border-radius: var(--border-radius-sSmall);
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom_complete p
+{
+    width: 100%;
+    border-radius: var(--border-radius-sSmall);
+    text-align: end;
+    padding-right: 4px;
+}
+
+/* custom - notification */
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom-late-task,
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom-near-task {
+    border-radius: var(--border-radius-sSmall);
+    font-size: var(--font-size-small);
+    position: relative;
+    padding: 2px 8px;
+}
+
+/* custom-late-task */
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom-late-task {
+    background-color: rgba(var(--color-red-rgb), 0.3);
+    color: var(--color-red);
+}
+
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom-late-task::before,
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom-near-task::before
+{
+    content: "late deadline";
+    margin-right: 2px;
+    position: absolute;
+    top: 0; 
+    left: 50%;
+    transform: translateX(-30%);
+    left: 8px;
+    width: 80px;
+    background-color: var(--color-black);
+    color: var(--color-white);
+    padding: 2px 4px;
+    font-size: var(--border-radius-small);
+    border-radius: 4px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    
+}
+
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom-near-task::before
+{
+    content: "near deadline";
+}
+
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom-late-task:hover::before,
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom-near-task:hover::before
+{
+    display: flex;
+    top: -25px;
+}
+
+
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom-late-task p {
+    color: var(--color-red);
+    margin-right: 2px;
+}
+
+/* custom-near-task */
+
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom-near-task {
+    background-color: rgba(var(--color-yellow-rgb), 0.3);
+    color: var(--color-yellow);
+}
+
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom-near-task p {
+    color: var(--color-yellow);
+    margin-right: 2px;
+}
+
+

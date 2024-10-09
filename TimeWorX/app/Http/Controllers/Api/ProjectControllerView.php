@@ -37,6 +37,9 @@ class ProjectControllerView extends Controller
         ];
 
         foreach ($tasks as $task) {
+
+            $task->checkDeadlineStatus();
+            
             $statusKey = $task->status_key ?? 'to-do'; 
             if (array_key_exists($statusKey, $response['tasks'])) {
                 $response['tasks'][$statusKey][] = [
@@ -52,6 +55,8 @@ class ProjectControllerView extends Controller
                     }),
                     'deadline' => $task->formatted_deadline,
                     'status' => $task->status_key,
+                    'is_late' => $task->is_late,
+                    'is_near_deadline' => $task->is_near_deadline,
                 ];
             }
         }
@@ -69,12 +74,6 @@ class ProjectControllerView extends Controller
             'users' => 'nullable|array', 
             'users.*' => 'exists:users,id',
         ]);
-    
-        $project = Project::find($id);
-    
-        if (!$project) {
-            return response()->json(['error' => 'Không tìm thấy dự án'], 404);
-        }
     
         $task = new Task([
             'task_name' => $request->input('task_name'),

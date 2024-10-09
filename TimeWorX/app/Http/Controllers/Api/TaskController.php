@@ -69,11 +69,15 @@ class TaskController extends Controller
         ];
 
         foreach ($tasks as $task) {
+            
+            $task->checkDeadlineStatus();
+
             $statusKey = $task->status_key ?? 'to-do'; 
             if (array_key_exists($statusKey, $response['tasks'])) {
                 $response['tasks'][$statusKey][] = [
                     'id' => strval($task->task_id), 
                     'content' => $task->task_name, 
+                    'project_name' => $task->getProjectName(),
                     'description' => $task->task_description,
                     'user_count' => $task->users->count(), 
                     'users' => $task->users->map(function ($user) {
@@ -84,6 +88,8 @@ class TaskController extends Controller
                     }),
                     'deadline' => $task->formatted_deadline,
                     'status' => $task->status_key,
+                    'is_late' => $task->is_late,
+                    'is_near_deadline' => $task->is_near_deadline,
                 ];
             }
         }
