@@ -134,6 +134,7 @@ const DashboardProjectView = ({ auth }) => {
                 'verify': projectData.tasks['verify'] || [],
                 'done': projectData.tasks['done'] || [],
             });
+            console.log(tasks);
         } catch (error) {
             toast.error('Error fetching project details or tasks');
         }

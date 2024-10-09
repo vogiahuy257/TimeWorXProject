@@ -21,10 +21,10 @@
     --color-green: rgb(37, 162, 73);
     --background: linear-gradient(155deg,#FFFFFF,#d3d3d3);
 
-    --color-shadow:rgba(85, 85, 85, 0.425);
+    --color-shadow:rgba(68, 68, 68, 0.418);
 
     /* Font Sizes */
-    --font-size-sSmall: 0.7rem;
+    --font-size-sSmall: 0.8rem;
     --font-size-small: 0.875rem;
     --font-size-medium: 1rem;
     --font-size-large: 1.25rem;
