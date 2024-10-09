@@ -145,7 +145,7 @@
 
 #dashboard .block #main .content main #project-view main .block-task
 {
-    margin: 10px 5px;
+    margin: 10px 10px;
     width: 100%;
     display: flex;
     flex-direction: column;

@@ -131,6 +131,18 @@ export default function Folder({ auth }) {
                          </PrimaryButton>
                   </div>
                   <div className='block-button-right'> 
+                    
+                        <div className='block-search'>
+                                <form action="" method="">
+                                    <input type="text" name="query" placeholder="Search projects" />
+                                    <button type="submit">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                            <path d="M21 21L16.65 16.65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
                         <PrimaryButton onClick={handleDeletedFormToggle} className='btn-delete'>
                                 <svg width="25" height="25" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M3 13.1429V17.7143C3 18.9767 4.00736 20 5.25 20H18.75C19.9926 20 21 18.9767 21 17.7143V13.1429M3 13.1429L5.82751 5.48315C6.15683 4.59102 6.99635 4 7.93425 4H16.0657C17.0037 4 17.8432 4.59102 18.1725 5.48315L21 13.1429M3 13.1429H7.5L9 14.7429H15L16.5 13.1429H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -141,25 +153,6 @@ export default function Folder({ auth }) {
             {/* main */}
             <section id='container'>
                 <div className='mainContainer'>
-                <div className='menu'>
-                    <div className='block-text'>
-                         <h1>Your project</h1>
-                    </div>
-
-                    <div className='block-search'>
-
-                        <form action="" method="">
-                            <input type="text" name="query" placeholder="Search projects" />
-                            <button type="submit">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                    <path d="M21 21L16.65 16.65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                </svg>
-                            </button>
-                        </form>
-
-                    </div>
-                </div>
 
                     <div className='block-project'>
 

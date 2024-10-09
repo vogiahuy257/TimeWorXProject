@@ -5,7 +5,7 @@
 
 #login{
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(360deg,var(--color-cream),var(--color-white));
+    background: var(--background);
     width: 100vw;
     height: 100vh;
     display: flex;

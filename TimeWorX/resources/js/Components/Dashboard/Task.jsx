@@ -102,7 +102,12 @@ export default function Task({ auth }) {
                 [destinationColumn]: destinationTasks,
             }));
             const isPersonalPlan = movedTask.type === 'personalPlan'; 
+            // Nếu là task và trạng thái là 'done', chuyển thành 'verify'
+        if (movedTask.type === 'task' && destinationColumn === 'done') {
+            updateTaskStatus(movedTask.id, 'verify', isPersonalPlan);
+        } else {
             updateTaskStatus(movedTask.id, destinationColumn, isPersonalPlan);
+        }
         }
     };
 
@@ -115,22 +120,25 @@ export default function Task({ auth }) {
             const updatedPersonalPlans = {
                 'to-do': projectData.personalPlans['to-do']?.map(task => ({ ...task, type: 'personalPlan' })) || [],
                 'in-progress': projectData.personalPlans['in-progress']?.map(task => ({ ...task, type: 'personalPlan' })) || [],
-                'verify': projectData.personalPlans['verify']?.map(task => ({ ...task, type: 'personalPlan' })) || [],
-                'done': projectData.personalPlans['done']?.map(task => ({ ...task, type: 'personalPlan' })) || [],
+                'done': [
+                ...(projectData.personalPlans['verify']?.map(task => ({ ...task, type: 'personalPlan' })) || []),
+                ...(projectData.personalPlans['done']?.map(task => ({ ...task, type: 'personalPlan' })) || [])
+                ],
             };
 
             // Cập nhật các tác vụ với thuộc tính 'type'
             const updatedTasks = {
                 'to-do': projectData.tasks['to-do']?.map(task => ({ ...task, type: 'task' })) || [],
                 'in-progress': projectData.tasks['in-progress']?.map(task => ({ ...task, type: 'task' })) || [],
-                'verify': projectData.tasks['verify']?.map(task => ({ ...task, type: 'task' })) || [],
-                'done': projectData.tasks['done']?.map(task => ({ ...task, type: 'task' })) || [],
+                'done': [
+                ...(projectData.tasks['verify']?.map(task => ({ ...task, type: 'task' })) || [])
+                ],
+                // đã đổi done thành verify vì nhân viên sẽ không nhìn thầy cột done
             };
 
             const mergedTasks = {
                 'to-do': [...updatedTasks['to-do'], ...updatedPersonalPlans['to-do']],
                 'in-progress': [...updatedTasks['in-progress'], ...updatedPersonalPlans['in-progress']],
-                'verify': [...updatedTasks['verify'], ...updatedPersonalPlans['verify']],
                 'done': [...updatedTasks['done'], ...updatedPersonalPlans['done']],
             };
 
