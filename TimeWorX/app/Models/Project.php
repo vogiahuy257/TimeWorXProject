@@ -115,4 +115,28 @@ class Project extends Model
                    ->count();
     }
 
+    // thông kê
+    public function countTasksAndCompleted()
+    {
+        $totalTasks = Task::withTrashed()
+            ->where('project_id', $this->project_id)
+            ->count();
+
+        $completedTasks = Task::withTrashed()
+            ->where('project_id', $this->project_id)
+            ->where('status_key', 'done')
+            ->count();
+
+        if( $totalTasks == 0 )
+        {
+            return "0/0";
+        }
+
+        $result = "{$completedTasks}/{$totalTasks}";
+        
+
+        return  $result;
+    }
+
+
 }

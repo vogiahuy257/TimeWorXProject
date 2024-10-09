@@ -20,7 +20,6 @@ export default function Folder({ auth }) {
         try {
             const response = await axios.get(`/api/projects/${auth.user.id}`);
             setProjects(response.data);
-            console.log(projects);
         } catch (error) {
             toast.error('Error fetching projects:', error.response ? error.response.data : error.message);
         }
@@ -122,16 +121,22 @@ export default function Folder({ auth }) {
             <ToastContainer className="custom_toast"/>
             {/* menu top */}
             <section id='menu'>
-                  <div className='block-button-left'>
+                  <div className='block-button-left flex gap-2'>
                          <PrimaryButton  onClick={handleCreate} className='btn-create'>
                             <p>Create Project</p>
                             <svg width="25" height="25" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                              <path d="M19.2192 14.9993H15.0005M15.0005 14.9993H10.7817M15.0005 14.9993V19.218M15.0005 14.9993L15.0005 10.7806M26.25 7.96873L26.25 22.0313C26.25 24.3612 24.3612 26.25 22.0312 26.25H7.96875C5.6388 26.25 3.75 24.3612 3.75 22.0313V7.96873C3.75 5.63879 5.6388 3.75 7.96875 3.75H22.0313C24.3612 3.75 26.25 5.63879 26.25 7.96873Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                             </svg>
                          </PrimaryButton>
+                         <PrimaryButton className='btn-create btn-report'>
+                            <p>Reports</p>
+                            <svg width="25" height="25" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                             <path d="M19.2192 14.9993H15.0005M15.0005 14.9993H10.7817M15.0005 14.9993V19.218M15.0005 14.9993L15.0005 10.7806M26.25 7.96873L26.25 22.0313C26.25 24.3612 24.3612 26.25 22.0312 26.25H7.96875C5.6388 26.25 3.75 24.3612 3.75 22.0313V7.96873C3.75 5.63879 5.6388 3.75 7.96875 3.75H22.0313C24.3612 3.75 26.25 5.63879 26.25 7.96873Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                            </svg>
+                         </PrimaryButton>
                   </div>
                   <div className='block-button-right'> 
-                    
+
                         <div className='block-search'>
                                 <form action="" method="">
                                     <input type="text" name="query" placeholder="Search projects" />
