@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\API\ReportController;
 use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\API\ProjectControllerView;
 use App\Http\Controllers\API\UserController;
@@ -48,6 +49,10 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
     //Task Comment
     Route::apiResource('task-comments', TaskCommentController::class)->except(['index']);
     Route::get('tasks/{taskId}/comments', [TaskCommentController::class, 'index']);
+
+    //Reports
+    Route::apiResource('reports', ReportController::class)->except(['index']);
+    Route::get('reports/{projectId}/reports', [ReportController::class, 'index']);
 
     // PersonalPlanController
     Route::apiResource('personal-plans', PersonalPlanController::class);

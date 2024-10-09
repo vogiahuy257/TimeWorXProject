@@ -63,4 +63,9 @@ class File extends Model
     {
         return $this->belongsTo(Project::class, 'project_id');
     }
+
+    public function reports()
+    {
+        return $this->belongsToMany(Report::class, 'report_file', 'file_id', 'report_id');
+    }
 }
