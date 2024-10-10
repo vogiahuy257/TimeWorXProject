@@ -18,6 +18,7 @@ export default function Folder({ auth }) {
     const [editProject, setEditProject] = useState([]); 
     const [searchQuery, setSearchQuery] = useState('');
 
+    //hàm gọi api lấy data
     const fetchProjectData = async () => {
         try {
             const response = await axios.get(`/api/projects/${auth.user.id}`);
@@ -27,7 +28,7 @@ export default function Folder({ auth }) {
             toast.error('Error fetching projects:', error.response ? error.response.data : error.message);
         }
     };
-
+    //hàm tìm kiếm theo mỗi lần nhấn cho project
     const handleSearch = (e) => {
         const query = e.target.value;
         setSearchQuery(query);
@@ -42,10 +43,12 @@ export default function Folder({ auth }) {
     }, [auth]);
     
 
+    // hàm mới form xóa
     const handleDeletedFormToggle = () => {
         setIsDeletedFormOpen(!isDeletedFormOpen);  
     };
 
+    //hàm đổi lại format lại ngày tháng năm
     const formatDateRange = (startDate, endDate) => {
         const optionsWithYear = { day: '2-digit', month: 'short', year: 'numeric' };
         const optionsWithoutYear = { day: '2-digit', month: 'short' };
@@ -64,6 +67,7 @@ export default function Folder({ auth }) {
         }
     };
 
+    //hàm hiện thông báo khi xóa chọn yes hoặc no
     const handleDelete = (projectId) => {
         toast.info(
             <div id='customToastInfo'>
@@ -77,6 +81,7 @@ export default function Folder({ auth }) {
         );
     };
     
+    //hàm cho sự kiện khi nhấn vào nút xóa
     const confirmDelete = (projectId) => {
         axios.delete(`/api/projects/${projectId}`)
             .then(() => {
@@ -89,16 +94,19 @@ export default function Folder({ auth }) {
             });
     };
 
+    //hàm mở form tạo dự án
     const handleCreate = () => {
         setIsFormOpen(true); 
         setEditProject(null);  
     };
 
+    // hàm mở form chỉnh sửa dự án
     const handleEdit = (project) => {
         setIsFormOpen(true);  
         setEditProject(project); 
     };
 
+    // submit cho cả 2 form chỉnh sửa và tạo dự án
     const handleSubmitForm = (projectData) => {
         if (editProject)
         {
@@ -107,6 +115,7 @@ export default function Folder({ auth }) {
                 .then(response => {
                     setProjects(projects.map(p => p.project_id === response.data.project_id ? response.data : p));
                     setIsFormOpen(false); 
+                    fetchProjectData();
                 })
                 .catch(error => {
                     toast.error('Error updating project:', error.response ? error.response.data : error.message);
@@ -118,7 +127,8 @@ export default function Folder({ auth }) {
             axios.post('/api/projects', projectData)
                 .then(response => {
                     setProjects([...projects, response.data]);
-                    setIsFormOpen(false);  // Đóng form
+                    setIsFormOpen(false); 
+                    fetchProjectData();
                 })
                 .catch(error => {
                     toast.error('Error creating project:', error.response ? error.response.data : error.message);
@@ -142,9 +152,9 @@ export default function Folder({ auth }) {
                          </PrimaryButton>
 
                          <PrimaryButton className='btn-create btn-report'>
-                            <p>Reports</p>
-                            <svg width="25" height="25" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                             <path d="M19.2192 14.9993H15.0005M15.0005 14.9993H10.7817M15.0005 14.9993V19.218M15.0005 14.9993L15.0005 10.7806M26.25 7.96873L26.25 22.0313C26.25 24.3612 24.3612 26.25 22.0312 26.25H7.96875C5.6388 26.25 3.75 24.3612 3.75 22.0313V7.96873C3.75 5.63879 5.6388 3.75 7.96875 3.75H22.0313C24.3612 3.75 26.25 5.63879 26.25 7.96873Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                            <p>Reports Project</p>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.5101 8.13298L10.4102 15.2328C9.56597 16.0771 8.19717 16.0771 7.35292 15.2328C6.5069 14.3868 6.50893 13.0145 7.35745 12.171L12.8632 6.69779L14.2459 5.31511C15.9282 3.63278 18.6558 3.63278 20.3381 5.31512C22.0205 6.99745 22.0205 9.72506 20.3381 11.4074L18.9763 12.7693L13.8148 17.9308C11.1448 20.712 7.09921 21.1351 4.27061 18.4197C1.47664 15.7375 1.95021 11.7162 4.7752 8.89123L9.91637 3.74927" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
                          </PrimaryButton>
                   </div>

@@ -141,6 +141,8 @@
     margin-top: 32px;
     display: flex;
     justify-content: center;
+    width: 90%;
+    margin: auto;
 }
 
 #dashboard .block #main .content main #project-view main .block-task

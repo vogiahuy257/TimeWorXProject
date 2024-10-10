@@ -168,7 +168,7 @@ export default function Task({ auth }) {
                     <div className="ml-4 filter-section flex items-center justify-center">
                         {/* Bộ lọc theo trạng thái */}
                         <select 
-                            className="border border-gray-300 rounded-md p-auto text-sm focus:ring focus:ring-black-500 appearance-none"
+                            className="border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-black-400 appearance-none bg-white text-gray-700 transition duration-150 ease-in-out"
                             onChange={(e)=>setProjectId(e.target.value)}
                         >
                             <option value="">All</option>
