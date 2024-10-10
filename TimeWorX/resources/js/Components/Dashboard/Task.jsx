@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Head } from '@inertiajs/react';
 import { ToastContainer, toast } from 'react-toastify';
@@ -8,18 +7,16 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import TaskForm from './Layouts/Project/TaskForm';
 import DeletedTasks from './Layouts/Project/DeletedTasks';
-import TaskUsers from './Layouts/Project/TaskUsersForm';
 import TaskComments from './Layouts/Project/TaskComments';
 
 export default function Task({ auth }) {
-    const { project_id } = useParams();
-    const [project, setProject] = useState(null);
-    const [isFormOpen, setIsFormOpen] = useState(false); 
+    const [ project_id,setProjectId ] = useState();
+    const [isFormOpen, setIsFormOpen] = useState(false);
+    const [projects, setProjects] = useState([]); 
     const [selectedTask, setSelectedTask] = useState(null);
     const [taskStatus, setTaskStatus] = useState(null);
     const [totalTaskCount,setTotalTaskCount] = useState(0);
     const [showDeletedTasks, setShowDeletedTasks] = useState(false);
-    const [showUserList, setShowUserList] = useState(false);
     const [showComments,setShowComments] = useState(false);
 
     const toggleDeletedTasks = () => {
@@ -66,7 +63,6 @@ export default function Task({ auth }) {
     const [tasks, setTasks] = useState({
         'to-do': [],
         'in-progress': [],
-        'verify': [],
         'done': [],
     });
 
@@ -111,11 +107,11 @@ export default function Task({ auth }) {
         }
     };
 
-    const fetchProjectData = async (user_id) => {
+    const fetchProjectData = async (user_id,project_id) => {
         try {
-            const response = await axios.get(`/api/tasks/${user_id}`);
+            const response = await axios.get(`/api/tasks/${user_id}`, { params: { project_id } });
             const projectData = response.data;
-
+            setProjects(response.data.projects);
             // Cập nhật các kế hoạch cá nhân với thuộc tính 'type'
             const updatedPersonalPlans = {
                 'to-do': projectData.personalPlans['to-do']?.map(task => ({ ...task, type: 'personalPlan' })) || [],
@@ -146,17 +142,14 @@ export default function Task({ auth }) {
             setTasks(mergedTasks);
             const totalTaskCount = Object.values(mergedTasks).flat().length;
             setTotalTaskCount(totalTaskCount);
-            console.log(mergedTasks);
         } catch (error) {
             toast.error('Error fetching project details or tasks');
         }
     };
 
     useEffect(() => {
-        fetchProjectData(auth.user.id);
-        
+        fetchProjectData(auth.user.id,project_id);
     }, [project_id]);
-
     return (
         <>
             <Head title="Task" />
@@ -167,8 +160,27 @@ export default function Task({ auth }) {
             <div className="block-project">
                 <div className='block-element-left'>
                     <div className='block-project-name'>
-                        <h1>Your Task</h1>
+                        <h1>Task</h1>
                     </div>
+                    
+
+                    {/* Bộ lọc */}
+                    <div className="ml-4 filter-section flex items-center justify-center">
+                        {/* Bộ lọc theo trạng thái */}
+                        <select 
+                            className="border border-gray-300 rounded-md p-auto text-sm focus:ring focus:ring-black-500 appearance-none"
+                            onChange={(e)=>setProjectId(e.target.value)}
+                        >
+                            <option value="">All</option>
+                                {projects.map(project => (
+                                    <option key={project.id} value={project.id}>
+                                        {project.name}
+                                    </option>
+                                ))}
+                            <option value="personalPlan">Your Pesonal Plan</option>
+                        </select>
+                    </div>
+
                 </div>
                 <div className='block-element-right'>
                     <PrimaryButton onClick={toggleDeletedTasks} className='btn btn-history'>
