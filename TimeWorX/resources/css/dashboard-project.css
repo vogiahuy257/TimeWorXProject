@@ -106,7 +106,7 @@
     border: 2px solid var(--color-black);
 }
 
-#dashboard .block #main .content main #project #menu .block-button-right .block-search button
+#dashboard .block #main .content main #project #menu .block-button-right .block-search svg
 {
    position: absolute;
    top: 50%;
