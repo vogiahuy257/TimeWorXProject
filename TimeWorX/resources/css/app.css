@@ -85,6 +85,7 @@ li
 
     .custom-scrollbar::-webkit-scrollbar {
         width: 5px; 
+        display: none;
     }
   
     .custom-scrollbar::-webkit-scrollbar-track {

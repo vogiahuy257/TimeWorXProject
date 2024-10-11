@@ -6,14 +6,26 @@ const ReportForm = ({ onClose ,task}) => {
     const [taskId, setTaskId] = useState(task ? task.task_id : '');
     const [reportTitle, setReportTitle] = useState('');
     const [statusReport, setStatusReport] = useState('');
+
+    //form input
     const [completionGoal, setCompletionGoal] = useState('');
     const [todayWork, setTodayWork] = useState('');
     const [nextSteps, setNextSteps] = useState('');
     const [issues, setIssues] = useState('');
+    //docment
     const [documents, setDocuments] = useState([]);
+    const [documentLink, setDocumentLink] = useState('');
+    const [isLink, setIsLink] = useState(false);
+    const [fileSizeError, setFileSizeError] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        let doc = documents;
+
+        if(isLink)
+        {
+           doc = documentLink;
+        }
 
         const reportData = {
             report_by_user_id: reportByUserId,
@@ -25,7 +37,7 @@ const ReportForm = ({ onClose ,task}) => {
             today_work: todayWork,
             next_steps: nextSteps,
             issues: issues,
-            documents: documents
+            documents: doc
         };
 
         // Gửi dữ liệu báo cáo (thêm mã xử lý gửi ở đây)
@@ -65,15 +77,16 @@ const ReportForm = ({ onClose ,task}) => {
                 
             <form className='box-form flex flex-col' onSubmit={handleSubmit}>
                 <div className='custom-form custom-scrollbar'>
-                    <div className='header-form flex mt-4 mb-4'>
+                    <div className='header-form flex mt-3 mb-2'>
                         <h1>Task name: {task.content}</h1>
-                        <h1 className='ml-auto'>date: 10/10/2024</h1>
+                        <h1 className='ml-auto'>Date: 10/10/2024</h1>
                     </div>
                     <div className='box-input'>
                         <h3>Goals to be complete:</h3>
                         <input type="text"
                                 value={completionGoal}
                                 onChange={(e) =>setCompletionGoal(e.target.value)} 
+                                placeholder="Enter the goals to complete for this task"
                                 required
                         />
                         {/* error */}
@@ -84,6 +97,7 @@ const ReportForm = ({ onClose ,task}) => {
                         <textarea
                                 value={todayWork}
                                 onChange={(e) =>setTodayWork(e.target.value)} 
+                                placeholder="Describe the work you completed today"
                                 required
                         />
                         {/* error */}
@@ -94,6 +108,7 @@ const ReportForm = ({ onClose ,task}) => {
                         <input type='text'
                                 value={nextSteps}
                                 onChange={(e) =>setNextSteps(e.target.value)} 
+                                placeholder="Outline the next steps for this task"
                                 required
                         />
                         {/* error */}
@@ -101,10 +116,33 @@ const ReportForm = ({ onClose ,task}) => {
                 
 
                     <div className='box-input'>
+                        <div className='flex items-center mb-2 mt-4'>
                         <h3>Document:</h3>
+                            <select 
+                                name="upload-type"
+                                id="upload-type"
+                                value={isLink ? 'link' : 'upload'}
+                                onChange={(e) => setIsLink(e.target.value === 'link')}
+                                className="form-select ml-2"
+                            >
+                                <option value="upload">File</option>
+                                <option value="link">Link</option>
+                            </select>
+                        </div>
                         {/* Nút tải lên tài liệu */}
-                        <UploadMultipleFiler onFilesChange={(files) => setDocuments(files)} />
+                        {isLink ? (
+                            <input
+                                type="text"
+                                value={documentLink}
+                                onChange={(e) => setDocumentLink(e.target.value)}
+                                placeholder="Enter the URL of the document"
+                                required
+                            />
+                        ) : (
+                            <UploadMultipleFiler onFilesChange={(files) => setDocuments(files)} setIsLink={setIsLink} setFileSizeError={setFileSizeError} />
+                        )}
                         {/* error */}
+                        {fileSizeError && <p className="text-error">{fileSizeError}</p>}
                     </div>
 
                     <div className='box-input'>
@@ -112,6 +150,7 @@ const ReportForm = ({ onClose ,task}) => {
                         <input type='text'
                                 value={issues}
                                 onChange={(e) =>setIssues(e.target.value)} 
+                                placeholder="Describe any issues or difficulties encountered"
                                 required
                         />
                         {/* error */}
