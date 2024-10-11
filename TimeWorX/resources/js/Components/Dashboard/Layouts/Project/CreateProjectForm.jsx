@@ -9,6 +9,10 @@ const CreateProjectForm = ({ user_id,  onClose, onSubmit, title, project }) => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [status, setStatus] = useState('');
+    const [error, setError] = useState('');
+    const [nameError, setNameError] = useState('');
+    const [descriptionError, setDescriptionError] = useState('');
+
 
     // Hàm để chuyển đổi định dạng ngày từ ISO sang 'yyyy-MM-dd'
     function formatDate(dateString) {
@@ -29,8 +33,55 @@ const CreateProjectForm = ({ user_id,  onClose, onSubmit, title, project }) => {
         }
     }, [project]);
 
+
+    const handleStartDateChange = (e) => {
+        const newStartDate = e.target.value;
+        setStartDate(newStartDate);
+        
+        // Kiểm tra ngay khi người dùng thay đổi ngày bắt đầu
+        if ((startDate != "" || endDate != "") && new Date(newStartDate) > new Date(endDate)) {
+            setError('Ngày bắt đầu không được lớn hơn ngày kết thúc.');
+        } else {
+            setError(''); // Xóa lỗi nếu không có vấn đề
+        }
+    };
+    
+    const handleEndDateChange = (e) => {
+        const newEndDate = e.target.value;
+        setEndDate(newEndDate);
+    
+        // Kiểm tra ngay khi người dùng thay đổi ngày kết thúc
+        if ((startDate != '' || endDate != "") && new Date(startDate) > new Date(newEndDate)) {
+            setError('Ngày bắt đầu không được lớn hơn ngày kết thúc.');
+        } else {
+            setError('');
+        }
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (!projectName) {
+            setNameError('Tên dự án không được để trống.');
+            return;
+        } else if (projectName.length > 100) {
+            setNameError('Tên dự án không được vượt quá 100 ký tự.');
+            return;
+        } else {
+            setNameError('');
+        }
+
+        if (!projectDescription) {
+            setDescriptionError('Mô tả dự án không được để trống.');
+            return;
+        } else {
+            setDescriptionError('');
+        }
+
+        if ((startDate != '' || endDate != "") && new Date(startDate) > new Date(endDate)) {
+            setError('Ngày bắt đầu không được lớn hơn ngày kết thúc.');
+            return;
+        }
         const projectData = {
             project_name: projectName,
             project_description: projectDescription,
@@ -59,54 +110,57 @@ const CreateProjectForm = ({ user_id,  onClose, onSubmit, title, project }) => {
                 <form onSubmit={handleSubmit}>
 
                     <label>Project Name</label>
-                    <div className='projectName'>
-                    <input
-                        type="text"
-                        value={projectName}
-                        onChange={(e) => setProjectName(e.target.value)}
-                        required
-                    />
+                    <div className='projectName flex flex-col justify-center items-center mb-2'>
+                        <input
+                            type="text"
+                            value={projectName}
+                            onChange={(e) =>setProjectName(e.target.value)}
+                        />
+                        {nameError && <p className="m-auto error-message">{nameError}</p>}
                     </div>
 
                     <label>Project Description</label>
-                    <div className='project-description'>
-                    <textarea
-                        value={projectDescription}
-                        onChange={(e) => setProjectDescription(e.target.value)}
-                        required
-                    />
+                    <div className='project-description flex flex-col justify-center items-center mb-2'>
+                        <textarea
+                            value={projectDescription}
+                            onChange={(e) => setProjectDescription(e.target.value)}
+                        />
+                        {descriptionError && <p className="error-message">{descriptionError}</p>}
                     </div>
 
-                    <div className='project-date'>
-                        <div>
-                            <label>Start Date</label>
+                    <div className='box-input'>
+                        <div className='project-date'>
                             <div>
-                            <input
-                                type="date"
-                                value={startDate}
-                                onChange={(e) => setStartDate(e.target.value)}
-                                required
-                            />
+                                <label>Start Date</label>
+                                <div>
+                                <input
+                                    type="date"
+                                    value={startDate}
+                                    onChange={handleStartDateChange}
+                                    required
+                                />
+                                </div>
                             </div>
-                        </div>
-                        
-                        <p>-</p>
+                            
+                            <p className='text'>-</p>
 
-                        <div>
-                            <label>End Date</label>
                             <div>
-                            <input
-                                type="date"
-                                value={endDate}
-                                onChange={(e) => setEndDate(e.target.value)}
-                                required
-                            />
+                                <label>End Date</label>
+                                <div>
+                                <input
+                                    type="date"
+                                    value={endDate}
+                                    onChange={handleEndDateChange }
+                                    required
+                                />
+                                </div>
                             </div>
                         </div>
+                        {error && <p className="error-message">{error}</p>}
                     </div>
 
                     <label>Status</label>
-                   <div className='project-status'>
+                   <div className='project-status mb-3'>
                     <select
                         value={status}
                         onChange={(e) =>  setStatus(e.target.value)}

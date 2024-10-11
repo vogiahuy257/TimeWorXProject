@@ -87,6 +87,7 @@ export default function Folder({ auth }) {
             .then(() => {
                 setProjects(projects.filter(project => project.project_id !== projectId));
                 toast.dismiss(); 
+                fetchProjectData();
                 toast.success('Project deleted successfully!');
             })
             .catch(error => {
