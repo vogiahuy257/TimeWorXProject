@@ -33,8 +33,6 @@ class Report extends Model
         'report_by_user_id',
         'project_id',
         'task_id',
-        'report_title',
-        'status_report',
         'completion_goal',
         'today_work',
         'next_steps',

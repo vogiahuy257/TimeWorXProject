@@ -27,6 +27,7 @@ class ProjectControllerView extends Controller
                 'id' => $project->project_id, 
                 'name' => $project->project_name, 
                 'description' => $project->project_description, 
+                'deadline' => $project->end_date
             ],
             'tasks' => [
                 'to-do' => [],

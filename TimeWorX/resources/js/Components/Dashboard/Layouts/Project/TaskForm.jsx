@@ -3,13 +3,15 @@ import "./css/TaskForm.css";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { toast } from "react-toastify";
 
-const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status }) => {
+const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,project_deadline }) => {
     const [taskName, setTaskName] = useState('');
     const [deadline, setDeadLine] = useState('');
     const [description, setDescription] = useState('');
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [users, setUsers] = useState([]);
     const [isUserBoxVisible, setIsUserBoxVisible] = useState(false);
+    const [deadLineError, setDeadLineError] =useState('');
+    
 
 
     const fetchUsers = async () => {
@@ -28,14 +30,39 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status }
         }
     };
 
+    const onChangeDeadLine = (e) => {
+        const selectedDate = e.target.value;
+        setDeadLine(selectedDate);
+    
+        if (project_deadline && new Date(selectedDate) > new Date(project_deadline)) {
+            setDeadLineError(`Deadline cannot be greater than the project's end date: ${formatDeadline(project_deadline)}`);
+        } 
+        else 
+        {
+            setDeadLineError('');
+        }
+    };
+    
+
     useEffect(() => {
         fetchUsers();
     }, []);
 
     const convertDateFormat = (dateStr) => {
+        if (!dateStr) return '';
         const [day, month, year] = dateStr.split('-');
         return `${year}-${month}-${day}`;
     };
+
+    const formatDeadline = (deadline) => {
+        const date = new Date(deadline);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); 
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    };
+    
+    
 
     useEffect(() => {
         if (task && projectId != null) 
@@ -63,6 +90,11 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status }
     const handleSubmit = async (event) => {
         event.preventDefault();
         let taskData = {};
+
+        if (project_deadline && new Date(deadline) > new Date(project_deadline)) {
+            setDeadLineError(`Deadline cannot be greater than the project's end date: ${formatDeadline(project_deadline)}`);
+            return;
+        }
         if(projectId != null )
         {
             taskData = {
@@ -138,7 +170,8 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status }
     
                 <form onSubmit={handleSubmit}>
                     <div className="task-form-header">
-                      <h2> {user_id ? (task ? `Edit ${task.name}` : "Create Task") : (task ? `Edit ${task.content}` : "Create Task")}</h2>
+                            <h2> {user_id ? (task ? `Edit ${task.name}` : "Create Task") : (task ? `Edit ${task.content}` : "Create Task")}</h2>
+                            <p> {project_deadline ? `Project end date: ${formatDeadline(project_deadline)}` : null}</p>
                         <div className="form-main">
                         <div className="form-group task-group">
                                 <label htmlFor="task-name">Task name</label>
@@ -157,9 +190,10 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status }
                                     type="date"
                                     id="time-starts"
                                     value={deadline}
-                                    onChange={(e) => setDeadLine(e.target.value)}
+                                    onChange={onChangeDeadLine}
                                     required
                                 />
+                                {deadLineError && <p className="text-error">{deadLineError}</p>}
                         </div>
 
                         <div className="form-group">

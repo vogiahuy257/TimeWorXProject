@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-
         Schema::create('files', function (Blueprint $table) {
             $table->id('file_id'); // Primary key
             $table->string('file_name', 255); // File name
             $table->foreignId('uploaded_by')->constrained('users', 'id')->onDelete('cascade'); // Foreign key to 'users' table
-            $table->timestamp('uploaded_at')->useCurrent(); // Uploaded at
+            $table->timestamps(); // Uploaded at
             $table->foreignId('project_id')->constrained('projects', 'project_id')->onDelete('cascade'); // Foreign key to 'projects' table
-            $table->string('file_type', 60); 
+            $table->string('file_type', 255); 
             $table->string('file_path', 255); // File path
             $table->softDeletes();
         });
 
+        // liên kế 1 nhiều với report
         Schema::create('report_file', function (Blueprint $table) {
             $table->id(); // Khóa chính
             $table->foreignId('report_id')->constrained('reports', 'report_id')->onDelete('cascade'); // Khóa ngoại liên kết với bảng 'reports'

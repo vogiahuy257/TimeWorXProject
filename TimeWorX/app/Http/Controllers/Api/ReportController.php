@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Services\FileStorageService;
 use App\Models\Report;
+use App\Models\File;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -11,16 +13,10 @@ class ReportController extends Controller
     /**
      * Display a listing of the reports.
      *
-     *
      */
     public function index($projectId)
     {
-        // Kiểm tra xem project_id có hợp lệ không
-        $reports = Report::with(['user', 'project', 'task'])
-            ->where('project_id', $projectId)
-            ->get();
 
-        return response()->json($reports);
     }
 
     /**
@@ -28,22 +24,57 @@ class ReportController extends Controller
      *
      * @param  Request  $request
      */
-    public function store(Request $request)
+    public function store(Request $request ,FileStorageService $fileStorageService)
     {
+        
         $validatedData = $request->validate([
             'report_by_user_id' => 'required|exists:users,id',
             'project_id' => 'required|exists:projects,project_id',
             'task_id' => 'nullable|exists:tasks,task_id',
-            'report_title' => 'required|string|max:100',
-            'status_report' => 'required|string|max:100',
             'completion_goal' => 'nullable|string',
             'today_work' => 'nullable|string',
             'next_steps' => 'nullable|string',
             'issues' => 'nullable|string',
+            'isLink' => 'required|boolean',
+            'documents' => 'nullable|array',
         ]);
 
+        // Tạo mới report
         $report = Report::create($validatedData);
-        return response()->json($report);
+
+        // Xử lý tài liệu
+        if ($request->isLink) {
+            // Nếu là link, tạo mới file với kiểu 'link'
+            $file = File::create([
+                'file_name' => $request->documents,  // Ở đây, documents là link tài liệu
+                'uploaded_by' => $request->report_by_user_id,
+                'project_id' => $report->project_id,
+                'file_type' => 'link',
+                'file_path' => $request->documents,
+            ]);
+
+            // Gắn file với report
+            $report->files()->attach($file->file_id);
+
+        } else {
+            // Nếu không phải link, xử lý file tải lên
+            foreach ($request->documents as $uploadedFile) {
+                // Sử dụng FileStorageService để lưu file
+                $filePath = $fileStorageService->storeFile($uploadedFile);
+                $file = File::create([
+                    'file_name' => $uploadedFile->getClientOriginalName(),
+                    'uploaded_by' => $request->report_by_user_id,
+                    'project_id' => $report->project_id,
+                    'file_type' => $uploadedFile->getClientMimeType(),
+                    'file_path' => $filePath,
+                ]);
+
+                // Gắn file với report
+                $report->files()->attach($file->file_id);
+            }
+        }
+
+        return response()->json();
     }
 
     /**
@@ -53,7 +84,7 @@ class ReportController extends Controller
      */
     public function show(Report $report)
     {
-        return response()->json($report->load(['user', 'project', 'task']));
+        
     }
 
     /**
@@ -64,20 +95,7 @@ class ReportController extends Controller
      */
     public function update(Request $request, Report $report)
     {
-        $validatedData = $request->validate([
-            'report_by_user_id' => 'sometimes|exists:users,id',
-            'project_id' => 'sometimes|exists:projects,project_id',
-            'task_id' => 'nullable|exists:tasks,task_id',
-            'report_title' => 'sometimes|string|max:100',
-            'status_report' => 'sometimes|string|max:100',
-            'completion_goal' => 'nullable|string',
-            'today_work' => 'nullable|string',
-            'next_steps' => 'nullable|string',
-            'issues' => 'nullable|string',
-        ]);
-
-        $report->update($validatedData);
-        return response()->json($report);
+       
     }
 
     /**

@@ -16,9 +16,7 @@ return new class extends Migration
             $table->foreignId('report_by_user_id')->constrained('users', 'id')->onDelete('cascade'); // Foreign key to 'users' table
             $table->foreignId('project_id')->constrained('projects', 'project_id')->onDelete('cascade'); // Foreign key to 'projects' table
             $table->foreignId('task_id')->nullable()->constrained('tasks', 'task_id')->onDelete('set null');// report không nhất tiết phải mang task_id 
-            $table->string('report_title', 100); // Report title
             $table->timestamps(); // created_at, updated_at
-            $table->string('status_report', 100); // Status report
             $table->softDeletes();
 
             $table->text('completion_goal')->nullable(); // Mục tiêu cần hoàn thành

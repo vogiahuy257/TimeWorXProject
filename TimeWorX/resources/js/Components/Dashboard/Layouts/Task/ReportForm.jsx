@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import UploadMultipleFiler from './UploadMultipleFiler';
-const ReportForm = ({ onClose ,task}) => {
-    const [reportByUserId, setReportByUserId] = useState('');
-    const [projectId, setProjectId] = useState('');
-    const [taskId, setTaskId] = useState(task ? task.task_id : '');
-    const [reportTitle, setReportTitle] = useState('');
-    const [statusReport, setStatusReport] = useState('');
+import axios from 'axios';
+import {  toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const ReportForm = ({ onClose ,task ,user_id}) => {
 
     //form input
     const [completionGoal, setCompletionGoal] = useState('');
@@ -18,48 +17,96 @@ const ReportForm = ({ onClose ,task}) => {
     const [isLink, setIsLink] = useState(false);
     const [fileSizeError, setFileSizeError] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        let doc = documents;
-
-        if(isLink)
-        {
-           doc = documentLink;
-        }
-
-        const reportData = {
-            report_by_user_id: reportByUserId,
-            project_id: projectId,
-            task_id: taskId,
-            report_title: reportTitle,
-            status_report: statusReport,
-            completion_goal: completionGoal,
-            today_work: todayWork,
-            next_steps: nextSteps,
-            issues: issues,
-            documents: doc
-        };
-
-        // Gửi dữ liệu báo cáo (thêm mã xử lý gửi ở đây)
-        console.log('Report data:', reportData);
-
-        // Đây là ví dụ, bạn có thể gửi `reportData` bằng fetch hoặc axios
-        // Ví dụ với fetch:
-        /*
-        fetch('/api/upload', {
-            method: 'POST',
-            body: reportData
-        }).then(response => {
-            if (response.ok) {
-                // Xử lý sau khi upload thành công
-            }
-        }).catch(error => {
-            console.error('Error:', error);
-        });
-        */
-
+    const getCurrentDate = () => {
+        const date = new Date();
+        const day = String(date.getDate()).padStart(2, '0'); 
+        const month = String(date.getMonth() + 1).padStart(2, '0'); 
+        const year = date.getFullYear(); // Lấy năm
+    
+        return `${day}-${month}-${year}`; 
     };
 
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     let doc = documents;
+
+    //     if(isLink)
+    //     {
+    //        doc = documentLink;
+    //     }
+
+    //     const reportData = {
+    //         report_by_user_id: user_id,
+    //         project_id: task.project_id,
+    //         task_id: task.id,
+    //         completion_goal: completionGoal,
+    //         today_work: todayWork,
+    //         next_steps: nextSteps,
+    //         issues: issues,
+    //         isLink: isLink ? '1' : '0',
+    //         documents: doc
+    //     };
+
+    //     // Gửi dữ liệu báo cáo (thêm mã xử lý gửi ở đây)
+    //     console.log('Report data:', reportData);
+
+    //     const headers = {
+    //         'Content-Type': isLink ? 'application/json' : 'multipart/form-data'
+    //     };
+        
+    //     axios.post('/api/reports', reportData, { headers })
+    //     .then((response) => {
+    //         toast.success('Report submitted successfully!');
+    //     })
+    //     .catch((error) => {
+    //         const message = error.response?.data?.message || 'Error submitting report. Please try again.';
+    //         toast.error(message);
+    //         console.log('Error response:', message);
+    //     });
+
+    // };
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        const reportData = new FormData(); // Sử dụng FormData nếu có file upload
+    
+        reportData.append('report_by_user_id', user_id);
+        reportData.append('project_id', task.project_id);
+        reportData.append('task_id', task.id);
+        reportData.append('completion_goal', completionGoal);
+        reportData.append('today_work', todayWork);
+        reportData.append('next_steps', nextSteps);
+        reportData.append('issues', issues);
+        reportData.append('isLink', isLink ? '1' : '0');
+    
+        // Nếu là link thì chỉ append link
+        if (isLink) {
+            reportData.append('documents', documentLink);
+        } else {
+            // Nếu là file thì append từng file
+            documents.forEach((file, index) => {
+                reportData.append(`documents[${index}]`, file);
+            });
+        }
+    
+        const headers = {
+            'Content-Type': isLink ? 'application/json' : 'multipart/form-data'
+        };
+        
+        axios.post('/api/reports', reportData, { headers })
+        .then((response) => {
+            toast.success('Report submitted successfully!');
+            onClose();  // Close the form after successful submission
+        })
+        .catch((error) => {
+            const message = error.response?.data?.message || 'Error submitting report. Please try again.';
+            toast.error(message);
+            console.log('Error response:', message);
+        });
+    };
+    
+    
   return (
     <section id="report-form">
       <div className='main'>
@@ -72,14 +119,14 @@ const ReportForm = ({ onClose ,task}) => {
                 </button>
 
             <div className='text'>
-                <h2>Report Form</h2>
+                <h2>Task Report</h2>
             </div>
                 
             <form className='box-form flex flex-col' onSubmit={handleSubmit}>
                 <div className='custom-form custom-scrollbar'>
                     <div className='header-form flex mt-3 mb-2'>
                         <h1>Task name: {task.content}</h1>
-                        <h1 className='ml-auto'>Date: 10/10/2024</h1>
+                        <h1 className='ml-auto'>Date: {getCurrentDate()}</h1>
                     </div>
                     <div className='box-input'>
                         <h3>Goals to be complete:</h3>

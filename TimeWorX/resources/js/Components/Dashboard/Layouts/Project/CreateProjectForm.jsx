@@ -41,7 +41,12 @@ const CreateProjectForm = ({ user_id,  onClose, onSubmit, title, project }) => {
         // Kiểm tra ngay khi người dùng thay đổi ngày bắt đầu
         if ((startDate != "" || endDate != "") && new Date(newStartDate) > new Date(endDate)) {
             setError('Ngày bắt đầu không được lớn hơn ngày kết thúc.');
-        } else {
+        } 
+        else if((startDate != "" || endDate != "") && new Date(newStartDate) == new Date(endDate))
+        {
+            setError('Ngày bắt đầu không bằng ngày kết thúc.');
+        }
+        else {
             setError(''); // Xóa lỗi nếu không có vấn đề
         }
     };
@@ -53,7 +58,15 @@ const CreateProjectForm = ({ user_id,  onClose, onSubmit, title, project }) => {
         // Kiểm tra ngay khi người dùng thay đổi ngày kết thúc
         if ((startDate != '' || endDate != "") && new Date(startDate) > new Date(newEndDate)) {
             setError('Ngày bắt đầu không được lớn hơn ngày kết thúc.');
-        } else {
+        }
+        else if (new Date(endDate) < new Date()) {
+            setError('Ngày kết thúc không được nhỏ hơn ngày hiện tại.');
+        } 
+        else if((startDate != "" || endDate != "") && new Date(newStartDate) == new Date(endDate))
+        {
+            setError('Ngày bắt đầu không bằng ngày kết thúc.');
+        }
+        else {
             setError('');
         }
     };
@@ -80,6 +93,15 @@ const CreateProjectForm = ({ user_id,  onClose, onSubmit, title, project }) => {
 
         if ((startDate != '' || endDate != "") && new Date(startDate) > new Date(endDate)) {
             setError('Ngày bắt đầu không được lớn hơn ngày kết thúc.');
+            return;
+        }
+        if((startDate != "" || endDate != "") && new Date(startDate) == new Date(endDate))
+        {
+            setError('Ngày bắt đầu không bằng ngày kết thúc.');
+            return
+        }
+        if (endDate != '' && new Date(endDate) < new Date()) {
+            setError('Ngày kết thúc không được nhỏ hơn ngày hiện tại.');
             return;
         }
         const projectData = {
@@ -150,7 +172,7 @@ const CreateProjectForm = ({ user_id,  onClose, onSubmit, title, project }) => {
                                 <input
                                     type="date"
                                     value={endDate}
-                                    onChange={handleEndDateChange }
+                                    onChange={handleEndDateChange}
                                     required
                                 />
                                 </div>

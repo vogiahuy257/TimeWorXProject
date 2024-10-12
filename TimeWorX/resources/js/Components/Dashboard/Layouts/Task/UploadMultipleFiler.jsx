@@ -29,6 +29,7 @@ const UploadMultipleFiler = ({ onFilesChange, setIsLink, setFileSizeError }) => 
         setUploadedFiles(prevFiles => [...prevFiles, ...validFiles]);
         onFilesChange([...uploadedFiles, ...validFiles]);
     };
+    
 
     const removeFile = (index) => {
         const updatedFiles = uploadedFiles.filter((_, i) => i !== index);

@@ -21,6 +21,7 @@ const DashboardProjectView = ({ auth }) => {
     const [showDeletedTasks, setShowDeletedTasks] = useState(false);
     const [showUserList, setShowUserList] = useState(false);
     const [showComments,setShowComments] = useState(false);
+    const [projectDeadLine,setProjectDeadLine] = useState();
 
 
     const toggleComment = () => {
@@ -128,6 +129,7 @@ const DashboardProjectView = ({ auth }) => {
             const response = await axios.get(`/api/project-view/${project_id}`);
             const projectData = response.data;
             setProject(projectData.project);
+            setProjectDeadLine(projectData.project.deadline);
             setTasks({
                 'to-do': projectData.tasks['to-do'] || [],
                 'in-progress': projectData.tasks['in-progress'] || [],
@@ -292,9 +294,7 @@ const DashboardProjectView = ({ auth }) => {
 
              {/* Hiển thị TaskForm */}
              {isFormOpen && (
-                <TaskForm 
-                    onClose={toggleForm} projectId={project_id} refreshTasks={fetchProjectData} task={selectedTask} task_status={taskStatus}
-                />
+                <TaskForm onClose={toggleForm} projectId={project_id} refreshTasks={fetchProjectData} task={selectedTask} task_status={taskStatus} project_deadline={projectDeadLine} />
              )}
         </section>
         </>

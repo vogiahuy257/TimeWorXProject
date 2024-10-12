@@ -117,6 +117,7 @@ export default function Folder({ auth }) {
                     setProjects(projects.map(p => p.project_id === response.data.project_id ? response.data : p));
                     setIsFormOpen(false); 
                     fetchProjectData();
+                    toast.success('Project create successfully!');
                 })
                 .catch(error => {
                     toast.error('Error updating project:', error.response ? error.response.data : error.message);

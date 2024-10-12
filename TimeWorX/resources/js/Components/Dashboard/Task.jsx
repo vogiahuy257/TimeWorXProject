@@ -316,7 +316,7 @@ export default function Task({ auth }) {
 
              
                 {/* hiển thị ReportForm */}
-             {showReportForm && <ReportForm task={selectedTask} onClose={() => setShowReportForm(false)}/>}
+             {showReportForm && <ReportForm task={selectedTask} user_id={auth.user.id} onClose={() => setShowReportForm(false)}/>}
                 {/* Hiển thị TaskForm */}
              {isFormOpen && <TaskForm onClose={toggleForm} user_id={auth.user.id} projectId={null} refreshTasks={fetchProjectData} task={selectedTask} task_status={taskStatus}/>}
         </section>
