@@ -40,11 +40,11 @@ const CreateProjectForm = ({ user_id,  onClose, onSubmit, title, project }) => {
         
         // Kiểm tra ngay khi người dùng thay đổi ngày bắt đầu
         if ((startDate != "" || endDate != "") && new Date(newStartDate) > new Date(endDate)) {
-            setError('Ngày bắt đầu không được lớn hơn ngày kết thúc.');
+            setError('The start date cannot be greater than the end date.');
         } 
-        else if((startDate != "" || endDate != "") && new Date(newStartDate) == new Date(endDate))
+        else if(new Date(newStartDate) == new Date(endDate))
         {
-            setError('Ngày bắt đầu không bằng ngày kết thúc.');
+            setError('Start date cannot be equal to end date.');
         }
         else {
             setError(''); // Xóa lỗi nếu không có vấn đề
@@ -57,14 +57,14 @@ const CreateProjectForm = ({ user_id,  onClose, onSubmit, title, project }) => {
     
         // Kiểm tra ngay khi người dùng thay đổi ngày kết thúc
         if ((startDate != '' || endDate != "") && new Date(startDate) > new Date(newEndDate)) {
-            setError('Ngày bắt đầu không được lớn hơn ngày kết thúc.');
+            setError('The start date cannot be greater than the end date.');
         }
         else if (new Date(endDate) < new Date()) {
-            setError('Ngày kết thúc không được nhỏ hơn ngày hiện tại.');
+            setError('The end date cannot be less than the current date.');
         } 
-        else if((startDate != "" || endDate != "") && new Date(newStartDate) == new Date(endDate))
+        else if((startDate != "" || endDate != "") && new Date(startDate) == new Date(endDate))
         {
-            setError('Ngày bắt đầu không bằng ngày kết thúc.');
+            setError('The start date is not the same as the end date.');
         }
         else {
             setError('');
@@ -75,33 +75,33 @@ const CreateProjectForm = ({ user_id,  onClose, onSubmit, title, project }) => {
         e.preventDefault();
 
         if (!projectName) {
-            setNameError('Tên dự án không được để trống.');
+            setNameError('Project name cannot be blank.');
             return;
         } else if (projectName.length > 100) {
-            setNameError('Tên dự án không được vượt quá 100 ký tự.');
+            setNameError('Project name cannot exceed 100 characters.');
             return;
         } else {
             setNameError('');
         }
 
         if (!projectDescription) {
-            setDescriptionError('Mô tả dự án không được để trống.');
+            setDescriptionError('Project description cannot be left blank.');
             return;
         } else {
             setDescriptionError('');
         }
 
         if ((startDate != '' || endDate != "") && new Date(startDate) > new Date(endDate)) {
-            setError('Ngày bắt đầu không được lớn hơn ngày kết thúc.');
+            setError('The start date cannot be greater than the end date.');
             return;
         }
         if((startDate != "" || endDate != "") && new Date(startDate) == new Date(endDate))
         {
-            setError('Ngày bắt đầu không bằng ngày kết thúc.');
+            setError('The start date is not the same as the end date.');
             return
         }
         if (endDate != '' && new Date(endDate) < new Date()) {
-            setError('Ngày kết thúc không được nhỏ hơn ngày hiện tại.');
+            setError('The end date cannot be less than the current date.');
             return;
         }
         const projectData = {
@@ -159,6 +159,7 @@ const CreateProjectForm = ({ user_id,  onClose, onSubmit, title, project }) => {
                                     type="date"
                                     value={startDate}
                                     onChange={handleStartDateChange}
+                                    min={new Date().toISOString().split("T")[0]}
                                     required
                                 />
                                 </div>

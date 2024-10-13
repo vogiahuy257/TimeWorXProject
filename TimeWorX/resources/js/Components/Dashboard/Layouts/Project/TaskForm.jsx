@@ -191,6 +191,7 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
                                     id="time-starts"
                                     value={deadline}
                                     onChange={onChangeDeadLine}
+                                    min={new Date().toISOString().split("T")[0]}
                                     required
                                 />
                                 {deadLineError && <p className="text-error">{deadLineError}</p>}
