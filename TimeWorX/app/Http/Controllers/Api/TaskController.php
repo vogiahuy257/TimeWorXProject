@@ -101,6 +101,7 @@ class TaskController extends Controller
                 if ($task->project_id == $projectId) {
                     $this->addTaskToResponse($task, $response);
                 }
+                //lấy dữ liệu
                 if (!in_array($task->project_id, array_column($response['projects'], 'id'))) {
                     $response['projects'][] = [
                         'id' => $task->project_id,
