@@ -86,7 +86,6 @@ class TaskController extends Controller
             foreach ($personalPlans as $plan) {
                 $this->addPersonalPlanToResponse($plan, $response);
             }
-            // Lấy danh sách projects (nếu cần)
             foreach ($tasks as $task) {
                 if (!in_array($task->project_id, array_column($response['projects'], 'id'))) {
                     $response['projects'][] = [
@@ -102,11 +101,18 @@ class TaskController extends Controller
                 if ($task->project_id == $projectId) {
                     $this->addTaskToResponse($task, $response);
                 }
+                if (!in_array($task->project_id, array_column($response['projects'], 'id'))) {
+                    $response['projects'][] = [
+                        'id' => $task->project_id,
+                        'name' => $task->getProjectName() ?? 'Unknown',
+                    ];
+                }
             }
         }
         return response()->json($response);
     }
 
+    
     private function addTaskToResponse($task, &$response)
     {
         $task->checkDeadlineStatus();
