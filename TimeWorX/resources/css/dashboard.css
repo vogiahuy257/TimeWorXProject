@@ -17,7 +17,7 @@
 }
 
 #dashboard.dark-mode {
-    --color-black: #FFFFFF; 
+    --color-black: #ffffff; 
     --color-gray: #292B2C;
     --color-white: #151515; 
     --color-whiteGray:#232323;
@@ -35,7 +35,7 @@
 
 #dashboard .block
 {
-    width: 85%;
+    width: 90%;
     height: 100%;
     max-height: 690px;
     background-color: var(--color-whiteGray);

@@ -42,7 +42,6 @@
 {
     font-size: var(--font-size-large);
     font-weight: var(--font-weight-bold);
-    padding-bottom: 10px;
 }
 
 #dashboard .block #main .content main #project-view #task-form .task-form-container form .form-group
@@ -240,5 +239,13 @@
 
 #dashboard .block #main .content main #project-view #task-form .task-form-button .user-box h3
 {
+    font-weight: var(--font-weight-medium);
+}
+
+#dashboard .block #main .content main #project-view #task-form .text-error
+{
+    color: var(--color-red);
+    font-size: var(--font-size-sSmall);
+    margin-left: 2px;
     font-weight: var(--font-weight-medium);
 }

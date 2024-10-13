@@ -24,18 +24,18 @@ export default function CardProject({ project, formatDateRange, handleDelete,han
                         <p className='line-clamp-2'>{project.project_name}</p>
 
                         <div className='btn-form'>
-                            <Link className='btn card-form-edit' onClick={() => handleEdit(project)}>
+                            <button className='btn card-form-edit' onClick={(e) => { e.stopPropagation(); e.preventDefault(); handleEdit(project); }}>
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M4.7999 15.6L8.9999 19.2M4.1999 15.6L16.0313 3.35545C17.3052 2.08155 19.3706 2.08155 20.6445 3.35545C21.9184 4.62935 21.9184 6.69475 20.6445 7.96865L8.3999 19.8L2.3999 21.6L4.1999 15.6Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                            </Link>
+                            </button>
 
 
-                            <Link className='btn card-form-delete' onClick={() => handleDelete(project.project_id)}>
+                            <button className='btn card-form-delete' onClick={(e) => { e.stopPropagation(); e.preventDefault(); handleDelete(project.project_id); }}>
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M4 6.17647H20M10 16.7647V10.4118M14 16.7647V10.4118M16 21H8C6.89543 21 6 20.0519 6 18.8824V7.23529C6 6.65052 6.44772 6.17647 7 6.17647H17C17.5523 6.17647 18 6.65052 18 7.23529V18.8824C18 20.0519 17.1046 21 16 21ZM10 6.17647H14C14.5523 6.17647 15 5.70242 15 5.11765V4.05882C15 3.47405 14.5523 3 14 3H10C9.44772 3 9 3.47405 9 4.05882V5.11765C9 5.70242 9.44772 6.17647 10 6.17647Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                            </Link>
+                            </button>
                         </div>
                     </div>
 
@@ -47,7 +47,7 @@ export default function CardProject({ project, formatDateRange, handleDelete,han
                                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
                                 <path d="m437-355-56-56q-6-6-13-9t-14.5-3q-7.5 0-15 3t-13.5 9q-12 12-12 28.5t12 28.5l85 86q6 6 13 8.5t15 2.5q8 0 15-2.5t13-8.5l169-169q12-12 12-29t-12-29q-12-12-29-12t-29 12L437-355ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h287q16 0 30.5 6t25.5 17l194 194q11 11 17 25.5t6 30.5v447q0 33-23.5 56.5T720-80H240Zm280-560v-160H240v640h480v-440H560q-17 0-28.5-11.5T520-640ZM240-800v200-200 640-640Z"/>
                                 </svg>
-                                <p>3/10</p>
+                                <p>{project.completed_tasks_ratio}</p>
                         </div>
                         <div className='ml-auto flex gap-2'>
                             {project.late_tasks_count > 0 && (

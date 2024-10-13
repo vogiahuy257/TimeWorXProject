@@ -190,9 +190,9 @@ export default function Authenticated({ user, header, children }) {
                                 }
                             >
                                 <Link to = "/dashboard/reports">
-                                <svg width="32" height="29" viewBox="0 0 32 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1 16.2381V23.8571C1 25.9611 2.67893 27.6667 4.75 27.6667H27.25C29.3211 27.6667 31 25.9611 31 23.8571V16.2381M1 16.2381L5.71252 3.47191C6.26138 1.98504 7.66058 1 9.22375 1H22.7762C24.3394 1 25.7386 1.98504 26.2875 3.47191L31 16.2381M1 16.2381H8.5L11 18.9048H21L23.5 16.2381H31"  stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                    </svg>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11.6998 21.6001H5.69979C4.37431 21.6001 3.2998 20.5256 3.2998 19.2001L3.2999 4.80013C3.29991 3.47466 4.37442 2.40015 5.6999 2.40015H16.5002C17.8256 2.40015 18.9002 3.47466 18.9002 4.80015V9.60015M7.50018 7.20015H14.7002M7.50018 10.8001H14.7002M14.7002 15.5541V18.4985C14.7002 19.9534 16.2516 21.2879 17.7065 21.2879C19.1615 21.2879 20.7002 19.9535 20.7002 18.4985V14.7793C20.7002 14.009 20.2574 13.2273 19.2723 13.2273C18.2186 13.2273 17.7065 14.009 17.7065 14.7793V18.3435M7.50018 14.4001H11.1002" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
 
                                     <p>Reports</p>
                                 </Link>

@@ -207,6 +207,7 @@
     position: relative;
     border-radius: var(--border-radius-sSmall);
 }
+
 #dashboard .block #main .content main #project #container .block-project .card .card-header .custom_complete svg
 {
     padding: 4px;
@@ -243,17 +244,18 @@
 }
 
 #dashboard .block #main .content main #project #container .block-project .card .card-header .custom-late-task::before,
-#dashboard .block #main .content main #project #container .block-project .card .card-header .custom-near-task::before
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom-near-task::before,
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom_complete::before
 {
     content: "late deadline";
     margin-right: 2px;
     position: absolute;
-    top: 0; 
+    top: -25px; 
     left: 50%;
     transform: translateX(-30%);
     left: 8px;
     width: 80px;
-    background-color: var(--color-black);
+    background-color: rgba(var(--color-black-rgb), 0.8);
     color: var(--color-white);
     padding: 2px 4px;
     font-size: var(--border-radius-small);
@@ -262,8 +264,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    display: none;
-    
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom_complete::before
+{
+    content: "complete";
+    width: 60px;
 }
 
 #dashboard .block #main .content main #project #container .block-project .card .card-header .custom-near-task::before
@@ -272,10 +280,10 @@
 }
 
 #dashboard .block #main .content main #project #container .block-project .card .card-header .custom-late-task:hover::before,
-#dashboard .block #main .content main #project #container .block-project .card .card-header .custom-near-task:hover::before
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom-near-task:hover::before,
+#dashboard .block #main .content main #project #container .block-project .card .card-header .custom_complete:hover:before
 {
-    display: flex;
-    top: -25px;
+    opacity: 1;
 }
 
 

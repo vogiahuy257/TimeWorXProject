@@ -57,6 +57,7 @@ class ProjectController extends Controller
             $project->updateProjectStatus(); 
             $project->late_tasks_count = $project->countLateTasks();
             $project->near_deadline_tasks_count = $project->countNearDeadlineTasks();
+            $project->completed_tasks_ratio = $project->countTasksAndCompleted();
         }       
 
         return response()->json($projects);
@@ -132,4 +133,5 @@ class ProjectController extends Controller
     
         return response()->json(['message' => 'Project restored successfully'], 200);
     }
+    
 }

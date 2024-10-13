@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Head } from '@inertiajs/react';
 import { ToastContainer, toast } from 'react-toastify';
@@ -8,19 +7,24 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import TaskForm from './Layouts/Project/TaskForm';
 import DeletedTasks from './Layouts/Project/DeletedTasks';
-import TaskUsers from './Layouts/Project/TaskUsersForm';
 import TaskComments from './Layouts/Project/TaskComments';
+import ReportForm from './Layouts/Task/ReportForm';
 
 export default function Task({ auth }) {
-    const { project_id } = useParams();
-    const [project, setProject] = useState(null);
-    const [isFormOpen, setIsFormOpen] = useState(false); 
+    const [ project_id,setProjectId ] = useState();
+    const [isFormOpen, setIsFormOpen] = useState(false);
+    const [projects, setProjects] = useState([]); 
     const [selectedTask, setSelectedTask] = useState(null);
     const [taskStatus, setTaskStatus] = useState(null);
     const [totalTaskCount,setTotalTaskCount] = useState(0);
     const [showDeletedTasks, setShowDeletedTasks] = useState(false);
-    const [showUserList, setShowUserList] = useState(false);
     const [showComments,setShowComments] = useState(false);
+    const [showReportForm, setShowReportForm] = useState(false);
+
+    const handleReportClick = (task) => {
+        setShowReportForm(!showReportForm);
+        setSelectedTask(task);
+      };
 
     const toggleDeletedTasks = () => {
         setShowDeletedTasks(!showDeletedTasks);
@@ -31,10 +35,10 @@ export default function Task({ auth }) {
     };
 
     const handleCommentClick = (task) => 
-        {
+    {
             setSelectedTask(task);
             toggleComment();
-        };
+    };
     
 
     const handleAddTask = (status) => {
@@ -66,7 +70,6 @@ export default function Task({ auth }) {
     const [tasks, setTasks] = useState({
         'to-do': [],
         'in-progress': [],
-        'verify': [],
         'done': [],
     });
 
@@ -111,11 +114,11 @@ export default function Task({ auth }) {
         }
     };
 
-    const fetchProjectData = async (user_id) => {
+    const fetchProjectData = async (user_id,project_id) => {
         try {
-            const response = await axios.get(`/api/tasks/${user_id}`);
+            const response = await axios.get(`/api/tasks/${user_id}`, { params: { project_id } });
             const projectData = response.data;
-
+            setProjects(response.data.projects);
             // Cập nhật các kế hoạch cá nhân với thuộc tính 'type'
             const updatedPersonalPlans = {
                 'to-do': projectData.personalPlans['to-do']?.map(task => ({ ...task, type: 'personalPlan' })) || [],
@@ -146,17 +149,14 @@ export default function Task({ auth }) {
             setTasks(mergedTasks);
             const totalTaskCount = Object.values(mergedTasks).flat().length;
             setTotalTaskCount(totalTaskCount);
-            console.log(mergedTasks);
         } catch (error) {
             toast.error('Error fetching project details or tasks');
         }
     };
 
     useEffect(() => {
-        fetchProjectData(auth.user.id);
-        
+        fetchProjectData(auth.user.id,project_id);
     }, [project_id]);
-
     return (
         <>
             <Head title="Task" />
@@ -167,8 +167,27 @@ export default function Task({ auth }) {
             <div className="block-project">
                 <div className='block-element-left'>
                     <div className='block-project-name'>
-                        <h1>Your Task</h1>
+                        <h1>Task</h1>
                     </div>
+                    
+
+                    {/* Bộ lọc */}
+                    <div className="ml-4 filter-section flex items-center justify-center">
+                        {/* Bộ lọc theo trạng thái */}
+                        <select 
+                            className="border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-black-400 appearance-none bg-white text-gray-700 transition duration-150 ease-in-out"
+                            onChange={(e)=>setProjectId(e.target.value)}
+                        >
+                            <option value="">All</option>
+                                {projects.map(project => (
+                                    <option key={project.id} value={project.id}>
+                                        {project.name}
+                                    </option>
+                                ))}
+                            <option value="personalPlan">Your Pesonal Plan</option>
+                        </select>
+                    </div>
+
                 </div>
                 <div className='block-element-right'>
                     <PrimaryButton onClick={toggleDeletedTasks} className='btn btn-history'>
@@ -225,7 +244,7 @@ export default function Task({ auth }) {
                                                                             </svg>
                                                                         </PrimaryButton>
                                                                         {columnId === 'done' && (
-                                                                            <PrimaryButton className='btn-delete' onClick={() => handleDeleteTask(task)}>
+                                                                            <PrimaryButton className='ml-1 btn-delete' onClick={() => handleDeleteTask(task)}>
                                                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                                     <path d="M7 11.8784C7.94144 12.5631 9.82432 14.4459 10.5946 15.7297C11.536 13.6757 13.9324 9.05405 16.5 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                                                                                 </svg>
@@ -234,11 +253,20 @@ export default function Task({ auth }) {
                                                                     </>
                                                                 ) : 
                                                                 (
+                                                                    <>
+                                                                        {columnId === 'done' && (
+                                                                            <PrimaryButton className='btn-report mr-1' onClick={() => handleReportClick(task)}>
+                                                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                                    <path d="M11.6998 21.6001H5.69979C4.37431 21.6001 3.2998 20.5256 3.2998 19.2001L3.2999 4.80013C3.29991 3.47466 4.37442 2.40015 5.6999 2.40015H16.5002C17.8256 2.40015 18.9002 3.47466 18.9002 4.80015V9.60015M7.50018 7.20015H14.7002M7.50018 10.8001H14.7002M14.7002 15.5541V18.4985C14.7002 19.9534 16.2516 21.2879 17.7065 21.2879C19.1615 21.2879 20.7002 19.9535 20.7002 18.4985V14.7793C20.7002 14.009 20.2574 13.2273 19.2723 13.2273C18.2186 13.2273 17.7065 14.009 17.7065 14.7793V18.3435M7.50018 14.4001H11.1002" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                                                                </svg>
+                                                                            </PrimaryButton>
+                                                                        )}
                                                                         <PrimaryButton className='btn-comment' onClick={() => handleCommentClick(task)}>
                                                                             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                             <path d="M7.1999 7.20002H15.5999M7.1999 12H11.9999M11.6869 16.5913L6.67816 21.6V16.5913H4.7999C3.47442 16.5913 2.3999 15.5168 2.3999 14.1913V4.80003C2.3999 3.47454 3.47442 2.40002 4.7999 2.40002H19.1999C20.5254 2.40002 21.5999 3.47454 21.5999 4.80002V14.1913C21.5999 15.5168 20.5254 16.5913 19.1999 16.5913H11.6869Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                                                                             </svg>
                                                                         </PrimaryButton>
+                                                                    </>
                                                                 )}
                                                                 </div>
                                                             </div>
@@ -286,12 +314,11 @@ export default function Task({ auth }) {
                 />
             )}
 
-             {/* Hiển thị TaskForm */}
-             {isFormOpen && (
-                <TaskForm 
-                    onClose={toggleForm} user_id={auth.user.id} projectId={null} refreshTasks={fetchProjectData} task={selectedTask} task_status={taskStatus}
-                />
-             )}
+             
+                {/* hiển thị ReportForm */}
+             {showReportForm && <ReportForm task={selectedTask} user_id={auth.user.id} onClose={() => setShowReportForm(false)}/>}
+                {/* Hiển thị TaskForm */}
+             {isFormOpen && <TaskForm onClose={toggleForm} user_id={auth.user.id} projectId={null} refreshTasks={fetchProjectData} task={selectedTask} task_status={taskStatus}/>}
         </section>
         </>
     );

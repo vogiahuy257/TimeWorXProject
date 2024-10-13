@@ -44,7 +44,8 @@ class File extends Model
      * @return array<string, string>
      */
     protected $casts = [
-        'uploaded_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
 
@@ -62,5 +63,10 @@ class File extends Model
     public function project()
     {
         return $this->belongsTo(Project::class, 'project_id');
+    }
+
+    public function reports()
+    {
+        return $this->belongsToMany(Report::class, 'report_file', 'file_id', 'report_id');
     }
 }

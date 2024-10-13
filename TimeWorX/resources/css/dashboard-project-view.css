@@ -138,9 +138,11 @@
 
 #dashboard .block #main .content main #project-view main
 {
-    margin-top: 15px;
+    margin-top: 32px;
     display: flex;
     justify-content: center;
+    width: 100%;
+    margin: auto;
 }
 
 #dashboard .block #main .content main #project-view main .block-task
@@ -414,12 +416,15 @@
 }
 #dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-comment,
 #dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-view,
-#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-delete{
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-delete,
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-report
+{
     position: relative;
 }
 #dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-comment::after,
 #dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-view::after,
-#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-delete::after
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-delete::after,
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-report::after
 {
     position: absolute;
     background-color: var(--color-black);
@@ -433,6 +438,12 @@
     opacity: 0;
     transition: opacity 0.3s ease-in-out,top 0.3s ease-in-out;
 }
+
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-report::after
+{
+    content: 'report';
+}
+
 
 #dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-view::after
 {
@@ -449,18 +460,17 @@
 }
 #dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-comment:hover:after,
 #dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-view:hover::after,
-#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-delete:hover::after
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-delete:hover::after,
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-report:hover:after
 {
     opacity: 1;
-    top: -50%;
+    top: -40%;
 }
 
-#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-view:hover
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-view:hover,
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-delete:hover,
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-comment:hover,
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-report:hover
 {
    color: var(--color-status);
-}
-
-#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-delete:hover
-{
-    color: var(--color-green);
 }

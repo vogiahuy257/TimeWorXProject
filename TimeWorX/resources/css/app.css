@@ -19,7 +19,7 @@
     --color-red: rgb(218, 30, 40);
     --color-red-rgb: 218, 30, 40;
     --color-green: rgb(37, 162, 73);
-    --background: linear-gradient(155deg,#FFFFFF,#d3d3d3);
+    --background: linear-gradient(135deg, #e9defa,#fbfcdb); /* linear-gradient(155deg,#FFFFFF,#D3D3D3) */
 
     --color-shadow:rgba(68, 68, 68, 0.418);
 
@@ -85,6 +85,7 @@ li
 
     .custom-scrollbar::-webkit-scrollbar {
         width: 5px; 
+        display: none;
     }
   
     .custom-scrollbar::-webkit-scrollbar-track {

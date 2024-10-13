@@ -33,7 +33,6 @@ class Task extends Model
      {
          return $this->project() ? $this->project->project_name : null;
      }
-
     // Đảm bảo các cột ngày tháng được xử lý tự động dưới dạng đối tượng Carbon
     protected $dates = [
         'deleted_at',
@@ -47,7 +46,7 @@ class Task extends Model
 
         if ($this->deadline) {
             // Kiểm tra nếu task đã trễ
-            if ($now->greaterThan($this->deadline)) {
+            if ($now->isAfter($this->deadline)) {
                 $this->is_late = true;
                 $this->is_near_deadline = false;
             }

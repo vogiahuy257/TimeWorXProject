@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
             ProjectsTableSeeder::class,
             TasksTableSeeder::class,
             TaskCommentsTableSeeder::class,
-            FilesTableSeeder::class,
             MeetingsTableSeeder::class,
             NotificationsTableSeeder::class,
             ChatMessagesTableSeeder::class,

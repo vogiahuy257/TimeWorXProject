@@ -77,15 +77,27 @@ class Project extends Model
     {
         $tasks = Task::where('project_id', $this->project_id)->pluck('status_key');
 
-        if ($tasks->contains('verify')) {
+        if ($tasks->contains('verify')) 
+        {
             $this->project_status = 'verify';
-        } elseif ($tasks->contains('in-progress')) {
+        } 
+        elseif ($tasks->contains('in-progress')) 
+        {
             $this->project_status = 'in-progress';
-        } elseif ($tasks->contains('to-do')) {
+        } 
+        elseif ($tasks->contains('to-do')) 
+        {
             $this->project_status = 'to-do';
-        } else {
+        } 
+        elseif($tasks->contains('done')) 
+        {
             $this->project_status = 'done';
         }
+        else
+        {
+            $this->project_status = "to-do";
+        }
+
     
         return $this->save();
     }
@@ -114,5 +126,29 @@ class Project extends Model
                    ->where('is_near_deadline', true)
                    ->count();
     }
+
+    // thông kê
+    public function countTasksAndCompleted()
+    {
+        $totalTasks = Task::withTrashed()
+            ->where('project_id', $this->project_id)
+            ->count();
+
+        $completedTasks = Task::withTrashed()
+            ->where('project_id', $this->project_id)
+            ->where('status_key', 'done')
+            ->count();
+
+        if( $totalTasks == 0 )
+        {
+            return "0/0";
+        }
+
+        $result = "{$completedTasks}/{$totalTasks}";
+        
+
+        return  $result;
+    }
+
 
 }

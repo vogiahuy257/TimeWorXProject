@@ -31,9 +31,12 @@ class Report extends Model
      */
     protected $fillable = [
         'report_by_user_id',
-        'report_title',
-        'report_description',
-        'status_report',
+        'project_id',
+        'task_id',
+        'completion_goal',
+        'today_work',
+        'next_steps',
+        'issues',
     ];
 
     /**
@@ -53,5 +56,20 @@ class Report extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'report_by_user_id');
+    }
+
+    public function files()
+    {
+        return $this->belongsToMany(File::class, 'report_file', 'report_id', 'file_id');
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class, 'project_id');
+    }
+
+    public function task()
+    {
+        return $this->belongsTo(Task::class, 'task_id', 'task_id');
     }
 }
