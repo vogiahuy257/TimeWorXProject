@@ -26,7 +26,6 @@ class ReportController extends Controller
      */
     public function store(Request $request ,FileStorageService $fileStorageService)
     {
-        
         $validatedData = $request->validate([
             'report_by_user_id' => 'required|exists:users,id',
             'project_id' => 'required|exists:projects,project_id',
@@ -36,7 +35,7 @@ class ReportController extends Controller
             'next_steps' => 'nullable|string',
             'issues' => 'nullable|string',
             'isLink' => 'required|boolean',
-            'documents' => 'nullable|array',
+            'documents' => 'nullable',
         ]);
 
         // Tạo mới report
@@ -46,11 +45,11 @@ class ReportController extends Controller
         if ($request->isLink) {
             // Nếu là link, tạo mới file với kiểu 'link'
             $file = File::create([
-                'file_name' => $request->documents,  // Ở đây, documents là link tài liệu
+                'name' => $request->documents,  // Ở đây, documents là link tài liệu
                 'uploaded_by' => $request->report_by_user_id,
                 'project_id' => $report->project_id,
-                'file_type' => 'link',
-                'file_path' => $request->documents,
+                'type' => 'link',
+                'path' => $request->documents,
             ]);
 
             // Gắn file với report
@@ -62,11 +61,11 @@ class ReportController extends Controller
                 // Sử dụng FileStorageService để lưu file
                 $filePath = $fileStorageService->storeFile($uploadedFile);
                 $file = File::create([
-                    'file_name' => $uploadedFile->getClientOriginalName(),
+                    'name' => $uploadedFile->getClientOriginalName(),
                     'uploaded_by' => $request->report_by_user_id,
                     'project_id' => $report->project_id,
-                    'file_type' => $uploadedFile->getClientMimeType(),
-                    'file_path' => $filePath,
+                    'type' => $uploadedFile->getClientMimeType(),
+                    'path' => $filePath,
                 ]);
 
                 // Gắn file với report
@@ -74,7 +73,7 @@ class ReportController extends Controller
             }
         }
 
-        return response()->json();
+        return response()->json(['message' => 'Report create successfully!']);
     }
 
     /**
@@ -82,30 +81,126 @@ class ReportController extends Controller
      *
      * @param  Report  $report
      */
-    public function show(Report $report)
+    public function show(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'project_id' => 'required|exists:projects,project_id',
+            'task_id' => 'required|exists:tasks,task_id',
+        ]);
+    
+        // Tìm report dựa trên project_id và task_id
+        $report = Report::where('project_id', $validatedData['project_id'])
+                        ->where('task_id', $validatedData['task_id'])
+                        ->with('files')
+                        ->first();
         
+        if(!$report)
+        {
+            return;
+        }
+    
+        // Trả về report và file liên quan
+        return response()->json($report);
     }
 
     /**
      * Update the specified report in storage.
      *
      * @param  Request  $request
-     * @param  Report  $report
      */
-    public function update(Request $request, Report $report)
+    public function update($report_id,Request $request, FileStorageService $fileStorageService)
     {
-       
+        $report = Report::find($report_id);
+        if (!$report) {
+            return response()->json(['error' => 'Report not found'], 404);
+        }
+        $validatedData = $request->validate([
+            'report_by_user_id' => 'required|exists:users,id',
+            'project_id' => 'required|exists:projects,project_id',
+            'task_id' => 'nullable|exists:tasks,task_id',
+            'completion_goal' => 'nullable|string',
+            'today_work' => 'nullable|string',
+            'next_steps' => 'nullable|string',
+            'issues' => 'nullable|string',
+            'isLink' => 'required|boolean',
+            'documents' => 'nullable',
+        ]);
+    
+        // Cập nhật report
+        $report->update($validatedData);
+    
+        // Xử lý tài liệu
+        if ($request->isLink) 
+        {
+            // Xóa các file cũ
+            $report->files()->delete(); 
+    
+            // Tạo mới file dạng link
+            $file = File::create([
+                'name' => $request->documents,  
+                'uploaded_by' => $request->report_by_user_id,
+                'project_id' => $report->project_id,
+                'type' => 'link',
+                'path' => $request->documents,
+            ]);
+    
+            // Gắn file với report
+            $report->files()->attach($file->file_id);
+    
+        } 
+        else 
+        {
+            foreach ($report->files as $file) 
+            {
+                $fileStorageService->deleteFile($file->path);
+                $file->delete(); 
+            }
+
+            if($request->documents == null)
+            {
+                return response()->json(['message' => 'Report updated successfully!']);
+            }
+            else
+            {
+                foreach ($request->documents as $uploadedFile) 
+                {
+                    $filePath = $fileStorageService->storeFile($uploadedFile);
+                    $file = File::create([
+                        'name' => $uploadedFile->getClientOriginalName(),
+                        'uploaded_by' => $request->report_by_user_id,
+                        'project_id' => $report->project_id,
+                        'type' => $uploadedFile->getClientMimeType(),
+                        'path' => $filePath,
+                    ]);
+
+                    // Gắn file với report
+                    $report->files()->attach($file->file_id);
+                }
+            }
+        }
+    
+        return response()->json(['message' => 'Report updated successfully!']);
     }
+    
 
     /**
      * Remove the specified report from storage.
      *
-     * @param  Report  $report
      */
-    public function destroy(Report $report)
+    public function destroy($id,FileStorageService $fileStorageService)
     {
-        $report->delete();
-        return response()->json();
+        // Tìm và xóa report cùng với các file liên quan
+        $report = Report::findOrFail($id);
+        
+        // Xóa các file liên quan trước
+        foreach ($report->files as $file) {
+            $fileStorageService->deleteFile($file->path);
+            $file->delete();
+        }
+        
+        // Xóa report
+        $report->delete(); 
+
+        return response()->json(['message' => 'Report deleted successfully!']);
     }
 }

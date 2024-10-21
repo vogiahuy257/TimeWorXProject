@@ -19,10 +19,11 @@ return new class extends Migration
             $table->timestamps(); // created_at, updated_at
             $table->softDeletes();
 
-            $table->text('completion_goal')->nullable(); // Mục tiêu cần hoàn thành
-            $table->text('today_work')->nullable(); // Công việc hôm nay
-            $table->text('next_steps')->nullable(); // Các việc sẽ làm tiếp
-            $table->text('issues')->nullable(); // Vấn đề gặp phải/khó khăn
+            $table->boolean('isLink');
+            $table->string('completion_goal')->nullable(); // Mục tiêu cần hoàn thành
+            $table->string('today_work')->nullable(); // Công việc hôm nay
+            $table->string('next_steps')->nullable(); // Các việc sẽ làm tiếp
+            $table->string('issues')->nullable(); // Vấn đề gặp phải/khó khăn
         });
     }
 

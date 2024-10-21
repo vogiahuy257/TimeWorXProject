@@ -37,6 +37,7 @@ class Report extends Model
         'today_work',
         'next_steps',
         'issues',
+        'isLink'
     ];
 
     /**

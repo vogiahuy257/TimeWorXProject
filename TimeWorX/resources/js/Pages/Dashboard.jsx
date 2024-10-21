@@ -9,6 +9,8 @@ import DashboardReport from '@/Components/Dashboard/Report';
 import DashboardTask from '@/Components/Dashboard/Task';
 import DashboardNotFound from '@/Components/Dashboard/NotFound';
 import DashboardProjectView from "@/Components/Dashboard/DashboardProjectView";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
 export default function Dashboard({ auth ,token}) {
@@ -20,6 +22,7 @@ export default function Dashboard({ auth ,token}) {
     return (
         <Router>
             <AuthenticatedLayout user={auth.user}>
+            <ToastContainer className="custom_toast"/>
                 <Routes>
                     <Route path="/dashboard" element={<DashboardHome auth={auth}/>} />
                     <Route path="/dashboard/chat" element={<DashboardChat auth={auth} />} />

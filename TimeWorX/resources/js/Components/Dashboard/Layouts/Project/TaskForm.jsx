@@ -3,7 +3,7 @@ import "./css/TaskForm.css";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { toast } from "react-toastify";
 
-const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,project_deadline }) => {
+const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,project_deadline,is_staff }) => {
     const [taskName, setTaskName] = useState('');
     const [deadline, setDeadLine] = useState('');
     const [description, setDescription] = useState('');
@@ -170,7 +170,7 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
     
                 <form onSubmit={handleSubmit}>
                     <div className="task-form-header">
-                            <h2> {user_id ? (task ? `Edit ${task.name}` : "Create Task") : (task ? `Edit ${task.content}` : "Create Task")}</h2>
+                            <h2>{is_staff ? `View ${task?.content}` : (user_id ? (task ? `Edit ${task.name}` : "Create Task") : (task ? `Edit ${task.content}` : "Create Task"))}</h2>
                             <p> {project_deadline ? `Project end date: ${formatDeadline(project_deadline)}` : null}</p>
                         <div className="form-main">
                         <div className="form-group task-group">
@@ -178,8 +178,9 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
                                 <input
                                     type="text"
                                     id="task-name"
-                                    value={taskName}
+                                    value={is_staff ? task?.content : taskName}
                                     onChange={(e) => setTaskName(e.target.value)}
+                                    disabled={is_staff}
                                     required
                                 />
                         </div>
@@ -189,9 +190,10 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
                                 <input
                                     type="date"
                                     id="time-starts"
-                                    value={deadline}
+                                    value={is_staff ? convertDateFormat(task?.deadline) : deadline}
                                     onChange={onChangeDeadLine}
                                     min={new Date().toISOString().split("T")[0]}
+                                    disabled={is_staff}
                                     required
                                 />
                                 {deadLineError && <p className="text-error">{deadLineError}</p>}
@@ -204,6 +206,7 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
                                 value={description}
                                 className="custom-scrollbar"
                                 onChange={(e) => setDescription(e.target.value)}
+                                disabled={is_staff}
                             ></textarea>
                         </div>
                         </div>
@@ -279,9 +282,12 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
                             </div>
                         )}
 
-                    <button type="submit" className="save-button mt-auto mb-2">
-                         <h2>{task ? `Save` : "Create"}</h2>
-                    </button>
+                    {is_staff ? null :
+                        <button type="submit" className="save-button mt-auto mb-2">
+                            <h2>{task ? `Save` : "Create"}</h2>
+                        </button>
+                    } 
+                    
                     </div>
                     
                 </form>

@@ -107,7 +107,7 @@ export default function Authenticated({ user, header, children }) {
                                             strokeLinejoin="round"
                                         />
                                     </svg>
-                                    <p>Dashboard</p>
+                                    <p>Home</p>
                                 </Link>
                             </li>
                             <li
