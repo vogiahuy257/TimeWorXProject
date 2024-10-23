@@ -187,11 +187,11 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
                         <div className="form-group time-group">
                                 <label htmlFor="time-starts">Completion time</label>
                                 <input
-                                    type="date"
+                                    type="datetime-local"
                                     id="time-starts"
                                     value={is_staff ? convertDateFormat(task?.deadline) : deadline}
                                     onChange={onChangeDeadLine}
-                                    min={new Date().toISOString().split("T")[0]}
+                                    min={new Date().toISOString().slice(0, 16)}
                                     disabled={is_staff}
                                     required
                                 />
@@ -247,39 +247,31 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
 
                     <div className="task-form-button">
                     <PrimaryButton className="close-button" type="button" onClick={onClose}>
-                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="24" height="24" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M22.5 7.5L7.5 22.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                             <path d="M7.5 7.5L22.5 22.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                     </PrimaryButton>
-                    {projectId ? (<PrimaryButton className="add-user-button flex" type="button" onClick={toggleUserBox}>
-                        <svg className="mr-1" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12.5" cy="10" r="6.25" fill="currentColor"/>
-                        <path d="M23.75 12.5L23.75 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                        <path d="M27.5 16.25L20 16.25" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                        <path d="M21.4388 25.4757C22.0099 25.3463 22.3523 24.7527 22.1 24.2244C21.4107 22.7814 20.2752 21.5133 18.8024 20.5582C16.9943 19.3856 14.779 18.75 12.5 18.75C10.221 18.75 8.00569 19.3856 6.19764 20.5582C4.72482 21.5133 3.58929 22.7813 2.90002 24.2244C2.64766 24.7527 2.99015 25.3463 3.56119 25.4757L3.66506 25.4992C9.48138 26.8164 15.5186 26.8164 21.3349 25.4992L21.4388 25.4757Z" fill="currentColor"/>
-                        </svg>
-                        <p className="font-medium text-sm">Add User</p>
-                    </PrimaryButton>):null}
-                    
-                    {isUserBoxVisible && (
-                            <div className="user-box">
-                                <h3>Users list</h3>
-                                <ul>
-                                    {users.map((user) => (
-                                        <li key={user.id}>
-                                                <p>{user.name}</p>
-                                                <input
-                                                    type="checkbox"
-                                                    value={user.id}
-                                                    checked={selectedUsers.some(selectedUser => selectedUser.id == user.id)}
-                                                    onChange={() => handleUserSelection(user)}
-                                                />
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
+                        <div className="user-box bg-white shadow-md rounded-lg p-4 max-h-80">
+                            <h3 className="text-lg font-semibold text-gray-800 mb-2">Users List</h3>
+                            <ul className="divide-y divide-gray-200 overflow-y-auto max-h-60 scrollbar-hide">
+                                {users.map((user) => (
+                                    <li key={user.id} className="flex justify-between items-center p-3 hover:bg-gray-100 transition duration-300 ease-in-out">
+                                        <div>
+                                            <p className="text-sm font-medium text-gray-800"><strong>Name:</strong> {user.name}</p>
+                                            <p className="text-xs text-gray-600"><strong>Active tasks count:</strong> {user.active_tasks_count}</p>
+                                        </div>
+                                        <input
+                                            type="checkbox"
+                                            value={user.id}
+                                            checked={selectedUsers.some(selectedUser => selectedUser.id === user.id)}
+                                            onChange={() => handleUserSelection(user)}
+                                            className="ml-4 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                        />
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
 
                     {is_staff ? null :
                         <button type="submit" className="save-button mt-auto mb-2">

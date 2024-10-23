@@ -51,4 +51,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Task::class, 'task_user', 'user_id', 'task_id');
     }
+
+    //đếm số lượng task user đó tham gia
+    public function countActiveTasks()
+    {
+        return $this->tasks()->whereNull('tasks.deleted_at')->count();
+    }
+
 }

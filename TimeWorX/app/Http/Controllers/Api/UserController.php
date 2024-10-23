@@ -13,8 +13,10 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-
-        // Trả về danh sách user dưới dạng JSON
+        $users->each(function($user) {
+            $user->active_tasks_count = $user->countActiveTasks();
+        });
+    
         return response()->json($users);
     }
 
