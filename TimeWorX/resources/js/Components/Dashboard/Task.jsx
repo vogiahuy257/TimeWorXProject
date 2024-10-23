@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Head } from '@inertiajs/react';
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';

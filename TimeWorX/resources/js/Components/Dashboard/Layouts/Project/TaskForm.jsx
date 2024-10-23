@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./css/TaskForm.css";
 import PrimaryButton from "@/Components/PrimaryButton";
-import { toast } from "react-toastify";
-
+import { toast } from "react-toastify";;
 const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,project_deadline,is_staff }) => {
     const [taskName, setTaskName] = useState('');
     const [deadline, setDeadLine] = useState('');

@@ -10,6 +10,7 @@ import TaskForm from './Layouts/Project/TaskForm';
 import DeletedTasks from './Layouts/Project/DeletedTasks';
 import TaskUsers from './Layouts/Project/TaskUsersForm';
 import TaskComments from './Layouts/Project/TaskComments';
+import ShowReportToTask from './Layouts/Project/ShowReportToTask';
 
 const DashboardProjectView = ({ auth }) => {
     const navigate = useNavigate();
@@ -21,6 +22,7 @@ const DashboardProjectView = ({ auth }) => {
     const [showDeletedTasks, setShowDeletedTasks] = useState(false);
     const [showUserList, setShowUserList] = useState(false);
     const [showComments,setShowComments] = useState(false);
+    const [showFormReportToTask, setShowFormReportToTask] = useState(false);
     const [projectDeadLine,setProjectDeadLine] = useState();
 
 
@@ -35,6 +37,17 @@ const DashboardProjectView = ({ auth }) => {
     const toggleUserList = () => {
         setShowUserList(!showUserList);
     };
+
+    const toggleFormReportToTak = () =>
+    {
+        setShowFormReportToTask(!showFormReportToTask);
+    }
+
+    const handleShowReportClick = (task) =>
+    {
+        setSelectedTask(task);
+        toggleFormReportToTak();
+    }
 
     const handleCommentClick = (task) => 
     {
@@ -152,10 +165,9 @@ const DashboardProjectView = ({ auth }) => {
     return (
         <>
         
-        <ToastContainer className="custom_toast"/>
+        
         <section id='project-view'>
             <Head title={`${project.name}`} />
-
             {/* Menu */}
             <div className="block-project">
                 <div className='block-element-left'>
@@ -223,12 +235,24 @@ const DashboardProjectView = ({ auth }) => {
                                                             <div className='task-card-content'>
                                                                 <p>{task.content}</p>
                                                                 <div className='btn-group'>
+
+                                                                    {columnId == 'verify' ? 
+                                                                    (
+                                                                        <PrimaryButton className='btn-report mr-1.5' onClick={() => handleShowReportClick(task)}>
+                                                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path d="M11.6998 21.6001H5.69979C4.37431 21.6001 3.2998 20.5256 3.2998 19.2001L3.2999 4.80013C3.29991 3.47466 4.37442 2.40015 5.6999 2.40015H16.5002C17.8256 2.40015 18.9002 3.47466 18.9002 4.80015V9.60015M7.50018 7.20015H14.7002M7.50018 10.8001H14.7002M14.7002 15.5541V18.4985C14.7002 19.9534 16.2516 21.2879 17.7065 21.2879C19.1615 21.2879 20.7002 19.9535 20.7002 18.4985V14.7793C20.7002 14.009 20.2574 13.2273 19.2723 13.2273C18.2186 13.2273 17.7065 14.009 17.7065 14.7793V18.3435M7.50018 14.4001H11.1002" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                                                            </svg>
+                                                                        </PrimaryButton>
+                                                                    ): null } 
+
                                                                     <PrimaryButton className='btn-view' onClick={() => handleViewClick(task)}>
                                                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                         <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
                                                                         <path d="M20.188 10.9343C20.5762 11.4056 20.7703 11.6412 20.7703 12C20.7703 12.3588 20.5762 12.5944 20.188 13.0657C18.7679 14.7899 15.6357 18 12 18C8.36427 18 5.23206 14.7899 3.81197 13.0657C3.42381 12.5944 3.22973 12.3588 3.22973 12C3.22973 11.6412 3.42381 11.4056 3.81197 10.9343C5.23206 9.21014 8.36427 6 12 6C15.6357 6 18.7679 9.21014 20.188 10.9343Z" stroke="currentColor" strokeWidth="2"/>
                                                                     </svg>
                                                                     </PrimaryButton>
+                                                                    
+                                                                    
                                                                     {columnId == 'done' ? 
                                                                     (
                                                                         <PrimaryButton className='btn-delete'  onClick={() => handleDeleteTask(task)}>
@@ -283,6 +307,14 @@ const DashboardProjectView = ({ auth }) => {
                 />
             )}
 
+            {/* hiển thị report to task form */}
+            {showFormReportToTask && (
+                <ShowReportToTask
+                    task = {selectedTask}
+                    onClose = {toggleFormReportToTak}
+                />
+            )}
+
             {/* Hiển thị bình luận */}
             {showComments && (
                 <TaskComments 
@@ -294,7 +326,14 @@ const DashboardProjectView = ({ auth }) => {
 
              {/* Hiển thị TaskForm */}
              {isFormOpen && (
-                <TaskForm onClose={toggleForm} projectId={project_id} refreshTasks={fetchProjectData} task={selectedTask} task_status={taskStatus} project_deadline={projectDeadLine} />
+                <TaskForm 
+                    onClose={toggleForm} 
+                    projectId={project_id} 
+                    refreshTasks={fetchProjectData} 
+                    task={selectedTask} 
+                    task_status={taskStatus} 
+                    project_deadline={projectDeadLine} 
+                />
              )}
         </section>
         </>

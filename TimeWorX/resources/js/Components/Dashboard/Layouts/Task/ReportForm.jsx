@@ -50,7 +50,6 @@ const ReportForm = ({ onClose ,task ,user_id}) => {
             .catch((error) => {
                 const message = error.response?.data?.message || 'Error submitting report. Please try again.';
                 toast.error(`Error: ${message}`);
-                console.log('Error:', error.response?.data || error);
                 onClose();
             });
     }, []); 
@@ -71,8 +70,9 @@ const ReportForm = ({ onClose ,task ,user_id}) => {
         reportData.append('report_by_user_id', user_id);
         reportData.append('project_id', task.project_id);
         reportData.append('task_id', task.id);
-        reportData.append('completion_goal', completionGoal);;
-        reportData.append('today_work', todayWork);
+        reportData.append('completion_goal', completionGoal);
+        const formattedTodayWork = todayWork.replace(/\n/g, '<br>');
+        reportData.append('today_work', formattedTodayWork);
         reportData.append('next_steps', nextSteps);
         reportData.append('issues', issues);
         reportData.append('isLink', isLink ? '1' : '0');
@@ -93,10 +93,6 @@ const ReportForm = ({ onClose ,task ,user_id}) => {
                 {
                     reportData.append(`documents[${index}]`, file.file);
                 }
-                else
-                {
-                    toast.error("error")
-                }
             });
         }
 
@@ -114,7 +110,7 @@ const ReportForm = ({ onClose ,task ,user_id}) => {
             onClose();
         })
         .catch((error) => {
-            const message = error.response?.data?.message || 'Error submitting report. Please try again.';
+            const message = error.response?.message || 'Error submitting report. Please try again.';
             toast.error(message);
             onClose();
         });
@@ -157,7 +153,7 @@ const ReportForm = ({ onClose ,task ,user_id}) => {
                     <div className='box-input'>
                         <h3>Today's work:</h3>
                         <textarea
-                                value={todayWork}
+                                value={todayWork.replace(/<br>/g, '\n')}
                                 onChange={(e) =>setTodayWork(e.target.value)} 
                                 placeholder="Describe the work you completed today"
                                 required

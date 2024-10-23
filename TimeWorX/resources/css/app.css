@@ -15,7 +15,7 @@
     --color-white-rgb: 255, 255, 255; 
     --color-whiteGray:rgb(244, 248, 247);
     --color-light-gray: #F9F9F9;
-    --color-light-blue: #2459cd;
+    --color-light-blue: #117add;
     --color-red: rgb(218, 30, 40);
     --color-red-rgb: 218, 30, 40;
     --color-green: rgb(37, 162, 73);
@@ -104,4 +104,13 @@ li
         background-color: var(--color-black-gray);
     }
   }
+
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE và Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari và Opera */
+}
+
   

@@ -144,7 +144,7 @@ export default function Folder({ auth }) {
 
     return (
         
-        <section id='project'>
+        <section id='project' >
             <Head title="Project" />
             {/* menu top */}
             <section id='menu'>

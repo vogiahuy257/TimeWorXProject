@@ -7,7 +7,6 @@ import PrimaryButton from '../PrimaryButton';
 export default function Home({ auth }) {
     return (
         <>
-        <ToastContainer className="custom_toast"/>
         <Head title="Home" />
             <section id="home">
                 <div className='box box-header'>

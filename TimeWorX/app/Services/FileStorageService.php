@@ -40,7 +40,7 @@ class FileStorageService
             return Storage::disk('public')->delete($filePath);
         } 
 
-        return false;
+        return;
     }
 
 }

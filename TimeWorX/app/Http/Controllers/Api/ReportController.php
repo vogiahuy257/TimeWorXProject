@@ -91,12 +91,15 @@ class ReportController extends Controller
         // Tìm report dựa trên project_id và task_id
         $report = Report::where('project_id', $validatedData['project_id'])
                         ->where('task_id', $validatedData['task_id'])
-                        ->with('files')
+                        ->with([
+                            'files', 
+                            'user:id,name'
+                        ])
                         ->first();
         
         if(!$report)
         {
-            return;
+            return response()->json(['message' => 'Report not found'], 404);
         }
     
         // Trả về report và file liên quan
@@ -132,6 +135,14 @@ class ReportController extends Controller
         // Xử lý tài liệu
         if ($request->isLink) 
         {
+            if($report->isLink)
+            {
+                foreach ($report->files as $file) 
+                {
+                    $fileStorageService->deleteFile($file->path);
+                    $file->delete(); 
+                }
+            }
             // Xóa các file cũ
             $report->files()->delete(); 
     
@@ -150,22 +161,21 @@ class ReportController extends Controller
         } 
         else 
         {
+            
+            if($request->documents == null)
+            {
+                return response()->json(['message' => 'Report updated successfully!']);
+            }
             foreach ($report->files as $file) 
             {
                 $fileStorageService->deleteFile($file->path);
                 $file->delete(); 
             }
-
-            if($request->documents == null)
+            
+            foreach ($request->documents as $uploadedFile) 
             {
-                return response()->json(['message' => 'Report updated successfully!']);
-            }
-            else
-            {
-                foreach ($request->documents as $uploadedFile) 
-                {
-                    $filePath = $fileStorageService->storeFile($uploadedFile);
-                    $file = File::create([
+                $filePath = $fileStorageService->storeFile($uploadedFile);
+                $file = File::create([
                         'name' => $uploadedFile->getClientOriginalName(),
                         'uploaded_by' => $request->report_by_user_id,
                         'project_id' => $report->project_id,
@@ -173,10 +183,10 @@ class ReportController extends Controller
                         'path' => $filePath,
                     ]);
 
-                    // Gắn file với report
-                    $report->files()->attach($file->file_id);
-                }
+                // Gắn file với report
+                $report->files()->attach($file->file_id);
             }
+            
         }
     
         return response()->json(['message' => 'Report updated successfully!']);
