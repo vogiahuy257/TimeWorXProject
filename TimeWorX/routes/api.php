@@ -50,9 +50,12 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
     Route::apiResource('task-comments', TaskCommentController::class)->except(['index']);
     Route::get('tasks/{taskId}/comments', [TaskCommentController::class, 'index']);
 
-    //Reports
-    Route::apiResource('reports', ReportController::class)->except(['index']);
+
+
+    //Route Reports
+    Route::apiResource('reports', ReportController::class)->except(['index','update']);
     Route::get('reports/{projectId}/reports', [ReportController::class, 'index']);
+    Route::post('reports/{report_id}',[ReportController::class, 'update']);
 
     // PersonalPlanController
     Route::apiResource('personal-plans', PersonalPlanController::class);

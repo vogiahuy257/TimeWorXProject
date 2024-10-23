@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import UploadMultipleFiler from './UploadMultipleFiler';
 import axios from 'axios';
 import {  toast } from 'react-toastify';
@@ -16,95 +16,106 @@ const ReportForm = ({ onClose ,task ,user_id}) => {
     const [documentLink, setDocumentLink] = useState('');
     const [isLink, setIsLink] = useState(false);
     const [fileSizeError, setFileSizeError] = useState('');
+    const [existingReport, setExistingReport] = useState(false);
+
+    useEffect(() => {
+        // Lấy báo cáo hiện có khi component được mount
+        axios.get(`/api/reports/${task.id}`, {
+            params: {
+                project_id: task.project_id,
+                task_id: task.id
+            }
+        }).then((response) => {
+                if (response.data) {
+                    const report = response.data;
+                        setExistingReport(report);
+                        setCompletionGoal(report.completion_goal || '');
+                        setTodayWork(report.today_work || '');
+                        setNextSteps(report.next_steps || '');
+                        setIssues(report.issues || '');
+                        setIsLink(report.isLink);
+                        if(report.isLink)
+                        {
+                            setDocumentLink(report.files && report.files.length > 0 ? report.files[0].path : '');
+                        }   
+                        else
+                        {
+                            setDocuments(report.files || []);
+                        }
+                }
+                else {
+                    setExistingReport(false); 
+                }
+            })
+            .catch((error) => {
+                const message = error.response?.data?.message || 'Error submitting report. Please try again.';
+                toast.error(`Error: ${message}`);
+                onClose();
+            });
+    }, []); 
 
     const getCurrentDate = () => {
         const date = new Date();
         const day = String(date.getDate()).padStart(2, '0'); 
         const month = String(date.getMonth() + 1).padStart(2, '0'); 
-        const year = date.getFullYear(); // Lấy năm
+        const year = date.getFullYear(); 
     
         return `${day}-${month}-${year}`; 
     };
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     let doc = documents;
-
-    //     if(isLink)
-    //     {
-    //        doc = documentLink;
-    //     }
-
-    //     const reportData = {
-    //         report_by_user_id: user_id,
-    //         project_id: task.project_id,
-    //         task_id: task.id,
-    //         completion_goal: completionGoal,
-    //         today_work: todayWork,
-    //         next_steps: nextSteps,
-    //         issues: issues,
-    //         isLink: isLink ? '1' : '0',
-    //         documents: doc
-    //     };
-
-    //     // Gửi dữ liệu báo cáo (thêm mã xử lý gửi ở đây)
-    //     console.log('Report data:', reportData);
-
-    //     const headers = {
-    //         'Content-Type': isLink ? 'application/json' : 'multipart/form-data'
-    //     };
-        
-    //     axios.post('/api/reports', reportData, { headers })
-    //     .then((response) => {
-    //         toast.success('Report submitted successfully!');
-    //     })
-    //     .catch((error) => {
-    //         const message = error.response?.data?.message || 'Error submitting report. Please try again.';
-    //         toast.error(message);
-    //         console.log('Error response:', message);
-    //     });
-
-    // };
-    
+     
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        const reportData = new FormData(); // Sử dụng FormData nếu có file upload
-    
+        const reportData = new FormData();
         reportData.append('report_by_user_id', user_id);
         reportData.append('project_id', task.project_id);
         reportData.append('task_id', task.id);
         reportData.append('completion_goal', completionGoal);
-        reportData.append('today_work', todayWork);
+        const formattedTodayWork = todayWork.replace(/\n/g, '<br>');
+        reportData.append('today_work', formattedTodayWork);
         reportData.append('next_steps', nextSteps);
         reportData.append('issues', issues);
         reportData.append('isLink', isLink ? '1' : '0');
     
         // Nếu là link thì chỉ append link
-        if (isLink) {
+        if (isLink) 
+        {
             reportData.append('documents', documentLink);
-        } else {
-            // Nếu là file thì append từng file
+        } 
+        else
+        {
             documents.forEach((file, index) => {
-                reportData.append(`documents[${index}]`, file);
+                if (file instanceof File)
+                {
+                    reportData.append(`documents[${index}]`, file);
+                }
+                else if (file.file instanceof File)
+                {
+                    reportData.append(`documents[${index}]`, file.file);
+                }
             });
         }
-    
+
         const headers = {
-            'Content-Type': isLink ? 'application/json' : 'multipart/form-data'
+             'Content-Type': 'multipart/form-data'
         };
         
-        axios.post('/api/reports', reportData, { headers })
+        const method = 'post';
+        const url = existingReport ? `/api/reports/${existingReport.report_id}` : '/api/reports';
+        const data = reportData;
+
+        axios[method](url, data, { headers })
         .then((response) => {
-            toast.success('Report submitted successfully!');
-            onClose();  // Close the form after successful submission
+            toast.success(response?.data?.message);
+            onClose();
         })
         .catch((error) => {
-            const message = error.response?.data?.message || 'Error submitting report. Please try again.';
+            const message = error.response?.message || 'Error submitting report. Please try again.';
             toast.error(message);
-            console.log('Error response:', message);
+            onClose();
         });
     };
+    
     
     
   return (
@@ -142,7 +153,7 @@ const ReportForm = ({ onClose ,task ,user_id}) => {
                     <div className='box-input'>
                         <h3>Today's work:</h3>
                         <textarea
-                                value={todayWork}
+                                value={todayWork.replace(/<br>/g, '\n')}
                                 onChange={(e) =>setTodayWork(e.target.value)} 
                                 placeholder="Describe the work you completed today"
                                 required
@@ -186,7 +197,7 @@ const ReportForm = ({ onClose ,task ,user_id}) => {
                                 required
                             />
                         ) : (
-                            <UploadMultipleFiler onFilesChange={(files) => setDocuments(files)} setIsLink={setIsLink} setFileSizeError={setFileSizeError} />
+                            <UploadMultipleFiler onFilesChange={(files) => setDocuments(files)} setIsLink={setIsLink} setFileSizeError={setFileSizeError} existingFiles={existingReport ? existingReport.files : []} />
                         )}
                         {/* error */}
                         {fileSizeError && <p className="text-error">{fileSizeError}</p>}
@@ -205,7 +216,9 @@ const ReportForm = ({ onClose ,task ,user_id}) => {
                 </div>
 
                 <div className='mt-auto flex justify-center'>
-                    <button className='btn-submit mb-4' type='submit'>Submit</button>
+                    <button className='btn-submit mb-4' type='submit'>
+                         {existingReport ? 'Update Report' : 'Report'}
+                    </button>
                 </div>
             </form>
       </div>

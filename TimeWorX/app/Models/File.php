@@ -30,12 +30,12 @@ class File extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'file_name',
+        'name',
         'uploaded_by',
         'uploaded_at',
         'project_id',
-        'file_type',
-        'file_path',
+        'type',
+        'path',
     ];
 
     /**

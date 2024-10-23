@@ -47,6 +47,7 @@ class ProjectControllerView extends Controller
                     'id' => strval($task->task_id), 
                     'content' => $task->task_name, 
                     'description' => $task->task_description,
+                    'project_id' => $task->project_id,
                     'user_count' => $task->users->count(), 
                     'users' => $task->users->map(function ($user) {
                         return [

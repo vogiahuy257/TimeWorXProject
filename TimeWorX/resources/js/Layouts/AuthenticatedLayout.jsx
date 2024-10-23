@@ -107,7 +107,7 @@ export default function Authenticated({ user, header, children }) {
                                             strokeLinejoin="round"
                                         />
                                     </svg>
-                                    <p>Dashboard</p>
+                                    <p>Home</p>
                                 </Link>
                             </li>
                             <li
@@ -261,7 +261,7 @@ export default function Authenticated({ user, header, children }) {
 
                 <section id="main">
                     <div className="content">
-                        <main>
+                        <main className='overflow-x-hidden'>
                         {children}
                         </main>
                     </div>
