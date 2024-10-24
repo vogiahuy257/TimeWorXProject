@@ -148,5 +148,44 @@ class ProjectController extends Controller
     
         return response()->json(['message' => 'Project restored successfully'], 200);
     }
+
+    public function addUserToProject(Request $request, $projectId)
+    {
+        $userId = $request->input('user_id');
+
+        // Kiểm tra xem người dùng đã có trong dự án chưa
+        $project = Project::find($projectId);
+
+        if (!$project) {
+            return response()->json(['message' => 'Project not found'], 404);
+        }
+
+        if ($project->users()->where('user_id', $userId)->exists()) {
+            return response()->json(['message' => 'User already added to this project'], 400);
+        }
+
+        // Thêm người dùng vào dự án
+        $project->users()->attach($userId);
+
+        return response()->json();
+    }
+
+    public function updateUserRoleInProject(Request $request, string $projectId)
+    {
+        $validated = $request->validate([
+            'user_id' => 'required|integer',
+            'is_project_manager' => 'required|boolean',
+        ]);
+
+        $project = Project::findOrFail($projectId);
+        
+        // Cập nhật quyền cho người dùng
+        $project->users()->updateExistingPivot($validated['user_id'], [
+            'is_project_manager' => $validated['is_project_manager']
+        ]);
+
+        return response()->json(['message' => 'User role updated successfully']);
+    }
+
     
 }

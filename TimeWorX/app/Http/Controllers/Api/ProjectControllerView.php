@@ -211,19 +211,12 @@ class ProjectControllerView extends Controller
 
     public function getUsersByProject($projectId)
     {
-        $userIds = Task::where('project_id', $projectId)
-        ->with('users')
-        ->get()
-        ->pluck('users')
-        ->flatten()
-        ->pluck('id')
-        ->unique();
+        $project = Project::findOrFail($projectId);
 
         // Fetch unique users from the list of user IDs
-        $users = User::whereIn('id', $userIds)->get(['id', 'name']);
+        $users = $project->users()->get();
 
         return response()->json($users);
     }
-
 
 }

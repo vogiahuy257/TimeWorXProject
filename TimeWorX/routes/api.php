@@ -31,6 +31,9 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
     Route::get('/projects/deleted/{user_id}', [ProjectController::class, 'getDeletedProjects']);
     Route::delete('/projects/permanently-delete/{id}', [ProjectController::class, 'permanentlyDeleteProject']);
     Route::get('/projects/restore/{id}', [ProjectController::class, 'restoreProject']);
+    Route::post('/projects/{projectId}/users', [ProjectController::class, 'addUserToProject']);
+    Route::put('/projects/{projectId}/user-role', [ProjectController::class, 'updateUserRoleInProject']);
+
 
     // Route Projectview (TASK)
     Route::apiResource('project-view', ProjectControllerView::class);
@@ -66,4 +69,6 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
 
     // Route User
     Route::apiResource('users', UserController::class);
+    Route::get('/users/search', [UserController::class, 'search']);
+
 // });

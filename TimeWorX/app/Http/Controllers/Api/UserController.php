@@ -20,6 +20,25 @@ class UserController extends Controller
         return response()->json($users);
     }
 
+    /**
+     * Tìm kiếm người dùng theo tên hoặc email.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search');
+
+        $users = User::where('name', 'like', "%{$searchTerm}%")
+                     ->orWhere('email', 'like', "%{$searchTerm}%")
+                     ->take(20) 
+                     ->get(['id', 'name']);
+
+        return response()->json($users);
+    }
+
+
     public function showUserToTask($task_id)
     {
         
