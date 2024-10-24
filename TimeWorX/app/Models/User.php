@@ -58,4 +58,22 @@ class User extends Authenticatable
         return $this->tasks()->whereNull('tasks.deleted_at')->count();
     }
 
+     /**
+     * Mối quan hệ với bảng `projects` qua bảng trung gian `project_user`.
+     * Lấy tất cả các dự án mà người dùng tham gia.
+     */
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'project_user')
+                    ->withPivot('is_project_manager')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Lấy tất cả các dự án mà người dùng là project manager.
+     */
+    public function managedProjects()
+    {
+        return $this->projects()->wherePivot('is_project_manager', true);
+    }
 }

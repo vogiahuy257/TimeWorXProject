@@ -7,7 +7,7 @@ import CardProject from '@/Components/Dashboard/Layouts/Project/CardProject';
 import CreateProjectForm from '@/Components/Dashboard/Layouts/Project/CreateProjectForm'; 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import DeletedProjectsForm from '@/Components/Dashboard/Layouts/Project/DeletedProjectsForm'; 
+import DeletedProjectsForm from './Layouts/Project/DeletedProjectsForm'; 
 
 export default function Folder({ auth }) {
     
@@ -25,7 +25,7 @@ export default function Folder({ auth }) {
             setProjects(response.data);
             setFilteredProjects(response.data);
         } catch (error) {
-            toast.error('Error fetching projects:', error.response ? error.response.data : error.message);
+            toast.error('Error fetching projects:', error.response ? error.response?.error : error.response?.message);
         }
     };
     //hàm tìm kiếm theo mỗi lần nhấn cho project
@@ -40,7 +40,7 @@ export default function Folder({ auth }) {
     
     useEffect(() => {
         fetchProjectData();
-    }, [auth]);
+    }, []);
     
 
     // hàm mới form xóa
@@ -121,10 +121,10 @@ export default function Folder({ auth }) {
                     setProjects(projects.map(p => p.project_id === response.data.project_id ? response.data : p));
                     setIsFormOpen(false); 
                     fetchProjectData();
-                    toast.success('Project create successfully!');
+                    toast.success('Project update successfully!');
                 })
                 .catch(error => {
-                    toast.error('Error updating project:', error.response ? error.response.data : error.message);
+                    toast.error(`Error updating project: ${error.message}`);
                 });
         }
         else
@@ -135,9 +135,10 @@ export default function Folder({ auth }) {
                     setProjects([...projects, response.data]);
                     setIsFormOpen(false); 
                     fetchProjectData();
+                    toast.success('Project create successfully!');
                 })
                 .catch(error => {
-                    toast.error('Error creating project:', error.response ? error.response.data : error.message);
+                    toast.error(`Error creating project: ${error.message}`);
                 });
         }
     };

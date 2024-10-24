@@ -39,11 +39,14 @@ class ProjectController extends Controller
             'user_id' => 'required|integer',
             'project_status'=>'nullable|string|max:200',
         ]);
-        
+
+        // Gán project_manager là user_id
         $validated['project_manager'] = $request->user_id;
 
-        $project = Project::create($validated);
-        return response()->json($project, 201);
+        // Tạo dự án mới
+        Project::create($validated);
+
+        return response()->json();
     }
 
     /**
@@ -51,14 +54,25 @@ class ProjectController extends Controller
      */
     public function show(string $user_id)
     {
-        $projects = Project::nonDeleted()->where('project_manager', $user_id)->get();
+        $projects = Project::nonDeleted()
+        ->where(function ($query) use ($user_id) 
+        {
+            $query->where('project_manager', $user_id)
+                  ->orWhereHas('users', function ($query) use ($user_id) 
+                  {
+                      $query->where('user_id', $user_id)
+                            ->where('is_project_manager', true);
+                  });
+        })
+        ->get();
 
+        // Cập nhật trạng thái và thông tin cho từng dự án
         foreach ($projects as $project) {
-            $project->updateProjectStatus(); 
+            $project->updateProjectStatus();
             $project->late_tasks_count = $project->countLateTasks();
             $project->near_deadline_tasks_count = $project->countNearDeadlineTasks();
             $project->completed_tasks_ratio = $project->countTasksAndCompleted();
-        }       
+        }
 
         return response()->json($projects);
     }
@@ -67,8 +81,11 @@ class ProjectController extends Controller
 
     public function getDeletedProjects(string $user_id)
     {
-        $projects = Project::onlyTrashed()->where('project_manager', $user_id)->get();
-        return response()->json($projects);
+        // Lấy các dự án đã bị xóa cho người quản lý dự án
+        $deletedProjects = Project::deletedProjectsByUser($user_id)->get();
+
+        // Trả về danh sách dự án đã bị xóa hoặc thông báo không tìm thấy dự án
+        return response()->json($deletedProjects);
     }
 
 
@@ -87,9 +104,8 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
 
-        // Check if the authenticated user is the project manager
-        if ($request->user_id != $project->project_manager) {
-            return response()->json(['error' => 'Unauthorized'], 403);
+        if (!$project->isUserProjectManager($request->user_id)) {
+            return response()->json(['error' => 'Update false'], 403);
         }
 
         $validated = $request->validate([
@@ -101,9 +117,8 @@ class ProjectController extends Controller
             'project_status'=>'nullable|string|max:200',
         ]);
 
-        // Ghi giá trị vào log
-        $validated['project_manager'] = $request->user_id;
         $project->update($validated);
+
         return response()->json($project);
     }
 

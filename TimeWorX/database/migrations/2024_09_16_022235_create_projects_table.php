@@ -23,6 +23,14 @@ return new class extends Migration
             $table->foreignId('project_manager')->constrained('users', 'id')->onDelete('cascade'); // Foreign key to users table
             $table->softDeletes();
         });
+
+        Schema::create('project_user', function (Blueprint $table) {
+            $table->id(); // Primary key
+            $table->foreignId('project_id')->constrained('projects', 'project_id')->onDelete('cascade'); // Khóa ngoại tới bảng projects
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Khóa ngoại tới bảng users
+            $table->boolean('is_project_manager')->default(false); // Đánh dấu người dùng có phải là project manager hay không
+            $table->timestamps();
+        });
     }
 
     /**
@@ -31,5 +39,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('projects');
+        
+        Schema::dropIfExists('project_user');
     }
 };

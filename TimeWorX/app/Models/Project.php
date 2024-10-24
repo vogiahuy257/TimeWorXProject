@@ -150,5 +150,90 @@ class Project extends Model
         return  $result;
     }
 
+    /**
+     * Mối quan hệ với bảng `users` qua bảng trung gian `project_user`.
+     * Lấy tất cả những người dùng tham gia vào dự án.
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'project_user', 'project_id', 'user_id')
+                    ->withPivot('is_project_manager')
+                    ->withTimestamps();
+    }
 
+    // Automatically add project manager to the users list
+    public static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($project) 
+        {
+            try 
+            {
+                $project->addProjectManagerToUsers();
+            } 
+            catch (\Exception $e) 
+            {
+                \Log::info('Error adding project manager: ' . $e->getMessage());
+            }
+        });
+        
+
+        static::updated(function ($project) 
+        {
+            try
+            {
+                $project->addProjectManagerToUsers();
+            }
+            catch (\Exception $e) 
+            {
+                \Log::info('Error adding project manager: ' . $e->getMessage());
+            }
+        });
+    }
+
+
+    /**
+     * Add the project manager to the users list with 'is_project_manager' set to true.
+     */
+    public function addProjectManagerToUsers()
+    {
+        // Kiểm tra xem người quản lý dự án đã có trong danh sách users chưa
+        if (!$this->users()->where('user_id', $this->project_manager)->exists()) {
+            // Thêm người quản lý vào danh sách users
+            $this->users()->attach($this->project_manager, ['is_project_manager' => true]);
+        }
+    }
+
+    /**
+     * Kiểm tra xem người dùng có phải là người quản lý dự án hay không.
+     *
+     * @param string $user_id
+     * @return bool
+     */
+    public function isUserProjectManager(string $user_id)
+    {
+        // Kiểm tra xem người dùng có trong danh sách users và có 'is_project_manager' là true không
+        return $this->users()->where('user_id', $user_id)
+                            ->where('is_project_manager', true)
+                            ->exists();
+    }
+
+    /**
+     * Lấy các dự án đã bị xóa mà người dùng có vai trò project_manager.
+     *
+     * @param string $user_id
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function scopeDeletedProjectsByUser($query, string $user_id)
+    {
+        return $query->onlyTrashed()
+            ->where(function ($query) use ($user_id) {
+                $query->whereHas('users', function ($query) use ($user_id) {
+                    $query->where('user_id', $user_id)
+                          ->where('is_project_manager', true);
+                })
+                ->orWhere('project_manager', $user_id);
+            });
+    }
 }
