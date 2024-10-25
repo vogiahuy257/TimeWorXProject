@@ -216,6 +216,10 @@ class ProjectControllerView extends Controller
         // Fetch unique users from the list of user IDs
         $users = $project->users()->get();
 
+        $users->each(function($user) {
+            $user->active_tasks_count = $user->countActiveTasks();
+        });
+
         return response()->json($users);
     }
 

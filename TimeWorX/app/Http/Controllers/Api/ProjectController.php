@@ -187,5 +187,4 @@ class ProjectController extends Controller
         return response()->json(['message' => 'User role updated successfully']);
     }
 
-    
 }

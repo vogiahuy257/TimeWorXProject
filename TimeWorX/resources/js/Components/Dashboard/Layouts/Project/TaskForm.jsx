@@ -17,7 +17,7 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
         try {
             if(projectId != null)
             {
-                const response = await axios.get('/api/users'); 
+                const response = await axios.get(`/api/project-view/${projectId}/users`); 
                 setUsers(response.data); 
             }
             else
@@ -50,8 +50,9 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
     const convertDateFormat = (dateStr) => {
         if (!dateStr) return '';
         const [day, month, year] = dateStr.split('-');
-        return `${year}-${month}-${day}`;
+        return `${year}-${month}-${day}T00:00`;
     };
+    
 
     const formatDeadline = (deadline) => {
         const date = new Date(deadline);
