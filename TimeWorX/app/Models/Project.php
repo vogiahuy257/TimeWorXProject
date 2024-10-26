@@ -236,4 +236,26 @@ class Project extends Model
                 ->orWhere('project_manager', $user_id);
             });
     }
+
+
+    /**
+     * Thống kê trang thái của các task trong project
+     *
+     */
+    public function countTasksByStatus()
+    {
+        $statusCounts = Task::where('project_id', $this->project_id)
+            ->select('status_key')
+            ->selectRaw('COUNT(*) as count')
+            ->groupBy('status_key')
+            ->pluck('count', 'status_key')
+            ->toArray();
+
+        return [
+            'to-do' => $statusCounts['to-do'] ?? 0,
+            'in-progress' => $statusCounts['in-progress'] ?? 0,
+            'verify' => $statusCounts['verify'] ?? 0,
+            'done' => $statusCounts['done'] ?? 0,
+        ];
+    }
 }

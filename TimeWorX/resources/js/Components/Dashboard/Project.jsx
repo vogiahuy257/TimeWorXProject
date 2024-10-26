@@ -5,9 +5,11 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import CardProject from '@/Components/Dashboard/Layouts/Project/CardProject';
 import CreateProjectForm from '@/Components/Dashboard/Layouts/Project/CreateProjectForm'; 
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DeletedProjectsForm from './Layouts/Project/DeletedProjectsForm'; 
+import ProjectAnalysis from './Layouts/Project/ProjectAnalysis';
+
 
 export default function Folder({ auth }) {
     
@@ -15,8 +17,11 @@ export default function Folder({ auth }) {
     const [filteredProjects, setFilteredProjects] = useState([]);
     const [isDeletedFormOpen, setIsDeletedFormOpen] = useState(false);
     const [isFormOpen, setIsFormOpen] = useState(false);
+    const [isOpenProjectAnalysis, setIsOpenProjectAnalysis] = useState(false);
     const [editProject, setEditProject] = useState([]); 
     const [searchQuery, setSearchQuery] = useState('');
+    
+
 
     //hàm gọi api lấy data
     const fetchProjectData = async () => {
@@ -81,9 +86,9 @@ export default function Folder({ auth }) {
         );
     };
     
-    const handleReports = () => 
+    const handleProjectAnalysis = () => 
     {
-        console.log("this is Report");
+        setIsOpenProjectAnalysis(!isOpenProjectAnalysis);
     }
     //hàm cho sự kiện khi nhấn vào nút xóa
     const confirmDelete = (projectId) => {
@@ -157,10 +162,10 @@ export default function Folder({ auth }) {
                             </svg>
                          </PrimaryButton>
 
-                         <PrimaryButton onClick={handleReports} className='btn-create btn-report'>
-                            <p>Reports Project</p>
+                         <PrimaryButton onClick={handleProjectAnalysis} className='btn-create btn-report'>
+                            <p>Project Analysis </p>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M17.5101 8.13298L10.4102 15.2328C9.56597 16.0771 8.19717 16.0771 7.35292 15.2328C6.5069 14.3868 6.50893 13.0145 7.35745 12.171L12.8632 6.69779L14.2459 5.31511C15.9282 3.63278 18.6558 3.63278 20.3381 5.31512C22.0205 6.99745 22.0205 9.72506 20.3381 11.4074L18.9763 12.7693L13.8148 17.9308C11.1448 20.712 7.09921 21.1351 4.27061 18.4197C1.47664 15.7375 1.95021 11.7162 4.7752 8.89123L9.91637 3.74927" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M12 2.40002C17.3019 2.40006 21.5999 6.69814 21.5999 12.0001C21.5999 17.302 17.3018 21.6001 11.9999 21.6001C6.69797 21.6001 2.3999 17.302 2.3999 12.0001C2.3999 6.6981 6.698 2.39999 12 2.40002ZM12 2.40002L11.9999 12.0001M11.9999 12.0001L5.3999 18.6001M11.9999 12.0001L5.3999 5.40008" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
                          </PrimaryButton>
                   </div>
@@ -216,6 +221,12 @@ export default function Folder({ auth }) {
                 )}
             </section>
 
+            {isOpenProjectAnalysis && (
+                    <ProjectAnalysis 
+                        userId={auth.user.id} 
+                        onClose={handleProjectAnalysis}
+                    />
+            )}
             {/* from model */}
             {isFormOpen && (
                 <CreateProjectForm

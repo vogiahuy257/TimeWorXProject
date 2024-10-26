@@ -187,4 +187,11 @@ class ProjectController extends Controller
         return response()->json(['message' => 'User role updated successfully']);
     }
 
+    public function getStatisticsOfTasks()
+    {
+        //xây dựng routeapi
+        //xây dựng tiệp nhận project_id từ frontend và tìm kiếm trong model
+        //lấy ra hàm countTasksByStatus xong truyền nó về cho frontend
+        
+    }
 }
