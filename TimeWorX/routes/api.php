@@ -31,13 +31,14 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
     Route::get('/projects/deleted/{user_id}', [ProjectController::class, 'getDeletedProjects']);
     Route::delete('/projects/permanently-delete/{id}', [ProjectController::class, 'permanentlyDeleteProject']);
     Route::get('/projects/restore/{id}', [ProjectController::class, 'restoreProject']);
+    Route::post('/projects/{projectId}/users', [ProjectController::class, 'addUserToProject']);
+    Route::put('/projects/{projectId}/user-role', [ProjectController::class, 'updateUserRoleInProject']);
+
 
     // Route Projectview (TASK)
     Route::apiResource('project-view', ProjectControllerView::class);
     Route::post('/project-view/{project_id}/tasks', [ProjectControllerView::class, 'createTaskToProject']);
     Route::put('/project-view/{projectId}/tasks/{taskId}', [ProjectControllerView::class, 'updateTaskProject']);
-    
-    // Route xử lý các task đã bị xóa mềm
     Route::get('/project-view/{projectId}/deleted-tasks', [ProjectControllerView::class, 'getDeletedTasks']);
     Route::put('/project-view/tasks/{taskId}/restore', [ProjectControllerView::class, 'restoreTask']); 
     Route::delete('/project-view/tasks/{taskId}/force-delete', [ProjectControllerView::class, 'forceDeleteTask']); 
@@ -66,4 +67,6 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
 
     // Route User
     Route::apiResource('users', UserController::class);
+    Route::get('/users/search', [UserController::class, 'search']);
+
 // });

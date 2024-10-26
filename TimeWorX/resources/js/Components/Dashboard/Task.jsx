@@ -12,6 +12,7 @@ import ReportForm from './Layouts/Task/ReportForm';
 
 export default function Task({ auth }) {
     const [ project_id,setProjectId ] = useState();
+    const [selectProjectId, setSelectedProjectId] = useState();
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [projects, setProjects] = useState([]); 
     const [selectedTask, setSelectedTask] = useState(null);
@@ -48,9 +49,10 @@ export default function Task({ auth }) {
         toggleForm(); 
     };
 
-    const handleViewClick = (task) => {
+    const handleViewClick = (task,project_id) => {
         setSelectedTask(task);
         setTaskStatus(task.status);
+        setSelectedProjectId(project_id);
         if(task.type == "task")
         {
             setIsStaff(true);
@@ -270,7 +272,7 @@ export default function Task({ auth }) {
                                                                                 </svg>
                                                                             </PrimaryButton>
                                                                         )}
-                                                                        <PrimaryButton className='btn-view' onClick={() => handleViewClick(task)}>
+                                                                        <PrimaryButton className='btn-view' onClick={() => handleViewClick(task,task.project_id)}>
                                                                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                                 <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
                                                                                 <path d="M20.188 10.9343C20.5762 11.4056 20.7703 11.6412 20.7703 12C20.7703 12.3588 20.5762 12.5944 20.188 13.0657C18.7679 14.7899 15.6357 18 12 18C8.36427 18 5.23206 14.7899 3.81197 13.0657C3.42381 12.5944 3.22973 12.3588 3.22973 12C3.22973 11.6412 3.42381 11.4056 3.81197 10.9343C5.23206 9.21014 8.36427 6 12 6C15.6357 6 18.7679 9.21014 20.188 10.9343Z" stroke="currentColor" strokeWidth="2"/>
@@ -324,6 +326,7 @@ export default function Task({ auth }) {
             {showComments && (
                 <TaskComments 
                     taskId={selectedTask.id} 
+                    user_id ={auth.user.id}
                     onClose={() => setShowComments(false)} 
                     isManagerComment ={false}
                 />
@@ -333,7 +336,16 @@ export default function Task({ auth }) {
                 {/* hiển thị ReportForm */}
              {showReportForm && <ReportForm task={selectedTask} user_id={auth.user.id} onClose={() => setShowReportForm(false)}/>}
                 {/* Hiển thị TaskForm */}
-             {isFormOpen && <TaskForm onClose={toggleForm} user_id={auth.user.id} projectId={null} refreshTasks={fetchProjectData} task={selectedTask} task_status={taskStatus} is_staff={isStaff}/>}
+                {isFormOpen && <TaskForm 
+                    onClose={toggleForm} 
+                    user_id={auth.user.id} 
+                    projectId={selectProjectId} 
+                    refreshTasks={fetchProjectData} 
+                    task={selectedTask} 
+                    task_status={taskStatus} 
+                    is_staff={isStaff}
+                />}
+
         </section>
         </>
     );

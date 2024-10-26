@@ -5,7 +5,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextareaAutosize from 'react-textarea-autosize';
 import './css/TaskComments.css';
 
-const TaskComments = ({ taskId, onClose,isManagerComment }) => {
+const TaskComments = ({ user_id, taskId, onClose,isManagerComment }) => {
     const [commentsData, setCommentsData] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
     const [commentContent, setCommentContent] = useState('');
@@ -26,10 +26,23 @@ const TaskComments = ({ taskId, onClose,isManagerComment }) => {
      const fetchComments = async () => {
         try {
             const response = await axios.get(`/api/tasks/${taskId}/comments`);
-            setCommentsData(response.data);
-            if (response.data.length > 0) {
-                setSelectedUser(response.data[0].user); 
+            if(!isManagerComment)
+            {
+                const allComments = response.data;
+                const filteredComments = allComments.filter(comment => comment.user.id === user_id);
+                if (response.data.length > 0) {
+                    setSelectedUser(filteredComments[0].user); 
+                }
             }
+            else
+            {
+                if(response.data.length > 0)
+                {
+                    setSelectedUser(response.data[0].user); 
+                }
+            }
+            
+            setCommentsData(response.data);
         } catch (error) {
             toast.error('Failed to fetch comments');
         }
@@ -132,7 +145,11 @@ const TaskComments = ({ taskId, onClose,isManagerComment }) => {
                                     ?.comments.map((comment) => (
                                         <div
                                             key={comment.comment_id}
-                                            className={`comments ${comment.is_manager_comment ? 'comments-left' : 'user-comments'}`}
+                                            className={`comments 
+                                            ${isManagerComment ? 
+                                                (comment.is_manager_comment ? 'comments-left' : 'user-comments'):
+                                                (comment.is_manager_comment ? 'user-comments' : 'comments-left')
+                                            }`}
                                         >
                                             <div className='comments-content'>
                                                 <p className="comments-text"dangerouslySetInnerHTML={{ __html: comment.comment_text }}/>

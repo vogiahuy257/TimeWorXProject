@@ -438,7 +438,7 @@
     border-radius: 4px;
     opacity: 0;
     z-index: 9999;
-    transition: opacity 0.3s ease-in-out,top 0.3s ease-in-out;
+    transition: opacity 0.2s ease-in-out,top 0.2s ease-in-out;
 }
 
 #dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-report::after

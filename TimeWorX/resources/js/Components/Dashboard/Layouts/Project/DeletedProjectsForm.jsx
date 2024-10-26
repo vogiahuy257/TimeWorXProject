@@ -7,17 +7,16 @@ import "./css/DeletedProjectFrom.css";
 const DeletedProjectsForm = ({ auth ,resetPage, onClose }) => {
     
     const [deletedProjects, setDeletedProjects] = useState([]);
+    const fetchDeletedProjects = () => {
+        axios.get(`/api/projects/deleted/${auth.user.id}`)
+            .then(response => {
+                setDeletedProjects(response.data);
+            })
+            .catch(error => {
+                toast.error(`Error fetching deleted projects: ${error.response ? error.response.data : error.message}`);
+            });
+    };
     useEffect(() => {
-        const fetchDeletedProjects = () => {
-            axios.get(`/api/projects/deleted/${auth.user.id}`)
-                .then(response => {
-                    setDeletedProjects(response.data);
-                })
-                .catch(error => {
-                    toast.error(`Error fetching deleted projects: ${error.response ? error.response.data : error.message}`);
-                });
-        };
-
         fetchDeletedProjects();
     }, []);
 
