@@ -267,6 +267,7 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
                                             value={user.id}
                                             checked={selectedUsers.some(selectedUser => selectedUser.id === user.id)}
                                             onChange={() => handleUserSelection(user)}
+                                            disabled={is_staff}
                                             className="ml-4 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                                         />
                                     </li>
