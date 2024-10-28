@@ -187,11 +187,23 @@ class ProjectController extends Controller
         return response()->json(['message' => 'User role updated successfully']);
     }
 
-    public function getStatisticsOfTasks()
+    public function getStatisticsOfTasks($user_id)
     {
-        //xây dựng routeapi
-        //xây dựng tiệp nhận project_id từ frontend và tìm kiếm trong model
-        //lấy ra hàm countTasksByStatus xong truyền nó về cho frontend
-        
+        $projects = Project::nonDeleted()
+        ->where(function ($query) use ($user_id) {
+            $query->where('project_manager', $user_id)
+                  ->orWhereHas('users', function ($query) use ($user_id) {
+                      $query->where('user_id', $user_id)
+                            ->where('is_project_manager', true);
+                  });
+        })
+        ->get();
+
+        foreach ($projects as $project) {
+            $project->updateProjectStatus();
+            $project->statistics = $project->countTasksByStatus();;
+        }
+    
+        return response()->json($projects);
     }
 }
