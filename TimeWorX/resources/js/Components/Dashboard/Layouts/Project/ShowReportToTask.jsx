@@ -7,7 +7,6 @@ const ShowReportToTask = ({ task, onClose }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Lấy dữ liệu báo cáo khi component được mount
         axios.get(`/api/reports/${task.id}`, {
             params: {
                 project_id: task.project_id,

@@ -17,34 +17,38 @@ const ReportForm = ({ onClose ,task ,user_id}) => {
     const [isLink, setIsLink] = useState(false);
     const [fileSizeError, setFileSizeError] = useState('');
     const [existingReport, setExistingReport] = useState(false);
+    const [isExistingReport, setIsExistingReport] = useState(false);
 
     useEffect(() => {
-        // Lấy báo cáo hiện có khi component được mount
         axios.get(`/api/reports/${task.id}`, {
             params: {
                 project_id: task.project_id,
                 task_id: task.id
             }
         }).then((response) => {
-                if (response.data) {
-                    const report = response.data;
-                        setExistingReport(report);
-                        setCompletionGoal(report.completion_goal || '');
-                        setTodayWork(report.today_work || '');
-                        setNextSteps(report.next_steps || '');
-                        setIssues(report.issues || '');
-                        setIsLink(report.isLink);
-                        if(report.isLink)
-                        {
-                            setDocumentLink(report.files && report.files.length > 0 ? report.files[0].path : '');
-                        }   
-                        else
-                        {
-                            setDocuments(report.files || []);
-                        }
-                }
-                else {
-                    setExistingReport(false); 
+            const report = response.data;
+            if(report.length == 0)
+            {
+                setIsExistingReport(false);
+            }
+            else
+            {
+                setIsExistingReport(true);
+            }
+                if (report) 
+                {
+                    setExistingReport(report);
+                    setCompletionGoal(report.completion_goal || '');
+                    setTodayWork(report.today_work || '');
+                    setNextSteps(report.next_steps || '');
+                    setIssues(report.issues || '');
+                    setIsLink(report.isLink);
+
+                    if (report.isLink) {
+                        setDocumentLink(report.files && report.files.length > 0 ? report.files[0].path : '');
+                    } else {
+                        setDocuments(report.files || []);
+                    }
                 }
             })
             .catch((error) => {
@@ -52,7 +56,7 @@ const ReportForm = ({ onClose ,task ,user_id}) => {
                 toast.error(`Error: ${message}`);
                 onClose();
             });
-    }, []); 
+    }, [task]); 
 
     const getCurrentDate = () => {
         const date = new Date();
@@ -101,7 +105,7 @@ const ReportForm = ({ onClose ,task ,user_id}) => {
         };
         
         const method = 'post';
-        const url = existingReport ? `/api/reports/${existingReport.report_id}` : '/api/reports';
+        const url = isExistingReport ? `/api/reports/${existingReport.report_id}` : '/api/reports';
         const data = reportData;
 
         axios[method](url, data, { headers })
@@ -217,7 +221,7 @@ const ReportForm = ({ onClose ,task ,user_id}) => {
 
                 <div className='mt-auto flex justify-center'>
                     <button className='btn-submit mb-4' type='submit'>
-                         {existingReport ? 'Update Report' : 'Report'}
+                         {isExistingReport ? 'Update Report' : 'Report'}
                     </button>
                 </div>
             </form>
