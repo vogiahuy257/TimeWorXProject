@@ -27,6 +27,7 @@
     --color-black-gray: #d2d2d2; 
     --background: linear-gradient(155deg, #232222, #373737);
     --color-shadow:#424242df;
+    --bg-color-blue-while: #222222;
 }
 
 #dashboard img{

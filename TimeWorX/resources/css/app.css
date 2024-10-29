@@ -13,14 +13,15 @@
     --color-gray: #D9D9D9;
     --color-white: rgb(255, 255, 255);
     --color-white-rgb: 255, 255, 255; 
-    --color-whiteGray:rgb(227, 231, 230);
+    --color-whiteGray:rgb(240, 240, 240);
     --color-light-gray: #F9F9F9;
     --color-light-blue: #117add;
     --color-red: rgb(218, 30, 40);
     --color-red-rgb: 218, 30, 40;
     --color-green: rgb(37, 162, 73);
-    --background: linear-gradient(135deg, #e9defa,#fbfcdb); /* linear-gradient(155deg,#FFFFFF,#D3D3D3) */
-
+    /* --background: linear-gradient(135deg, #F2F8FC,#fbfcdb); */
+    --background: linear-gradient(135deg, #F2F8FC,#e6f7ff);
+    --bg-color-blue-while: #F2F8FC;
     --color-shadow:rgba(68, 68, 68, 0.418);
 
     /* Font Sizes */

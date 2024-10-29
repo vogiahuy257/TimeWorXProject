@@ -206,4 +206,32 @@ class ProjectController extends Controller
     
         return response()->json($projects);
     }
+
+    public function getProjectStatistics(Request $request, $project_id)
+    {
+        $user_id = $request->input('user_id');
+    
+        $project = Project::select('project_id')
+            ->nonDeleted()
+            ->where('project_id', $project_id)
+            ->where(function ($query) use ($user_id) {
+                $query->where('project_manager', $user_id)
+                    ->orWhereHas('users', function ($query) use ($user_id) {
+                        $query->where('user_id', $user_id)
+                              ->where('is_project_manager', true);
+                    });
+            })
+            ->first();
+    
+        // Kiểm tra nếu không tìm thấy project
+        if (!$project) {
+            return response()->json(['message' => 'Project not found or access denied.'], 404);
+        }
+    
+        $statistics = $project->countTasksByStatus();
+    
+        return response()->json(['statistics' => $statistics]);
+    }
+    
+
 }

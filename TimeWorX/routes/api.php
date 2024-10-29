@@ -34,6 +34,8 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
     Route::post('/projects/{projectId}/users', [ProjectController::class, 'addUserToProject']);
     Route::put('/projects/{projectId}/user-role', [ProjectController::class, 'updateUserRoleInProject']);
     Route::get('/projects/statistics/{user_id}', [ProjectController::class, 'getStatisticsOfTasks']);
+    Route::post('/projects/{project_id}/statistics', [ProjectController::class, 'getProjectStatistics']);
+
 
 
     // Route Projectview (TASK)
