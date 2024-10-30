@@ -42,17 +42,21 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
     Route::apiResource('project-view', ProjectControllerView::class);
     Route::post('/project-view/{project_id}/tasks', [ProjectControllerView::class, 'createTaskToProject']);
     Route::put('/project-view/{projectId}/tasks/{taskId}', [ProjectControllerView::class, 'updateTaskProject']);
+
     Route::get('/project-view/{projectId}/deleted-tasks', [ProjectControllerView::class, 'getDeletedTasks']);
+
     Route::put('/project-view/tasks/{taskId}/restore', [ProjectControllerView::class, 'restoreTask']); 
     Route::delete('/project-view/tasks/{taskId}/force-delete', [ProjectControllerView::class, 'forceDeleteTask']); 
     Route::get('/project-view/{project_id}/users', [ProjectControllerView::class, 'getUsersByProject']);
 
     // Task
     Route::apiResource('tasks', TaskController::class);
+    Route::get('/tasks/{projectId}/done', [TaskController::class, 'getDoneTasksByProject']);
 
     //Task Comment
     Route::apiResource('task-comments', TaskCommentController::class)->except(['index']);
     Route::get('tasks/{taskId}/comments', [TaskCommentController::class, 'index']);
+    
 
 
 

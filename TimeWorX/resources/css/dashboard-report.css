@@ -44,7 +44,7 @@
 #dashboard #report
 {
     background-color: var(--color-whiteGray);
-    height: calc(100vh + 50%);
+    height: 100%;
 }
 
 #dashboard #report .report-content
@@ -147,4 +147,38 @@
     {
         font-size: var(--font-size-sSSmall);
     }
+}
+
+#dashboard #report .report-task-done .task-done-box
+{
+    box-shadow: 0px 2px 6px rgba(var(--color-black-rgb),0.4);
+}
+#dashboard #report .btn-report svg
+{
+    transform: translateY(0px);
+    position: relative;
+    transition: transform .2s ease-in-out;
+}
+#dashboard #report .btn-report::before
+{
+    content: "Report";
+    font-size: var(--font-size-sSSmall);
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+}
+#dashboard #report .btn-report:hover:before
+{
+    opacity: 1;
+}
+#dashboard #report .btn-report:hover svg{
+    transform: translateY(-8px);
+}
+
+#dashboard #report .btn-report:active svg
+{
+    color: rgba(var(--color-black-rgb),0.5);
 }

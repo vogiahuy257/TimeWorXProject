@@ -178,7 +178,7 @@ class ProjectControllerView extends Controller
 
     public function getDeletedTasks($projectId)
     {
-        $deletedTasks = Task::onlyTrashed()->where('project_id', $projectId)->with('users')->get();
+        $deletedTasks = Task::onlyTrashed()->where('project_id', $projectId)->get();
 
         return response()->json($deletedTasks);
     }

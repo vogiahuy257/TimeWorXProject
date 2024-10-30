@@ -199,4 +199,19 @@ class TaskController extends Controller
         $task->delete();
         return response()->json(['message' => 'Task deleted successfully']);
     }
+
+     /**
+     * Display a listing of completed (done) tasks for a given project,
+     * including tasks that have been soft deleted.
+     */
+    public function getDoneTasksByProject($projectId)
+    {
+        $tasks = Task::withTrashed()
+            ->where('project_id', $projectId)
+            ->where('status_key', 'done')
+            ->select('project_id', 'task_id', 'task_name', 'task_description')
+            ->get();
+
+        return response()->json($tasks);
+    }
 }

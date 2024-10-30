@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Head } from '@inertiajs/react';
 import { toast } from 'react-toastify';
 import ReportProjectDetail from './Layouts/Report/ReportProjectDetail';
+import ReportTaskDone from './Layouts/Report/ReportTaskDone';
 import axios from 'axios';
 
 export default function Report({ auth }) {
@@ -28,14 +29,15 @@ export default function Report({ auth }) {
     };
 
     return (
-        <section id='report' className='rounded-lg shadow-inner'>
+        <section id='report' className='rounded-lg shadow-inner p-1 overflow-y-auto scrollbar-hide'>
             <Head title="Report" />
-            <div className="main p-1 flex flex-col">
+            <div className="main w-full p-1 flex flex-col justify-center items-center">
                 {projects.length > 0 ? (
-                    <>
+                    <div className='w-full h-full'>
                         {/* Danh sách Project */}
-                        <div className='w-full flex'>
-                            <div className={`w-3/5 report-content report-project m-1 p-4 rounded-md shadow-md`}>
+                        <div className='w-full flex flex-col lg:flex-row'>
+                            
+                            <div className={`report-content report-project m-2 p-4 rounded-md shadow-md lg:w-3/5`}>
                                 <h2 className="text-header">Project</h2>
                                 <div className="project-box flex flex-wrap gap-2 p-1 mt-4 rounded max-h-[200px] overflow-y-auto scrollbar-hide">
                                 {projects.map((project) => (
@@ -62,24 +64,26 @@ export default function Report({ auth }) {
                                 </div>
                             </div>
                             {/* xem chi tiết project */}
-                            <div className={`w-2/5 report-content detail-box m-1 p-4 rounded-md shadow-md relative`}>
+                            <div className={`h-52 report-content detail-box m-2 p-4 rounded-md shadow-md relative lg:w-2/5 lg:h-auto`}>
                                 <ReportProjectDetail project = {selectProject} user_id = {auth.user.id} />
                             </div>
+                            
                         </div>
                         
                         {/* Task Done của Project */}
-                        <div className='w-full flex'>
-                            <div className="w-2/5 report-content report-task-done m-1 p-4 rounded-md shadow-md">
+                        <div className='w-full flex flex-col md:flex-row'>
+                            <div className="md:w-2/5 report-content report-task-done m-2 p-4 rounded-md shadow-md ">
                                 <h2 className="text-header">Task done</h2>
                                 {/* Hiển thị task của project đã chọn */}
+                                <ReportTaskDone project_id = {selectProject.project_id}/>
                             </div>
 
                             {/* Tổng Hợp */}
-                            <div className="w-3/5 report-content report-summary m-1 p-4 rounded-md shadow-md">
+                            <div className="md:w-3/5 report-content report-summary m-2 p-4 rounded-md shadow-md ">
                                 <h2 className="text-header">Summary Report</h2>
                             </div>
                         </div>
-                    </>
+                    </div>
                 ) : (
                     <p>No projects available.</p>
                 )}
