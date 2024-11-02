@@ -22,6 +22,7 @@
     },
     "dependencies": {
         "@szhsin/react-menu": "^4.2.2",
+        "@tailwindcss/line-clamp": "^0.4.4",
         "chart.js": "^4.4.5",
         "react-beautiful-dnd": "^13.1.1",
         "react-chartjs-2": "^5.2.0",

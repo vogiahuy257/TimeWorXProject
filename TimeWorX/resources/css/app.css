@@ -16,15 +16,18 @@
     --color-whiteGray:rgb(240, 240, 240);
     --color-light-gray: #F9F9F9;
     --color-light-blue: #117add;
+    --color-blue:rgba(45, 106, 185, 0.9);
     --color-red: rgb(218, 30, 40);
     --color-red-rgb: 218, 30, 40;
     --color-green: rgb(37, 162, 73);
     /* --background: linear-gradient(135deg, #F2F8FC,#fbfcdb); */
     --background: linear-gradient(135deg, #F2F8FC,#e6f7ff);
+    --background-blue: linear-gradient(135deg, rgba(45, 106, 185, 0.9), rgba(77, 144, 214, 0.9));
     --bg-color-blue-while: #F2F8FC;
     --color-shadow:rgba(68, 68, 68, 0.418);
 
     /* Font Sizes */
+    --font-size-2sSSmall: 0.675rem;
     --font-size-sSSmall: 0.75rem;
     --font-size-sSmall: 0.8rem;
     --font-size-small: 0.875rem;

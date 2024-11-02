@@ -65,10 +65,12 @@ const ReportProjectDetail = ({ project ,user_id}) => {
 
     return (
         <div className="project-detail">
-            <h3 className="project-name shadow-md px-2 py-2 pb-4 text-center break-words whitespace-normal">{project.project_name}</h3>
-            <h3 className="project-date rounded-lg shadow-md px-2 py-1 text-center break-words whitespace-normal">{formatDateRange(project.start_date,project.end_date)}</h3>
+            <h3 className="project-name shadow-md px-2 py-2 text-center break-words whitespace-normal">Project View</h3>
+            <h3 className="project-date rounded-lg py-1 text-center break-words whitespace-normal">{formatDateRange(project.start_date,project.end_date)}</h3>
             <div className='detail-content p-4 rounded-lg shadow-md flex'>
                 <div className='w-1/2 overflow-y-auto scrollbar-hide'>
+                    <h3 className='text-sm font-sans font-bold'>Project Name:</h3>
+                        <p className='text-xs mt-1 break-words whitespace-normal overflow-hidden'>{project.project_name}</p>
                     <h3 className='text-sm font-sans font-bold'>Description:</h3>
                         <p className='text-xs mt-1 break-words whitespace-normal overflow-hidden'>{project.project_description}</p>
                     <h3 className='text-sm font-sans font-bold'>Status:</h3>

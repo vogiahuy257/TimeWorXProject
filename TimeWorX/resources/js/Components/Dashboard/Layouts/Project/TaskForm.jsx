@@ -33,7 +33,7 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
         const selectedDate = e.target.value;
         setDeadLine(selectedDate);
     
-        if (project_deadline && new Date(selectedDate) > new Date(project_deadline)) {
+        if (project_deadline && new Date(selectedDate) < new Date(project_deadline)) {
             setDeadLineError(`Deadline cannot be greater than the project's end date: ${formatDeadline(project_deadline)}`);
         } 
         else 
@@ -91,7 +91,7 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
         event.preventDefault();
         let taskData = {};
 
-        if (project_deadline && new Date(deadline) > new Date(project_deadline)) {
+        if (project_deadline && new Date(deadline) < new Date(project_deadline)) {
             setDeadLineError(`Deadline cannot be greater than the project's end date: ${formatDeadline(project_deadline)}`);
             return;
         }
