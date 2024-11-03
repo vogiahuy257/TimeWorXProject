@@ -15,7 +15,7 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
 
     const fetchUsers = async () => {
         try {
-            if(projectId != null)
+            if(projectId != null && projectId != "")
             {
                 const response = await axios.get(`/api/project-view/${projectId}/users`); 
                 setUsers(response.data); 
@@ -170,11 +170,11 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
     
                 <form onSubmit={handleSubmit}>
                     <div className="task-form-header">
-                            <h2>{is_staff ? `View ${task?.content}` : (user_id ? (task ? `Edit ${task.name}` : "Create Task") : (task ? `Edit ${task.content}` : "Create Task"))}</h2>
+                            <h2>{is_staff ? `View ${task?.content}` :(projectId ? (user_id ? (task ? `Edit ${task.name}` : "Create Task") : (task ? `Edit ${task.content}` :  "Create Task")) : "Create Your Personal Plan") }</h2>
                             <p> {project_deadline ? `Project end date: ${formatDeadline(project_deadline)}` : null}</p>
                         <div className="form-main">
                         <div className="form-group task-group">
-                                <label htmlFor="task-name">Task name</label>
+                                <label htmlFor="task-name">{projectId ? "Task name:" : "Personal Plan name:"}</label>
                                 <input
                                     type="text"
                                     id="task-name"
@@ -186,7 +186,7 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
                         </div>
 
                         <div className="form-group time-group">
-                                <label htmlFor="time-starts">Completion time</label>
+                                <label htmlFor="time-starts">Completion time:</label>
                                 <input
                                     type="datetime-local"
                                     id="time-starts"
@@ -200,7 +200,7 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="description">Description</label>
+                            <label htmlFor="description">{projectId ? "Description:" : "Personal Plan Description:"}</label>
                             <textarea
                                 id="description"
                                 value={description}
@@ -253,6 +253,7 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
                             <path d="M7.5 7.5L22.5 22.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                     </PrimaryButton>
+                    {projectId &&(
                         <div className="user-box bg-white shadow-md rounded-lg p-4 max-h-80">
                             <h3 className="text-lg font-semibold text-gray-800 mb-2">Users List</h3>
                             <ul className="divide-y divide-gray-200 overflow-y-auto max-h-60 scrollbar-hide">
@@ -273,10 +274,10 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
                                     </li>
                                 ))}
                             </ul>
-                        </div>
-
+                        </div>)
+                        }
                     {is_staff ? null :
-                        <button type="submit" className="save-button mt-auto mb-2">
+                        <button type="submit" className="save-button mt-auto">
                             <h2>{task ? `Save` : "Create"}</h2>
                         </button>
                     } 
