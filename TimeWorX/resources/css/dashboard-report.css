@@ -10,8 +10,9 @@
     --color-white-rgb: 255, 255, 255; 
     --color-whiteGray:rgb(246, 246, 246);
     --color-light-gray: #F9F9F9;
-    --color-light-blue: #117add;
+    --color-light-blue: rgb(17, 122, 221);
     --color-blue:rgba(45, 106, 185, 0.9);
+    --color-blue-rgb: 45, 106, 185;
     --color-red: rgb(218, 30, 40);
     --color-red-rgb: 218, 30, 40;
     --color-green: rgb(37, 162, 73);
@@ -46,9 +47,10 @@
 
 #dashboard #report
 {
-    background: radial-gradient(circle, rgba(var(--color-black-rgb), 0.2) 12%, transparent 12%);
+    background: radial-gradient(circle, rgba(var(--color-blue-rgb), 0.2) 12%, transparent 12%);
     background-size: 14px 14px; 
     background-position: 0 0; 
+    background-color: var(--color-white);
     box-shadow: inset 0px 4px 8px rgba(var(--color-black-rgb), 0.1);
     height: 100%;
 }
@@ -134,8 +136,8 @@
     top: 0;
     left: 0;
     width: 48%;
-    background-color: var(--color-black);
-    color: var(--color-white);
+    background-color: #000000;
+    color: #F9F9F9;
     font-size: var(--font-size-small);
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
@@ -150,7 +152,7 @@
     width: 20px;
     height: 20px;
     border-bottom-left-radius: 0.5rem;
-    box-shadow: -5px 5px 0 var(--color-black);
+    box-shadow: -5px 5px 0 #000000;
 }
 
 #dashboard #report .project-detail .project-date
@@ -173,7 +175,7 @@
     width: 100%;
     height: 85%;
     background-color: var(--color-white);
-    border: 2.75px solid var(--color-black);
+    border: 3px solid #000000;
     border-top-left-radius: 0px;
 }
 
@@ -196,36 +198,59 @@
 
 #dashboard #report .custom-task-done
 {
+    --border-style: 3px solid rgba(var(--color-blue-rgb));
+    --task-border-radius: 0.375rem;
+
     background-color: var(--color-white);
-    border-radius: 0.375rem;
-    border: 1px solid var(--color-blue);
+    border: var(--border-style);
+    border-bottom-left-radius: var(--task-border-radius);
+    border-bottom-right-radius: var(--task-border-radius);
+    border-top-left-radius: var(--task-border-radius);
 }
 
 #dashboard #report .select-task-done
 {
    position: absolute;
    top: 0;
-   left:  0;
-   width: 18%;
-   height: 40px;
+   right:  0;
+   width: 38%;
+   height: 41px;
    text-align: center;
    font-size: var(--font-size-2sSSmall);
+   background-color: rgba(var(--color-blue-rgb));
+   border-top-left-radius: 0.375rem;
+   border-top-right-radius: 0.375rem;
+}
+
+#dashboard #report .select-task-done::before
+{
+    content: "";
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: transparent;
+    z-index: 0;
+    bottom: 0;
+    left: -22px;
+    border-bottom-right-radius: var(--task-border-radius);
+    box-shadow: 2px 1px 0 rgba(var(--color-blue-rgb));
 }
 
 #dashboard #report .select-task-done select {
-    width: 100%;
-    padding: 4px;
-    border: 1px solid #ccc; 
-    height: 30px;
+    width: 90%;
+    padding: 2px 10px;
+    border: 1px solid rgba(var(--color-while-rgb), 0.3); 
+    margin-top: 8px;
+    height: 26px;
     border-radius: 0.25rem;
-    background-color: #fff;
     font-size: inherit; 
-    color: #333;
+    color: var(--color-black);
     appearance: none; 
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 16 16"><path fill="%23656565" d="M4 6l4 4 4-4H4z"/></svg>');
     background-repeat: no-repeat;
     background-position: right 10px center; 
     background-size: 12px; 
+    background-color: var(--color-white);
     cursor: pointer; 
 }
 
@@ -242,15 +267,15 @@
 {   
    position: absolute;
    top: 0;
-   left: 50%;
-   transform: translateX(-50%);
-   width: 44%;
+   left:  0;
+   width: 60%;
    text-align: center;
-   background-color: var(--color-blue);
+   background: var(--background-blue);
    color: #fff;
    font-size: var(--font-size-medium);
-   padding: 4px 10px;
+   padding: 6px 8px;
    border-radius: 0.25rem;
+   z-index: 999;
 }
 
 #dashboard #report .btn-report svg

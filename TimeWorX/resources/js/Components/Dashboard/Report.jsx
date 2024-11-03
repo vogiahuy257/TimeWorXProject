@@ -82,7 +82,7 @@ export default function Report({ auth }) {
                         {/* Task Done của Project */}
                         <div className='w-full h-2/4 flex flex-col md:flex-row'>
                             <div className="md:w-2/5 h-full report-content relative report-task-done m-2 rounded-md">
-                                <h2 className="text-report-done shadow-sm">Task done</h2>
+                                <h2 className="text-report-done shadow-sm">Task Completed</h2>
                                 {/* Hiển thị task của project đã chọn */}
                                 <ReportTaskDone project_id = {selectProject.project_id} onOpenReportTaskForm={openFormReportToTask}/>
                             </div>

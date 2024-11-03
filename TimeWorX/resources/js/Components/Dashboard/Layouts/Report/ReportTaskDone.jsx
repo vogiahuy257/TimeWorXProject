@@ -65,12 +65,13 @@ const ReportTaskDone = ({ project_id ,onOpenReportTaskForm }) => {
     const filteredTasks = handleFilter();
 
     return (
-        <section className="custom-task-done w-full h-full mx-auto p-4 shadow-md mt-9">
+        <section className="custom-task-done w-full h-full mx-auto shadow-md p-2 py-4 mt-10">
              <div className="select-task-done">
                 <select 
                     id="endDate" 
                     value={endDate} 
                     onChange={(e) => setEndDate(e.target.value)} 
+                    className='p-2'
                 >
                     <option value="all">All</option>
                     {dateOptions.map((date) => (
@@ -81,13 +82,16 @@ const ReportTaskDone = ({ project_id ,onOpenReportTaskForm }) => {
                 </select>
             </div>
 
+            <div className='task-done-note'>
+                {/* tùy thích chưa biết để gì vậy trong này!!! */}
+            </div>
 
-            <div className="overflow-y-auto max-h-56 scrollbar-hide">
+            <div className="overflow-y-auto max-h-56 scrollbar-hide rounded-md">
                 {filteredTasks.length > 0 ? (
                     filteredTasks.map((task) => (
                         <div
                             key={task.task_id} 
-                            className="task-done-box text-left p-3 m-2 rounded-md relative"
+                            className="task-done-box text-left p-3 my-2 rounded-md relative"
                         >
                             <div className='flex flex-col'>
                                 <h3 className="text-sm font-semibold">{task.task_name}</h3>
