@@ -12,6 +12,7 @@ import '../css/dashboard-task-reportform.css';
 import '../css/dashboard-project-showReportToTask.css';
 import '../css/dashboard-project-analysis.css';
 import '../css/dashboard-report.css';
+import '../css/dashboard-calendar.css';
 
 import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';

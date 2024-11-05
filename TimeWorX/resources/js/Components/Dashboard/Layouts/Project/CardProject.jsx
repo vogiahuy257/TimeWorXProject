@@ -21,7 +21,7 @@ export default function CardProject({ project, formatDateRange, handleDelete,han
                 <div className='text'>
 
                     <div className='card-form'>
-                        <p className='line-clamp-2'>{project.project_name}</p>
+                        <p className='w-3/4 h-auto break-words text-ellipsis truncate line-clamp-2'>{project.project_name}</p>
 
                         <div className='btn-form'>
                             <button className='btn card-form-edit' onClick={(e) => { e.stopPropagation(); e.preventDefault(); handleEdit(project); }}>

@@ -242,7 +242,7 @@ export default function Task({ auth }) {
                                                         >
                                                             <div className='task-card-content'>
                                                                 <p className='project-name'>{task.type == 'personalPlan' ? null : task.project_name}</p>
-                                                                <p>{task.type == 'personalPlan' ? task.name :task.content}</p>
+                                                                <p className='truncate max-w-xs'>{task.type == 'personalPlan' ? task.name :task.content}</p>
                                                                 <div className='btn-group'>
                                                                 {task.type === 'personalPlan' ? 
                                                                 (

@@ -7,12 +7,19 @@ const ReportTaskDone = ({ project_id ,onOpenReportTaskForm }) => {
     const [taskData, setTaskData] = useState([]); 
     const [endDate, setEndDate] = useState('all');
     const [dateOptions, setDateOptions] = useState([]);
-   
+
+    
+
     const fetchChartData = async () => {
         try {
             const response = await axios.get(`/api/tasks/${project_id}/done`);
             const data = response.data;
-            setTaskData(data);
+            const sortedData = data.sort((a, b) => {
+                if (a.status_key === "verify" && b.status_key !== "verify") return -1;
+                if (a.status_key !== "verify" && b.status_key === "verify") return 1;
+                return 0;
+            });
+            setTaskData(sortedData);
             const uniqueDates = new Set(data.map(task => new Date(task.updated_at).toISOString().split('T')[0]));
             setDateOptions(Array.from(uniqueDates));
         } catch (error) {
@@ -65,13 +72,13 @@ const ReportTaskDone = ({ project_id ,onOpenReportTaskForm }) => {
     const filteredTasks = handleFilter();
 
     return (
-        <section className="custom-task-done w-full h-full mx-auto shadow-md p-2 py-4 mt-10">
+        <section className="custom-task-done w-full h-full mx-auto shadow-md rounded-md p-2 py-4">
              <div className="select-task-done">
                 <select 
                     id="endDate" 
                     value={endDate} 
                     onChange={(e) => setEndDate(e.target.value)} 
-                    className='p-2'
+                    className='p-1'
                 >
                     <option value="all">All</option>
                     {dateOptions.map((date) => (
@@ -82,28 +89,24 @@ const ReportTaskDone = ({ project_id ,onOpenReportTaskForm }) => {
                 </select>
             </div>
 
-            <div className='task-done-note'>
-                {/* tùy thích chưa biết để gì vậy trong này!!! */}
-            </div>
-
-            <div className="overflow-y-auto max-h-56 scrollbar-hide rounded-md">
+            <div className="flex flex-wrap gap-4 p-2 mx-auto mt-4 w-auto rounded max-h-[290px] overflow-y-auto scrollbar-hide">
                 {filteredTasks.length > 0 ? (
                     filteredTasks.map((task) => (
-                        <div
-                            key={task.task_id} 
-                            className="task-done-box text-left p-3 my-2 rounded-md relative"
-                        >
-                            <div className='flex flex-col'>
-                                <h3 className="text-sm font-semibold">{task.task_name}</h3>
-                                <p className="text-xs">{formatDate(task.updated_at) || "N/A"}</p>
-                            </div>
-                            <p className="text-xs text-gray-500">{task.task_description || "No description"}</p>
-                            <button onClick={() => onOpenReportTaskForm(task)} className="btn-report p-4 absolute top-1/2 right-1 -translate-y-1/2">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M11.6998 21.6001H5.69979C4.37431 21.6001 3.2998 20.5256 3.2998 19.2001L3.2999 4.80013C3.29991 3.47466 4.37442 2.40015 5.6999 2.40015H16.5002C17.8256 2.40015 18.9002 3.47466 18.9002 4.80015V9.60015M7.50018 7.20015H14.7002M7.50018 10.8001H14.7002M14.7002 15.5541V18.4985C14.7002 19.9534 16.2516 21.2879 17.7065 21.2879C19.1615 21.2879 20.7002 19.9535 20.7002 18.4985V14.7793C20.7002 14.009 20.2574 13.2273 19.2723 13.2273C18.2186 13.2273 17.7065 14.009 17.7065 14.7793V18.3435M7.50018 14.4001H11.1002" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <button
+                                key={task.task_id} 
+                                onClick={() => onOpenReportTaskForm(task)} 
+                                className="btn-report py-2 rounded-md relative flex flex-col justify-center items-center">
+
+                                <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path className='icon-path1' opacity="0.4" d="M16.74 3.65002H8.26004C5.79004 3.65002 3.79004 5.66002 3.79004 8.12002V17.53C3.79004 19.99 5.80004 22 8.26004 22H16.73C19.2 22 21.2 19.99 21.2 17.53V8.12002C21.21 5.65002 19.2 3.65002 16.74 3.65002Z" fill="currentColor"/>
+                                    <path className='icon-path2' d="M14.85 2H10.15C9.11001 2 8.26001 2.84 8.26001 3.88V4.82C8.26001 5.86 9.10001 6.7 10.14 6.7H14.85C15.89 6.7 16.73 5.86 16.73 4.82V3.88C16.74 2.84 15.89 2 14.85 2Z" fill="currentColor"/>
+                                    <path  d="M15.5 12.95H8.5C8.09 12.95 7.75 12.61 7.75 12.2C7.75 11.79 8.09 11.45 8.5 11.45H15.5C15.91 11.45 16.25 11.79 16.25 12.2C16.25 12.61 15.91 12.95 15.5 12.95Z" fill="currentColor"/>
+                                    <path  d="M12.88 16.95H8.5C8.09 16.95 7.75 16.61 7.75 16.2C7.75 15.79 8.09 15.45 8.5 15.45H12.88C13.29 15.45 13.63 15.79 13.63 16.2C13.63 16.61 13.29 16.95 12.88 16.95Z" fill="currentColor"/>
                                 </svg>
+
+                                <h3 className="w-5/6 break-words whitespace-nowrap overflow-hidden text-ellipsis truncate">{task.task_name}</h3>
                             </button>
-                        </div>
+                            
                     ))
                 ) : (
                     <p className="text-gray-600 text-center">No completed tasks found for this project.</p>

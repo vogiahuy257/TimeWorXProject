@@ -21,6 +21,9 @@
         "vite": "^5.0"
     },
     "dependencies": {
+        "@schedule-x/events-service": "^2.4.1",
+        "@schedule-x/react": "^2.4.1",
+        "@schedule-x/theme-default": "^2.4.1",
         "@szhsin/react-menu": "^4.2.2",
         "@tailwindcss/line-clamp": "^0.4.4",
         "chart.js": "^4.4.5",

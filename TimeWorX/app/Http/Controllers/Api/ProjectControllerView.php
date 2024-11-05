@@ -128,7 +128,7 @@ class ProjectControllerView extends Controller
 
         $task->status_key = $request->input('status');
         $task->save();
-
+        $task->checkDeadlineStatus();
         return response()->json();
     }
 
@@ -157,6 +157,7 @@ class ProjectControllerView extends Controller
         if (isset($validatedData['users'])) {
             $task->users()->sync($validatedData['users']);
         }
+        $task->checkDeadlineStatus();
 
         return response()->json();
     }

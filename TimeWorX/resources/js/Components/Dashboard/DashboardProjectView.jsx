@@ -233,7 +233,7 @@ const DashboardProjectView = ({ auth }) => {
                                                             {...provided.dragHandleProps}
                                                         >
                                                             <div className='task-card-content'>
-                                                                <p>{task.content}</p>
+                                                                <p className="truncate max-w-56">{task.content}</p>
                                                                 <div className='btn-group'>
 
                                                                     {columnId == 'verify' ? 

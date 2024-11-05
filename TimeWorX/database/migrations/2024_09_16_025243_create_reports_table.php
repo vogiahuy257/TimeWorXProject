@@ -25,6 +25,17 @@ return new class extends Migration
             $table->string('next_steps')->nullable(); // Các việc sẽ làm tiếp
             $table->string('issues')->nullable(); // Vấn đề gặp phải/khó khăn
         });
+
+        // Schema::create('summary_reports', function (Blueprint $table) {
+        //     $table->id('summary_report_id');
+        //     $table->unsignedBigInteger('report_id')->nullable();
+        //     $table->unsignedBigInteger('project_id')->nullable();
+        //     $table->string('status')->nullable(); //trạng thái
+        //     $table->string('priority')->nullable();// Độ ưu tiên của báo cáo
+        //     $table->string('drive_link')->nullable(); // Đường dẫn Google Drive cho tài liệu báo cáo
+        //     $table->timestamps(); // ngày tạo báo cáo
+        //     $table->softDeletes();
+        // });
     }
 
     /**

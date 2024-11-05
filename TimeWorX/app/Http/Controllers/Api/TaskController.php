@@ -183,10 +183,10 @@ class TaskController extends Controller
             'description' => 'nullable|string',
             'status' => 'sometimes|string',
         ]);
-
+        
         $task->status_key = $request->input('status');
         $task->save();
-
+        $task->checkDeadlineStatus();
         return response()->json();
     }
 
@@ -208,8 +208,8 @@ class TaskController extends Controller
     {
         $tasks = Task::withTrashed()
             ->where('project_id', $projectId)
-            ->where('status_key', 'done')
-            ->select('project_id', 'task_id', 'task_name', 'task_description','updated_at')
+            ->whereIn('status_key', ['done', 'verify'])
+            ->select('project_id', 'task_id', 'task_name','status_key' ,'task_description','updated_at')
             ->get();
 
         return response()->json($tasks);
