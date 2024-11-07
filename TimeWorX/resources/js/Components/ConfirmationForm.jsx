@@ -24,22 +24,23 @@ const ConfirmationForm = ({ type,styleToBox, styleToChildren,children, handleCon
                 
             </div>
 
-            <div className="w-3/4 flex flex-col justify-center h-ful items-start mx-3">
+            <div className="w-3/4 flex flex-col justify-center h-ful items-end mx-3">
 
                 <p className={`font-normal ${styleToChildren}`}>{children}</p>
 
                 <div className="btn mt-4">
+                    
                     <button
-                        className="px-4 py-1 rounded-md"
-                        onClick={() => handleConfirm(true)}
-                    >
-                        Confirm
-                    </button>
-                    <button
-                        className="ml-4 px-4 py-1 rounded-md"
+                        className=" px-4 py-1 rounded-md"
                         onClick={() => handleConfirm(false)}
                     >
                         Cancel
+                    </button>
+                    <button
+                        className="px-4 py-1 rounded-md ml-4 mr-8"
+                        onClick={() => handleConfirm(true)}
+                    >
+                        Confirm
                     </button>
                 </div>
                 

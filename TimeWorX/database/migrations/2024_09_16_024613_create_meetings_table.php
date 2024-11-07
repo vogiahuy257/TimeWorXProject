@@ -17,9 +17,10 @@ return new class extends Migration
             $table->text('meeting_description')->nullable(); // Meeting description
             $table->date('meeting_date'); // Meeting date
             $table->time('meeting_time'); // Meeting time
-            $table->foreignId('created_by_user_id')->constrained('users', 'id')->onDelete('cascade'); // Foreign key to 'users' table
+            $table->uuid('created_by_user_id'); // Foreign key to 'users' table
             $table->timestamps(); // created_at, updated_at
             $table->string('meeting_type', 60)->nullable(); // Meeting type
+            $table->foreign('created_by_user_id')->references('id')->on('users')->onDelete('cascade');
             $table->softDeletes();
         });
     }

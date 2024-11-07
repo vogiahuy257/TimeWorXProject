@@ -36,7 +36,7 @@ class ProjectController extends Controller
             'project_description' => 'nullable|string',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date',
-            'user_id' => 'required|integer',
+            'user_id' => 'required|uuid',
             'project_status'=>'nullable|string|max:200',
         ]);
 
@@ -113,7 +113,7 @@ class ProjectController extends Controller
             'project_description' => 'nullable|string',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date',
-            'user_id' => 'required|integer',
+            'user_id' => 'required|uuid',
             'project_status'=>'nullable|string|max:200',
         ]);
 
@@ -173,7 +173,7 @@ class ProjectController extends Controller
     public function updateUserRoleInProject(Request $request, string $projectId)
     {
         $validated = $request->validate([
-            'user_id' => 'required|integer',
+            'user_id' => 'required|uuid',
             'is_project_manager' => 'required|boolean',
         ]);
 

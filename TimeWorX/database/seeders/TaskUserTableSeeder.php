@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class TaskUserTableSeeder extends Seeder
 {
@@ -14,43 +15,51 @@ class TaskUserTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('task_user')->insert([
-            [
-                'task_id' => 1, // Task 1
-                'user_id' => 1, // Giao cho User 1
-            ],
-            [
-                'task_id' => 1, // Task 1
-                'user_id' => 2,
-            ],
-            [
-                'task_id' => 2, // Task 2
-                'user_id' => 2, 
-            ],
-            [
-                'task_id' => 3, // Task 3
-                'user_id' => 3, 
-            ],
-            [
-                'task_id' => 4, // Task 4
-                'user_id' => 1, 
-            ],
-            [
-                'task_id' => 5, // Task 5
-                'user_id' => 2, 
-            ],
-            [
-                'task_id' => 6, // Task 6
-                'user_id' => 3,
-            ],
-            [
-                'task_id' => 7, // Task 7
-                'user_id' => 2, 
-            ],
-            [
-                'task_id' => 8, // Task 8
-                'user_id' => 1,
-            ],
-        ]);
+        // Lấy user_id của User 1, 2, 3
+        $user1 = User::find(1);  // Tìm User 1
+        $user2 = User::where('name', 'Huy')->first()->id;  // Tìm User 2
+        $user3 = User::find(3);  // Tìm User 3
+
+        // Kiểm tra nếu các User tồn tại
+        if ($user1 && $user2 && $user3) {
+            DB::table('task_user')->insert([
+                [
+                    'task_id' => 1,
+                    'user_id' => $user1->id,  // Giao cho User 1
+                ],
+                [
+                    'task_id' => 1,
+                    'user_id' => $user2->id,  // Giao cho User 2
+                ],
+                [
+                    'task_id' => 2,
+                    'user_id' => $user2->id,  // Giao cho User 2
+                ],
+                [
+                    'task_id' => 3,
+                    'user_id' => $user3->id,  // Giao cho User 3
+                ],
+                [
+                    'task_id' => 4,
+                    'user_id' => $user1->id,  // Giao cho User 1
+                ],
+                [
+                    'task_id' => 5,
+                    'user_id' => $user2->id,  // Giao cho User 2
+                ],
+                [
+                    'task_id' => 6,
+                    'user_id' => $user3->id,  // Giao cho User 3
+                ],
+                [
+                    'task_id' => 7,
+                    'user_id' => $user2->id,  // Giao cho User 2
+                ],
+                [
+                    'task_id' => 8,
+                    'user_id' => $user1->id,  // Giao cho User 1
+                ],
+            ]);
+        }
     }
 }

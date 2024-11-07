@@ -8,10 +8,25 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens; // Import SoftDeletes trait
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, SoftDeletes,HasApiTokens; // Add SoftDeletes trait
+
+    protected $keyType = 'string'; // Khai báo kiểu dữ liệu của khóa chính là chuỗi
+    public $incrementing = false;  // Vô hiệu hóa auto-increment
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            if (empty($user->id)) {
+                $user->id = (string) Str::uuid(); // Tự động gán UUID cho user_id
+            }
+        });
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -57,7 +72,15 @@ class User extends Authenticatable
     {
         return $this->tasks()->whereNull('tasks.deleted_at')->count();
     }
-
+    /**
+     * Lấy danh sách tên các task mà user này tham gia.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getAllTaskNames()
+    {
+        return $this->tasks()->pluck('task_name');
+    }
      /**
      * Mối quan hệ với bảng `projects` qua bảng trung gian `project_user`.
      * Lấy tất cả các dự án mà người dùng tham gia.

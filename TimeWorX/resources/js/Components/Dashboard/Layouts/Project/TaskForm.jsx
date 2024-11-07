@@ -15,7 +15,20 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
     const [confirmUser, setConfirmUser] = useState(null);
     const taskLimit = 6;
     
+    // sự kiện xem user
+    const [viewTaskToUser, setViewTaskToUser] = useState(null);
+    const [listTaskToUser, setListTaskToUser] = useState([]);
 
+    const handleUserClick = async (user_id) =>   {
+        setViewTaskToUser(user_id);
+
+        try {
+            const response = await axios.get(`/api/user/${user_id}/tasks`);
+            setTasks(response.data); // Cập nhật danh sách task
+        } catch (error) {
+            console.error("Error fetching tasks:", error);
+        }
+    }
 
     const fetchUsers = async () => {
         try {
@@ -284,7 +297,7 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
 
                     </div>    
 
-                    <div className="task-form-button">
+                    <div className="task-form-button h-full">
                         <PrimaryButton className="close-button" type="button" onClick={onClose}>
                             <svg width="24" height="24" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M22.5 7.5L7.5 22.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -292,11 +305,18 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
                             </svg>
                         </PrimaryButton>
                         {projectId &&(
-                            <div className="user-box bg-white shadow-md rounded-lg p-4 max-h-80">
+                            <div className="h-2/5 user-box shadow-md rounded-lg p-4 max-h-80">
                                 <h3 className="text-lg font-semibold ">Users List</h3>
                                 <ul className="overflow-y-auto max-h-60 scrollbar-hide p-2">
                                     {users.map((user) => (
-                                        <li key={user.id} className="flex justify-between items-center p-3 shadow-md">
+                                        <li 
+                                            key={user.id} 
+                                            className="flex justify-between items-center p-3 shadow-md"
+                                            onClick={(e) => {
+                                                e.stopPropagation(); // Ngăn chặn sự kiện lan truyền lên form
+                                                handleUserClick(user.id); // Gọi hàm xử lý khi bấm vào user
+                                            }}
+                                        >
                                             <div>
                                                 <div className="flex items-center gap-1">
                                                     <svg width="16" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -325,7 +345,20 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
                                     ))}
                                 </ul>
                             </div>)
-                            }
+                        }
+
+                        {viewTaskToUser && (
+                            <div className="h-3/5 bg-white shadow-md rounded-lg p-4 my-3 max-h-80">
+                                <h3>Tasks for {viewTaskToUser.name}</h3>
+                                <ul>
+                                    {listTaskToUser.map((task, index) => (
+                                        <li key={index}>{task.task_name}</li>
+                                    ))}
+                                </ul>
+                            </div> 
+                        )}
+                        
+
                         {is_staff ? null :
                             <button type="submit" className="save-button mt-auto">
                                 <h2>{task ? `Save` : "Create"}</h2>
@@ -337,7 +370,7 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
                 {confirmUser && (
                 <ConfirmationForm
                     type={'help'}
-                    styleToBox = {"absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"}
+                    styleToBox = {"absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"}
                     styleToChildren={``}
                     children={`This ${confirmUser.name} already has too many tasks assigned. Are you sure you want to add them to the project?`}
                     handleConfirm={handleConfirm}
