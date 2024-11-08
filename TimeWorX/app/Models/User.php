@@ -79,7 +79,11 @@ class User extends Authenticatable
      */
     public function getAllTaskNames()
     {
-        return $this->tasks()->pluck('task_name');
+        return $this->tasks()
+        ->join('projects', 'tasks.project_id', '=', 'projects.project_id')
+        ->select('tasks.task_name', 'projects.project_name')
+        ->get()
+        ->groupBy('project_name');
     }
      /**
      * Mối quan hệ với bảng `projects` qua bảng trung gian `project_user`.

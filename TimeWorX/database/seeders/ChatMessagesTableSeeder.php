@@ -16,8 +16,8 @@ class ChatMessagesTableSeeder extends Seeder
     public function run()
     {
         // Lấy user_id của user 1 và user 2
-        $user1 = User::find(1);  // Tìm user với user_id = 1
-        $user2 = User::where('name', 'Huy')->first();    // Tìm user với user_id = 2
+        $user1 = User::where('name', 'Cheese')->first();  // Tìm User 1
+        $user2 = User::where('name', 'Huy')->first();  // Tìm User 2
 
         // Kiểm tra sự tồn tại của user
         if ($user1 && $user2) {

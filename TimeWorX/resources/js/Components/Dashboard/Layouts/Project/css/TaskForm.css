@@ -255,3 +255,7 @@
     margin-left: 2px;
     font-weight: var(--font-weight-medium);
 }
+#dashboard .block #main .content main #project-view #task-form .task-box
+{
+    background-color: var(--color-white);
+}

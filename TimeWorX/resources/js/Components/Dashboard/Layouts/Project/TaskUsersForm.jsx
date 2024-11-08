@@ -93,75 +93,79 @@ const TaskUsers = ({ projectId, onClose }) => {
 
                 <div className='user-list-active mr-2'>
                     <h2 className='text-lg whitespace-nowrap px-4 py-2'>List of users in the project</h2>
-                    <ul className="user-list space-y-3 mt-14">
-                        {users.length > 0 ? (
-                            users.map((user) => (
-                                <li className='custom-li flex items-center justify-between rounded-md p-3' key={user.id}>
-                                    <div className="flex items-center">
-                                        <span className="user-icon mr-2">
-                                            <img src="/image/y.jpg" alt="" className="w-8 h-8 rounded-full" />
-                                        </span>
-                                        <p className='text-sm font-medium'>{user.name}</p>
-                                    </div>
-                                    <div className="flex items-center">
-                                        {/* xây dựng nút chọn phân quyền cho user */}
-                                        
-                                        <select
-                                            className="w-auto text-sm border border-gray-300 rounded-md"
-                                            value={userManagerStatus[user.id] ? '1' : '0'}
-                                            onChange={(e) => handleToggleProjectManager(user.id, e.target.value)}
-                                        >
-                                            <option value="0">Staff</option>
-                                            <option value="1">Manager</option>
-                                        </select>
-                                        <PrimaryButton 
-                                            className="ml-4 mr-2 text-sm"
-                                        >
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path fillRule="evenodd" clipRule="evenodd" d="M3 10.4C3 8.15979 3 7.03969 3.43597 6.18404C3.81947 5.43139 4.43139 4.81947 5.18404 4.43597C6.03969 4 7.15979 4 9.4 4H14.6C16.8402 4 17.9603 4 18.816 4.43597C19.5686 4.81947 20.1805 5.43139 20.564 6.18404C21 7.03969 21 8.15979 21 10.4V11.6C21 13.8402 21 14.9603 20.564 15.816C20.1805 16.5686 19.5686 17.1805 18.816 17.564C17.9603 18 16.8402 18 14.6 18H7.41421C7.149 18 6.89464 18.1054 6.70711 18.2929L4.70711 20.2929C4.07714 20.9229 3 20.4767 3 19.5858V18V13V10.4ZM9 8C8.44772 8 8 8.44772 8 9C8 9.55228 8.44772 10 9 10H15C15.5523 10 16 9.55228 16 9C16 8.44772 15.5523 8 15 8H9ZM9 12C8.44772 12 8 12.4477 8 13C8 13.5523 8.44772 14 9 14H12C12.5523 14 13 13.5523 13 13C13 12.4477 12.5523 12 12 12H9Z" fill="currentColor"/>
-                                            </svg>
-                                        </PrimaryButton>
-                                    </div>
-                                </li>
-                            ))
-                        ) : (
-                            <p className="text-center">No users found.</p>
-                        )}
-                    </ul>
+                    <div className='mt-12 max-h-[480px] overflow-y-auto scrollbar-hide'>
+                        <ul className="user-list space-y-3 p-4 ">
+                            {users.length > 0 ? (
+                                users.map((user) => (
+                                    <li className='custom-li flex items-center justify-between rounded-md p-3' key={user.id}>
+                                        <div className="flex items-center">
+                                            <span className="user-icon mr-2">
+                                                <img src="/image/y.jpg" alt="" className="w-8 h-8 rounded-full" />
+                                            </span>
+                                            <p className='text-sm font-medium'>{user.name}</p>
+                                        </div>
+                                        <div className="flex items-center">
+                                            {/* xây dựng nút chọn phân quyền cho user */}
+                                            
+                                            <select
+                                                className="w-auto text-sm border border-gray-300 rounded-md"
+                                                value={userManagerStatus[user.id] ? '1' : '0'}
+                                                onChange={(e) => handleToggleProjectManager(user.id, e.target.value)}
+                                            >
+                                                <option value="0">Staff</option>
+                                                <option value="1">Manager</option>
+                                            </select>
+                                            <PrimaryButton 
+                                                className="ml-4 mr-2 text-sm"
+                                            >
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fillRule="evenodd" clipRule="evenodd" d="M3 10.4C3 8.15979 3 7.03969 3.43597 6.18404C3.81947 5.43139 4.43139 4.81947 5.18404 4.43597C6.03969 4 7.15979 4 9.4 4H14.6C16.8402 4 17.9603 4 18.816 4.43597C19.5686 4.81947 20.1805 5.43139 20.564 6.18404C21 7.03969 21 8.15979 21 10.4V11.6C21 13.8402 21 14.9603 20.564 15.816C20.1805 16.5686 19.5686 17.1805 18.816 17.564C17.9603 18 16.8402 18 14.6 18H7.41421C7.149 18 6.89464 18.1054 6.70711 18.2929L4.70711 20.2929C4.07714 20.9229 3 20.4767 3 19.5858V18V13V10.4ZM9 8C8.44772 8 8 8.44772 8 9C8 9.55228 8.44772 10 9 10H15C15.5523 10 16 9.55228 16 9C16 8.44772 15.5523 8 15 8H9ZM9 12C8.44772 12 8 12.4477 8 13C8 13.5523 8.44772 14 9 14H12C12.5523 14 13 13.5523 13 13C13 12.4477 12.5523 12 12 12H9Z" fill="currentColor"/>
+                                                </svg>
+                                            </PrimaryButton>
+                                        </div>
+                                    </li>
+                                ))
+                            ) : (
+                                <p className="text-center">No users found.</p>
+                            )}
+                        </ul>
+                    </div>
                 </div>
                 
                 <div className='user-list-search'>
                     <h2 className='text-lg whitespace-nowrap px-4 py-2'>List of Users</h2>
                     <div className='mt-10'>
-                    <input
-                        type="text"
-                        placeholder="Search users..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="mt-2 p-2 px-3 border rounded-md w-full"
-                    />
-                    <ul className="user-list p-4">
-                        {filteredUsers.length > 0 ? (
-                            filteredUsers.map((user) => (
-                                <li className='flex items-center justify-between mb-3 rounded-md p-2 custom-li' key={user.id}>
-                                    <div className="flex items-center">
-                                        <span className="user-icon">
-                                            <img src="/image/y.jpg" alt="" className="w-8 h-8 rounded-full" />
-                                        </span>
-                                        <p className='ml-2 text-sm'>{user.name}</p>
-                                    </div>
-                                    <PrimaryButton
-                                        className="custom-btn-app rounded-md w-5 h-5 ml-4 px-1 py-1 text-xs flex items-center justify-center"
-                                        onClick={() => handleAddUser(user)}
-                                    >
-                                        +
-                                    </PrimaryButton>
-                                </li>
-                            ))
-                        ) : (
-                            <p className='text-center text-gray-500'>No users found</p>
-                        )}
-                    </ul>
+                        <input
+                            type="text"
+                            placeholder="Search users..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="mt-2 p-2 px-3 border rounded-md w-full"
+                        />
+                        <div className='mt-4 max-h-96 overflow-y-auto scrollbar-hide'>
+                            <ul className="user-list m-auto p-4">
+                                {filteredUsers.length > 0 ? (
+                                    filteredUsers.map((user) => (
+                                        <li className='flex items-center justify-between mb-3 rounded-md p-2 custom-li' key={user.id}>
+                                            <div className="flex items-center">
+                                                <span className="user-icon">
+                                                    <img src="/image/y.jpg" alt="" className="w-8 h-8 rounded-full" />
+                                                </span>
+                                                <p className='ml-2 text-sm'>{user.name}</p>
+                                            </div>
+                                            <PrimaryButton
+                                                className="custom-btn-app rounded-md w-5 h-5 ml-4 px-1 py-1 text-xs flex items-center justify-center"
+                                                onClick={() => handleAddUser(user)}
+                                            >
+                                                +
+                                            </PrimaryButton>
+                                        </li>
+                                    ))
+                                ) : (
+                                    <p className='text-center text-gray-500'>No users found</p>
+                                )}
+                            </ul>
+                        </div>
                     </div>
                 </div>
 

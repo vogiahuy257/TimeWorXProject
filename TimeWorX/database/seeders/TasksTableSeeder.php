@@ -18,9 +18,9 @@ class TasksTableSeeder extends Seeder
     public function run()
     {
         // Lấy user_id của các user
-        $user1 = User::find(1);  // User 1
-        $user2 = User::where('name', 'Huy')->first();   // User 2
-        $user3 = User::find(3);  // User 3
+        $user1 = User::where('name', 'Cheese')->first();  // Tìm User 1
+        $user2 = User::where('name', 'Huy')->first();  // Tìm User 2
+        $user3 = User::where('name', 'Heotest')->first();
 
         // Lấy project_id của các project
         $project1 = Project::find(1);  // Project 1
@@ -30,7 +30,7 @@ class TasksTableSeeder extends Seeder
         if ($user1 && $user2 && $user3 && $project1 && $project2) {
             // Dùng Eloquent để tạo các task
             Task::create([
-                'project_id' => $project1->id,
+                'project_id' => $project1->project_id,
                 'task_name' => 'Task 1',
                 'task_description' => 'Description for Task 1.',
                 'status_key' => 'in-progress',
@@ -39,7 +39,7 @@ class TasksTableSeeder extends Seeder
             ]);
 
             Task::create([
-                'project_id' => $project1->id,
+                'project_id' => $project1->project_id,
                 'task_name' => 'Task 2',
                 'task_description' => 'Description for Task 2.',
                 'status_key' => 'to-do',
@@ -48,7 +48,7 @@ class TasksTableSeeder extends Seeder
             ]);
 
             Task::create([
-                'project_id' => $project1->id,
+                'project_id' => $project1->project_id,
                 'task_name' => 'Task 3',
                 'task_description' => 'Description for Task 3.',
                 'status_key' => 'done',
@@ -57,7 +57,7 @@ class TasksTableSeeder extends Seeder
             ]);
 
             Task::create([
-                'project_id' => $project2->id,
+                'project_id' => $project2->project_id,
                 'task_name' => 'Task 4',
                 'task_description' => 'Description for Task 4.',
                 'status_key' => 'in-progress',
@@ -66,7 +66,7 @@ class TasksTableSeeder extends Seeder
             ]);
 
             Task::create([
-                'project_id' => $project1->id,
+                'project_id' => $project1->project_id,
                 'task_name' => 'Task 5',
                 'task_description' => 'Description for Task 5.',
                 'status_key' => 'to-do',
@@ -75,7 +75,7 @@ class TasksTableSeeder extends Seeder
             ]);
 
             Task::create([
-                'project_id' => $project1->id,
+                'project_id' => $project1->project_id,
                 'task_name' => 'Task 6',
                 'task_description' => 'Description for Task 6.',
                 'status_key' => 'done',
@@ -84,7 +84,7 @@ class TasksTableSeeder extends Seeder
             ]);
 
             Task::create([
-                'project_id' => $project1->id,
+                'project_id' => $project1->project_id,
                 'task_name' => 'Task 7',
                 'task_description' => 'Description for Task 7.',
                 'status_key' => 'in-progress',
@@ -93,7 +93,7 @@ class TasksTableSeeder extends Seeder
             ]);
 
             Task::create([
-                'project_id' => $project2->id,
+                'project_id' => $project2->project_id,
                 'task_name' => 'Task 8',
                 'task_description' => 'Description for Task 8.',
                 'status_key' => 'to-do',

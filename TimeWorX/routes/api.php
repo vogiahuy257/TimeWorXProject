@@ -75,6 +75,6 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
     // Route User
     Route::apiResource('users', UserController::class);
     Route::get('/users/search', [UserController::class, 'search']);
-    Route::get('/user/{userId}/tasks', [UserController::class, 'getAllTaskNameToUser']);
+    Route::get('/users/{userId}/tasks', [UserController::class, 'getAllTaskNameToUser'])->where('userId', '[0-9a-fA-F\-]{36}');
 
 // });

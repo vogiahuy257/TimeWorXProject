@@ -16,9 +16,9 @@ class TaskUserTableSeeder extends Seeder
     public function run()
     {
         // Lấy user_id của User 1, 2, 3
-        $user1 = User::find(1);  // Tìm User 1
-        $user2 = User::where('name', 'Huy')->first()->id;  // Tìm User 2
-        $user3 = User::find(3);  // Tìm User 3
+        $user1 = User::where('name', 'Cheese')->first();  // Tìm User 1
+        $user2 = User::where('name', 'Huy')->first();  // Tìm User 2
+        $user3 = User::where('name', 'Heotest')->first();  // Tìm User 3
 
         // Kiểm tra nếu các User tồn tại
         if ($user1 && $user2 && $user3) {

@@ -67,11 +67,11 @@ const ShowReportToTask = ({ task, onClose }) => {
                     </button>
                     <div className="report-content report-task-form p-8">
                         <h2 className="text-xl">
-                            <strong>Report for Task:</strong> {task.task_name}
+                            <strong>Report for Task:</strong> {task.content}
                         </h2>
                     </div>
                     <div className='m-auto flex justify-center items-center'>
-                        <p className='text-center bg-red-100 rounded-md p-8 text-red-500'>This task has not been reported yet</p>
+                        <p className='text-center bg-gray-300 rounded-md p-8 text-gray-800'>This task has not been reported yet</p>
                     </div>
                 </div>
             </section>

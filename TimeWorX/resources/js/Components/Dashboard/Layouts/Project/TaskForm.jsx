@@ -17,14 +17,12 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
     
     // sự kiện xem user
     const [viewTaskToUser, setViewTaskToUser] = useState(null);
-    const [listTaskToUser, setListTaskToUser] = useState([]);
 
     const handleUserClick = async (user_id) =>   {
-        setViewTaskToUser(user_id);
 
         try {
-            const response = await axios.get(`/api/user/${user_id}/tasks`);
-            setTasks(response.data); // Cập nhật danh sách task
+            const response = await axios.get(`/api/users/${user_id}/tasks`);
+            setViewTaskToUser(response.data);
         } catch (error) {
             console.error("Error fetching tasks:", error);
         }
@@ -347,16 +345,40 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
                             </div>)
                         }
 
-                        {viewTaskToUser && (
-                            <div className="h-3/5 bg-white shadow-md rounded-lg p-4 my-3 max-h-80">
-                                <h3>Tasks for {viewTaskToUser.name}</h3>
-                                <ul>
-                                    {listTaskToUser.map((task, index) => (
-                                        <li key={index}>{task.task_name}</li>
-                                    ))}
-                                </ul>
-                            </div> 
-                        )}
+                    {viewTaskToUser && (
+                        <div className="h-3/5 task-box shadow-md rounded-lg p-4 my-3 relative flex justify-center items-center">
+                            <h3 className=" absolute shadow-gray-200 shadow-md bg-black rounded-bl-md rounded-br-md text-white px-2 py-1 top-0 left-1/2 -translate-x-1/2 text-sm whitespace-nowrap">Tasks for {viewTaskToUser.name}</h3>
+                            <div className="w-full mt-4 max-h-52 overflow-y-auto scrollbar-hide">
+                                {Object.keys(viewTaskToUser.tasks).length > 0 ? (
+                                    Object.keys(viewTaskToUser.tasks).map((projectName, index) => (
+                                        <div key={index} className=" rounded-lg m-2 shadow-md overflow-hidden">
+                                            <h4 className="flex items-center text-sm font-semibold p-4 truncate max-w-full overflow-hidden whitespace-nowrap">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor" className="mr-2">
+                                                    <path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h207q16 0 30.5 6t25.5 17l57 57h320q33 0 56.5 23.5T880-640v400q0 33-23.5 56.5T800-160H160Zm0-80h640v-400H447l-80-80H160v480Zm0 0v-480 480Z"/>
+                                                </svg>
+                                                {projectName}
+                                            </h4>
+                                            <ul className="">
+                                                {viewTaskToUser.tasks[projectName].length > 0 ? (
+                                                    viewTaskToUser.tasks[projectName].map((task, taskIndex) => (
+                                                        <li key={taskIndex} className="py-2 px-4 text-xs rounded-md truncate max-w-full overflow-hidden whitespace-nowrap">
+                                                            {task.task_name}
+                                                        </li>
+                                                    ))
+                                                ) : (
+                                                    <p className="p-4 text-center text-gray-500">No tasks for this project</p>
+                                                )}
+                                            </ul>
+                                        </div>
+
+                                    ))
+                                ) : (
+                                    <p className="p-4 text-center text-gray-500">This user has no tasks yet</p>
+                                )}
+                            </div>
+                        </div> 
+                    )}
+
                         
 
                         {is_staff ? null :
