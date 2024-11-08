@@ -36,6 +36,8 @@ class Task extends Model
     // Đảm bảo các cột ngày tháng được xử lý tự động dưới dạng đối tượng Carbon
     protected $dates = [
         'deleted_at',
+        'updated_at',
+        'created_at',
         'deadline', 
     ];
 
@@ -44,9 +46,11 @@ class Task extends Model
     {
         $now = Carbon::now();
 
-        if ($this->deadline) {
+        if ($this->deadline && $this->status_key != 'done') 
+        {
             // Kiểm tra nếu task đã trễ
-            if ($now->isAfter($this->deadline)) {
+            if ($now->isAfter($this->deadline)) 
+            {
                 $this->is_late = true;
                 $this->is_near_deadline = false;
             }
@@ -60,7 +64,9 @@ class Task extends Model
                 $this->is_late = false;
                 $this->is_near_deadline = false;
             }
-        } else {
+        } 
+        else 
+        {
             // Không có deadline
             $this->is_late = false;
             $this->is_near_deadline = false;

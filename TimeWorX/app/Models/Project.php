@@ -251,11 +251,16 @@ class Project extends Model
             ->pluck('count', 'status_key')
             ->toArray();
 
+        // Tính tổng số nhiệm vụ
+        $totalCount = array_sum($statusCounts);
+
+        // Trả về tỷ lệ phần trăm cho mỗi trạng thái
         return [
-            'to-do' => $statusCounts['to-do'] ?? 0,
-            'in-progress' => $statusCounts['in-progress'] ?? 0,
-            'verify' => $statusCounts['verify'] ?? 0,
-            'done' => $statusCounts['done'] ?? 0,
+            'to-do' => $totalCount > 0 ? round(($statusCounts['to-do'] ?? 0) / $totalCount * 100, 2) : 0,
+            'in-progress' => $totalCount > 0 ? round(($statusCounts['in-progress'] ?? 0) / $totalCount * 100, 2) : 0,
+            'verify' => $totalCount > 0 ? round(($statusCounts['verify'] ?? 0) / $totalCount * 100, 2) : 0,
+            'done' => $totalCount > 0 ? round(($statusCounts['done'] ?? 0) / $totalCount * 100, 2) : 0,
         ];
     }
+
 }

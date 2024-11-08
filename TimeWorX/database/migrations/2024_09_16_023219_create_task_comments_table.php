@@ -17,8 +17,9 @@ return new class extends Migration
             $table->text('comment_text'); 
             $table->timestamp('created_at')->useCurrent(); 
             $table->timestamp('updated_at')->nullable();
-            $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade'); // Foreign key to 'users' table (người bình luận)
+            $table->uuid('user_id');  // Foreign key to 'users' table (người bình luận)
             $table->boolean('is_manager_comment')->default(false);
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->softDeletes();
         });
     }

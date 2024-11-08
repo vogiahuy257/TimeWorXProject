@@ -9,7 +9,7 @@ Welcome to **TimeWorX Project**! This is our project, developed by Võ Gia Huy a
 
 ## 🚀 **Project Information**
 
-- **Frontend**: React.js, Vite.js
+- **Frontend**: React.js
 - **Backend**: Laravel
 - **Database**: MySQL
 

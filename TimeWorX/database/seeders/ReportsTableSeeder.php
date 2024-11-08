@@ -14,7 +14,6 @@ class ReportsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('reports')->insert([
-        ]);
+        
     }
 }

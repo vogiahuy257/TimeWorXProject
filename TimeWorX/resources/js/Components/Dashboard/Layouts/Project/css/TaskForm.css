@@ -39,17 +39,11 @@
 
 #dashboard .block #main .content main #project-view #task-form .task-form-container form .task-form-header
 {
-    width: 80%;
+    width: 70%;
     box-shadow: 0 2px 8px var(--color-shadow);
     background-color: var(--color-white);
     padding: 12px;
     border-radius: 0.5rem;
-}
-
-#dashboard .block #main .content main #project-view #task-form .task-form-container form .task-form-header h2
-{
-    font-size: var(--font-size-large);
-    font-weight: var(--font-weight-bold);
 }
 
 #dashboard .block #main .content main #project-view #task-form .task-form-container form .form-group
@@ -70,7 +64,7 @@
 #dashboard .block #main .content main #project-view #task-form .task-form-container form .form-group input,
 #dashboard .block #main .content main #project-view #task-form .task-form-container form .form-group textarea
 {
-    width: 95%;
+    width: 100%;
     border-radius: var(--border-radius-sSmall);
     color: var(--color-black);
 }
@@ -86,7 +80,7 @@
 #dashboard .block #main .content main #project-view #task-form .task-form-container form .form-group.time-group input
 {
     border-radius: var(--border-radius-sSmall);
-    width: 95%;
+    width: 100%;
     max-width: 220px;
     color: var(--color-black);
 }
@@ -116,7 +110,7 @@
 
 #dashboard .block #main .content main #project-view #task-form .task-form-container form .user-list .user-item
 {
-    width: 80%;
+    width: 100%;
     border: 1px solid var(--color-black);
     padding: 15px 0px;
     border-radius: var(--border-radius-sSmall);
@@ -211,6 +205,7 @@
     align-items: center;
     margin-left: 2px;
     gap: 5px;
+    background-color: var(--color-white);
 }
 
 #dashboard .block #main .content main #project-view #task-form .task-form-button .user-box ul
@@ -219,6 +214,7 @@
     flex-direction: column;
     gap: 5px;
     width: 100%;
+    color: var(--color-black);
 }
 
 #dashboard .block #main .content main #project-view #task-form .task-form-button .user-box ul li
@@ -226,6 +222,18 @@
     display: flex;  
     align-items: center;
     width: 100%;
+    border-radius: var(--border-radius-sSmall);
+}
+
+#dashboard .block #main .content main #project-view #task-form .task-form-button .user-box ul li:hover
+{
+    background-color: rgba(var(--color-black-rgb), 0.1);
+    cursor: pointer;
+}
+
+#dashboard .block #main .content main #project-view #task-form .active-task-count
+{
+    color: rgba(var(--color-black-rgb), 0.9);
 }
 
 #dashboard .block #main .content main #project-view #task-form .task-form-button .user-box ul li input
@@ -246,4 +254,8 @@
     font-size: var(--font-size-sSmall);
     margin-left: 2px;
     font-weight: var(--font-weight-medium);
+}
+#dashboard .block #main .content main #project-view #task-form .task-box
+{
+    background-color: var(--color-white);
 }

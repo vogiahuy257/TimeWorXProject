@@ -36,7 +36,7 @@ class ProjectController extends Controller
             'project_description' => 'nullable|string',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date',
-            'user_id' => 'required|integer',
+            'user_id' => 'required|uuid',
             'project_status'=>'nullable|string|max:200',
         ]);
 
@@ -113,7 +113,7 @@ class ProjectController extends Controller
             'project_description' => 'nullable|string',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date',
-            'user_id' => 'required|integer',
+            'user_id' => 'required|uuid',
             'project_status'=>'nullable|string|max:200',
         ]);
 
@@ -173,7 +173,7 @@ class ProjectController extends Controller
     public function updateUserRoleInProject(Request $request, string $projectId)
     {
         $validated = $request->validate([
-            'user_id' => 'required|integer',
+            'user_id' => 'required|uuid',
             'is_project_manager' => 'required|boolean',
         ]);
 
@@ -187,11 +187,51 @@ class ProjectController extends Controller
         return response()->json(['message' => 'User role updated successfully']);
     }
 
-    public function getStatisticsOfTasks()
+    public function getStatisticsOfTasks($user_id)
     {
-        //xây dựng routeapi
-        //xây dựng tiệp nhận project_id từ frontend và tìm kiếm trong model
-        //lấy ra hàm countTasksByStatus xong truyền nó về cho frontend
-        
+        $projects = Project::nonDeleted()
+        ->where(function ($query) use ($user_id) {
+            $query->where('project_manager', $user_id)
+                  ->orWhereHas('users', function ($query) use ($user_id) {
+                      $query->where('user_id', $user_id)
+                            ->where('is_project_manager', true);
+                  });
+        })
+        ->get();
+
+        foreach ($projects as $project) {
+            $project->updateProjectStatus();
+            $project->statistics = $project->countTasksByStatus();;
+        }
+    
+        return response()->json($projects);
     }
+
+    public function getProjectStatistics(Request $request, $project_id)
+    {
+        $user_id = $request->input('user_id');
+    
+        $project = Project::select('project_id')
+            ->nonDeleted()
+            ->where('project_id', $project_id)
+            ->where(function ($query) use ($user_id) {
+                $query->where('project_manager', $user_id)
+                    ->orWhereHas('users', function ($query) use ($user_id) {
+                        $query->where('user_id', $user_id)
+                              ->where('is_project_manager', true);
+                    });
+            })
+            ->first();
+    
+        // Kiểm tra nếu không tìm thấy project
+        if (!$project) {
+            return response()->json(['message' => 'Project not found or access denied.'], 404);
+        }
+    
+        $statistics = $project->countTasksByStatus();
+    
+        return response()->json(['statistics' => $statistics]);
+    }
+    
+
 }

@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('chat_messages', function (Blueprint $table) {
             $table->id('message_id'); // Primary key
-            $table->foreignId('sender_id')->constrained('users', 'id')->onDelete('cascade'); // Foreign key to 'users' table
-            $table->foreignId('receiver_id')->constrained('users', 'id')->onDelete('cascade'); // Foreign key to 'users' table
+            $table->uuid('sender_id'); // Chuyển sang UUID cho sender_id
+            $table->uuid('receiver_id'); // Foreign key to 'users' table
             $table->text('message_content'); // Message content
             $table->timestamp('sent_at')->useCurrent(); // Sent at
             $table->boolean('is_read')->default(false); // Read status (0 or 1)
+            $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('receiver_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

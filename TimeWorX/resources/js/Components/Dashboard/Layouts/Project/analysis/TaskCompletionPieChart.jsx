@@ -5,6 +5,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const TaskCompletionPieChart = ({ labels, dataValues, colors, title }) => {
+  const allZero = dataValues.every(value => value === 0);
   const data = {
     labels: labels,
     datasets: [
@@ -12,7 +13,7 @@ const TaskCompletionPieChart = ({ labels, dataValues, colors, title }) => {
         label: "Task Status",
         data: dataValues,
         backgroundColor: colors,
-        hoverBackgroundColor: colors.map(color => color + "BB"), // Tạo màu nhạt hơn khi hover
+        hoverBackgroundColor: colors.map(color => color + "BB"), 
         borderWidth: 1,
       },
     ],
@@ -20,9 +21,18 @@ const TaskCompletionPieChart = ({ labels, dataValues, colors, title }) => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: "top",
+        position: "left",
+        labels: {
+          boxWidth: 10,
+          boxHeight: 10,
+          font: {
+            size: 12,
+          },
+          paddingTop: 8,
+        },
       },
       tooltip: {
         callbacks: {
@@ -33,9 +43,17 @@ const TaskCompletionPieChart = ({ labels, dataValues, colors, title }) => {
   };
 
   return (
-    <div>
-      <h3>{title || "Biểu đồ biểu thị trạng thái task"}</h3>
-      <Pie data={data} options={options} />
+    <div className="p-2 rounded-lg custom-pie-chart flex flex-col items-center text-center w-full">
+          <h3 className="text-sm font-semibold">{title}</h3>
+          <div className="">
+          {allZero ? (
+            <p className="w-full h-40 mx-auto text-xs">No tasks have been created yet</p>
+          ) : (
+            <div className=" w-full h-40">
+              <Pie className="p-2 pl-4" data={data} options={options} />
+            </div>
+          )}
+          </div>
     </div>
   );
 };

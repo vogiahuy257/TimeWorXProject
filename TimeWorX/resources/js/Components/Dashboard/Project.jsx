@@ -21,14 +21,26 @@ export default function Folder({ auth }) {
     const [editProject, setEditProject] = useState([]); 
     const [searchQuery, setSearchQuery] = useState('');
     
+    const statusOrder = {
+        "verify": 1,
+        "in-progress": 2,
+        "to-do": 3,
+        "done": 4
+    };
 
+    const sortProjectsByStatus = (projects) => {
+        return projects.sort((a, b) => {
+            return statusOrder[a.project_status] - statusOrder[b.project_status];
+        });
+    };
 
     //hàm gọi api lấy data
     const fetchProjectData = async () => {
         try {
             const response = await axios.get(`/api/projects/${auth.user.id}`);
-            setProjects(response.data);
-            setFilteredProjects(response.data);
+            const sortedProjects = sortProjectsByStatus(response.data);
+            setProjects(sortedProjects);
+            setFilteredProjects(sortedProjects);
         } catch (error) {
             toast.error('Error fetching projects:', error.response ? error.response?.error : error.response?.message);
         }
@@ -46,7 +58,9 @@ export default function Folder({ auth }) {
     useEffect(() => {
         fetchProjectData();
     }, []);
-    
+    useEffect(() => {
+        setFilteredProjects(sortProjectsByStatus(filteredProjects));
+    }, [searchQuery]);
 
     // hàm mới form xóa
     const handleDeletedFormToggle = () => {
@@ -193,7 +207,7 @@ export default function Folder({ auth }) {
             </section>
             {/* main */}
             <section id='container'>
-                <div className='mainContainer'>
+                <div className='mainContainer w-full'>
 
                     <div className='block-project'>
 

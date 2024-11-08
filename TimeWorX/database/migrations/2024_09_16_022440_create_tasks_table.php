@@ -21,7 +21,8 @@ return new class extends Migration
             $table->boolean('is_late')->default(false); // Trễ deadline
             $table->boolean('is_near_deadline')->default(false); // Gần hết hạn deadline
             $table->timestamps();
-            $table->foreignId('assigned_to_user_id')->nullable()->constrained('users', 'id')->onDelete('set null'); // Foreign key to 'users' table
+            $table->uuid('assigned_to_user_id')->nullable(); // Chuyển khóa ngoại thành UUID
+            $table->foreign('assigned_to_user_id')->references('id')->on('users')->onDelete('set null'); // Foreign key to 'users' table
             $table->softDeletes();
         });
     }

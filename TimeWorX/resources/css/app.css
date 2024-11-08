@@ -7,23 +7,29 @@
     --color-yellow: rgb(241, 194, 27); 
     --color-yellow-rgb: 241, 194, 27;
     --color-cream: #FEF8E8;
-    --color-black: rgb(0, 0, 0); 
+    --color-black: #000000; 
     --color-black-rgb: 0, 0, 0;
-    --color-black-gray: #383838; 
+    --color-black-gray: #30393E; 
     --color-gray: #D9D9D9;
     --color-white: rgb(255, 255, 255);
     --color-white-rgb: 255, 255, 255; 
-    --color-whiteGray:rgb(244, 248, 247);
+    --color-whiteGray:rgb(240, 240, 240);
     --color-light-gray: #F9F9F9;
     --color-light-blue: #117add;
+    --color-light-blue-rgb: 101, 172, 240;
+    --color-blue:rgba(45, 106, 185, 0.9);
+    --color-blue-rgb: 45, 106, 185;
     --color-red: rgb(218, 30, 40);
     --color-red-rgb: 218, 30, 40;
     --color-green: rgb(37, 162, 73);
-    --background: linear-gradient(135deg, #e9defa,#fbfcdb); /* linear-gradient(155deg,#FFFFFF,#D3D3D3) */
-
+    /* --background: linear-gradient(135deg, #F2F8FC,#fbfcdb); */
+    --background: linear-gradient(135deg, #F2F8FC,#e6f7ff);
+    --background-blue: linear-gradient(135deg, rgba(45, 106, 185, 0.9), rgba(77, 144, 214, 0.9));
+    --bg-color-blue-while: #F2F8FC;
     --color-shadow:rgba(68, 68, 68, 0.418);
 
     /* Font Sizes */
+    --font-size-2sSSmall: 0.675rem;
     --font-size-sSSmall: 0.75rem;
     --font-size-sSmall: 0.8rem;
     --font-size-small: 0.875rem;
@@ -113,4 +119,71 @@ li
     display: none;  /* Chrome, Safari và Opera */
 }
 
-  
+#confirmation-form {
+    --color-bg:  var(--color-light-blue-rgb);   /*màu này đậm hơn nha tại đặt biến bị gà */
+   --color-content: var(--color-light-blue);
+
+    background-color: rgba(var(--color-bg), 1);
+    box-shadow: 0 0 18px rgba(var(--color-bg), 0.6);
+    color: #fff;
+
+    transform: translate(-50%,-20%);
+    opacity: 0;  /* Ẩn lúc đầu */
+    animation: slide-up 0.2s ease-in-out forwards;
+}
+
+@keyframes slide-up {
+    from {
+        transform: translate(-50%,-20%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%,-50%);
+        opacity: 1;
+    }
+}
+
+#confirmation-form .icon-confirmation .bg-icon-config
+{
+    color: var(--color-content);
+}
+
+#confirmation-form .icon-confirmation:not(.icon-bottom){
+    --size: 98px;
+
+    width: var(--size);
+    height: var(--size);
+}
+
+#confirmation-form .icon-confirmation .item-icon-config
+{
+    color: #fff;
+}
+
+#confirmation-form .btn button:nth-child(2)
+{
+    background-color: var(--color-content);
+    transition: background-color .2s ease-in-out;
+}
+
+#confirmation-form .btn button:nth-child(2):active
+{
+    background-color: #fff;
+    color: var(--color-content);
+}
+
+#confirmation-form .btn button:nth-child(2):hover
+{
+    background-color: var(--color-blue);
+}
+
+#confirmation-form .btn button:nth-child(1)
+{
+    background-color: rgba(var(--color-bg), 1);
+    transition: background-color .2s ease-in-out;
+}
+
+#confirmation-form .btn button:nth-child(1):hover
+{
+    background-color: var(--color-red);
+}

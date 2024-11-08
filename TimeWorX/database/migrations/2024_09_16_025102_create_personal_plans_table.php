@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('personal_plans', function (Blueprint $table) {
             $table->id('plan_id'); // Primary key
-            $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade'); // Foreign key to 'users' table
+            $table->uuid('user_id'); // Foreign key to 'users' table
             $table->string('plan_name', 100); // Plan name
             $table->text('plan_description')->nullable(); // Plan description (nullable)
             $table->date('start_date'); // Start date
@@ -21,6 +21,8 @@ return new class extends Migration
             $table->timestamps(); // created_at, updated_at
             $table->string('plan_status', 20); // Plan status
             $table->string('plan_priority', 20); // Plan priority
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->softDeletes();
         });
     }

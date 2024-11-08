@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id('setting_id'); // Primary key
-            $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade'); // Foreign key to 'users' table
+            $table->uuid('user_id'); // Foreign key to 'users' table
             $table->string('setting_key', 50); // Setting key
             $table->string('setting_value', 255); // Setting value
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

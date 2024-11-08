@@ -75,4 +75,17 @@ class UserController extends Controller
     {
         //
     }
+
+    // Phương thức lấy tất cả tên các task mà user tham gia
+    public function getAllTaskNameToUser($userId)
+    {
+        $user = User::where('id', $userId)->firstOrFail(); 
+        $taskNames = $user->getAllTaskNames(); 
+
+        return response()->json([
+            'user_id' => $userId,
+            'name' => $user->name,
+            'tasks' => $taskNames
+        ]);
+    }
 }

@@ -3,11 +3,12 @@
 /* card */
 #dashboard .block #main .content main #project #container .block-project
 {
-    width: 100%;
+    width: auto;
     display: flex;
     gap: 18px;
     justify-content: flex-start;
     flex-wrap: wrap;
+    margin: auto;
 } 
 
 #dashboard .block #main .content main #project #container .block-project .card.done {

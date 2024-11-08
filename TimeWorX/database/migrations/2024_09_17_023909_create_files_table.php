@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->id('file_id'); // Primary key
             $table->string('name', 255); // File name
-            $table->foreignId('uploaded_by')->constrained('users', 'id')->onDelete('cascade'); // Foreign key to 'users' table
+            $table->uuid('uploaded_by'); // Foreign key to 'users' table
             $table->timestamps(); // Uploaded at
             $table->foreignId('project_id')->constrained('projects', 'project_id')->onDelete('cascade'); // Foreign key to 'projects' table
             $table->string('type', 255); 
             $table->string('path', 255); // File path
+            
+            $table->foreign('uploaded_by')->references('id')->on('users')->onDelete('cascade');
             $table->softDeletes();
         });
 
