@@ -2,42 +2,54 @@
 #dashboard #report-to-task
 {
    position: fixed;
-   top: 50%;
-   left: 50%;
-   transform: translate(-50%,-50%);
+   top: 0;
+   left: 0;
    z-index: 9999;
-   background-color: rgba(var(--color-black-rgb), 0.3);
    width: 100%;
    height: 100%;
-   border-radius: var(--border-radius-large);
+}
+
+#dashboard #report-to-task .btn-close
+{
+    background-color: var(--color-white);
+}
+
+#dashboard #report-to-task .btn-close:hover
+{
+    background-color: var(--color-red);
+    color: var(--color-white);
 }
 
 #dashboard #report-to-task .report-data
 {
-    background-color: var(--color-white);
-    width: 80%;
-    max-width: 840px;
-    height: 100%;
-    margin: auto;
-    position: relative;
-    border-radius: var(--border-radius-small);
+    background-color: rgba(var(--color-black-rgb), 0.1);
     box-shadow: 0 0 12px var(--color-shadow);
-    display: flex;
-    flex-direction: column;
     transition: .2s ease;
-}
-
-@media screen and (max-width: 780px) {
-    #dashboard #report-to-task .report-data {
-        width: 100%;
-    }
 }
 
 #dashboard #report-to-task .report-content{
     color: var(--color-black);
+    background-color: var(--color-white);
 }
 
 #dashboard #report-to-task .report-content a
 {
     color: var(--color-light-blue);
+}
+
+#dashboard #report-to-task .report-content .custom-textarea
+{
+    background-color: rgba(var(--color-white-rgb), 0.8);
+}
+
+#dashboard #report-to-task .report-content .btn-send
+{
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
+
+#dashboard #report-to-task .report-content .btn-send:hover
+{
+    background-color: rgb(42, 136, 212);
+    color: #fff;
 }

@@ -11,6 +11,7 @@ use App\Http\Controllers\API\TaskController;
 use App\Http\Controllers\API\PersonalPlanController;
 use App\Http\Controllers\API\TaskCommentController;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
+use App\Http\Controllers\API\ReportCommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,4 +78,10 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
     Route::get('/users/search', [UserController::class, 'search']);
     Route::get('/users/{userId}/tasks', [UserController::class, 'getAllTaskNameToUser'])->where('userId', '[0-9a-fA-F\-]{36}');
 
+     // Xem danh sách bình luận của một báo cáo
+     Route::middleware('auth')->group(function () {
+        Route::get('/reports/{reportId}/comments', [ReportCommentController::class, 'index']);
+        Route::post('/reports/{reportId}/comments', [ReportCommentController::class, 'store']);
+        Route::delete('/reports/delete/{commentId}', [ReportCommentController::class, 'destroy']);
+    });
 // });

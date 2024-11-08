@@ -8,7 +8,6 @@ const CreateProjectForm = ({ user_id,  onClose, onSubmit, title, project }) => {
     const [projectDescription, setProjectDescription] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [status, setStatus] = useState('');
     const [error, setError] = useState('');
     const [nameError, setNameError] = useState('');
     const [descriptionError, setDescriptionError] = useState('');
@@ -29,7 +28,6 @@ const CreateProjectForm = ({ user_id,  onClose, onSubmit, title, project }) => {
             setProjectDescription(project.project_description);
             setStartDate(formatDate(project.start_date));
             setEndDate(formatDate(project.end_date));  
-            setStatus(project.project_status);
         }
     }, [project]);
 
@@ -109,7 +107,7 @@ const CreateProjectForm = ({ user_id,  onClose, onSubmit, title, project }) => {
             project_description: projectDescription,
             start_date: startDate,
             end_date: endDate,
-            project_status: status,
+            project_status: 'to-do',
             user_id: user_id,
         };
          onSubmit(projectData);
@@ -181,8 +179,8 @@ const CreateProjectForm = ({ user_id,  onClose, onSubmit, title, project }) => {
                         </div>
                         {error && <p className="error-message">{error}</p>}
                     </div>
-
-                    <label>Status</label>
+                    {/* bỏ status vì dự án sẽ tự động cập nhật */}
+                    {/* <label>Status</label>
                    <div className='project-status mb-3'>
                     <select
                         value={status}
@@ -194,7 +192,7 @@ const CreateProjectForm = ({ user_id,  onClose, onSubmit, title, project }) => {
                         <option value="to-do">To Do</option>
                         <option value="verify">Verify</option>
                     </select>
-                    </div>
+                    </div> */}
 
                     <PrimaryButton type="submit" className="btn-submit">
                         {project ? 'Save' : 'Create'}
