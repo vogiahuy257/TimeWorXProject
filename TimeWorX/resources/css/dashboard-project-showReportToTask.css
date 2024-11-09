@@ -107,3 +107,14 @@
     color: #FAEFEB;
     content: "staff";
 }
+
+#dashboard #report-comment .btn-scroll{
+    color: #fff;
+    background-color: #30393E;
+    box-shadow: 0 0 5px var(--color-light-blue);
+}
+
+#dashboard #report-comment .btn-scroll:hover
+{
+    background-color: var(--color-light-blue);
+}

@@ -138,3 +138,8 @@
     background-color: var(--color-white);
     color: var(--color-black);
 }
+
+#dashboard #report-form .report-content-task-form
+{
+    background-color: rgba(var(--color-white-rgb), 1);
+}

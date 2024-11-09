@@ -230,7 +230,7 @@ const ReportForm = ({ onClose ,task ,auth}) => {
                         </form>
                 </div>
 
-                <div className='w-[90%] report-content-task-form h-auto bg-gray-100 py-4 px-2 rounded-lg shadow-md lg:w-1/2'>
+                <div className='w-[90%] report-content-task-form h-auto py-4 px-2 rounded-lg shadow-md lg:w-1/2'>
                     <ReportComment auth={auth} taskId={task.id} is_project_manager={false} />
             </div>
         </div>
