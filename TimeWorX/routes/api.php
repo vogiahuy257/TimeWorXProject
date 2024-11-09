@@ -79,9 +79,7 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
     Route::get('/users/{userId}/tasks', [UserController::class, 'getAllTaskNameToUser'])->where('userId', '[0-9a-fA-F\-]{36}');
 
      // Xem danh sách bình luận của một báo cáo
-     Route::middleware('auth')->group(function () {
-        Route::get('/reports/{reportId}/comments', [ReportCommentController::class, 'index']);
-        Route::post('/reports/{reportId}/comments', [ReportCommentController::class, 'store']);
-        Route::delete('/reports/delete/{commentId}', [ReportCommentController::class, 'destroy']);
-    });
+    Route::get('/reports/{reportId}/comments/{userId}', [ReportCommentController::class, 'index']);
+    Route::post('/reports/{reportId}/comments/{userId}', [ReportCommentController::class, 'store']);
+    Route::delete('/reports/delete/{commentId}/{userId}', [ReportCommentController::class, 'destroy']);
 // });

@@ -81,8 +81,8 @@ const ReportTaskDone = ({ project_id ,onOpenReportTaskForm }) => {
                     className='p-1'
                 >
                     <option value="all">All</option>
-                    {dateOptions.map((date) => (
-                        <option key={date} value={date}>
+                    {dateOptions.map((date,index) => (
+                        <option key={index} value={date}>
                             {formatDateToDMY(date)}
                         </option>
                     ))}
@@ -91,9 +91,9 @@ const ReportTaskDone = ({ project_id ,onOpenReportTaskForm }) => {
 
             <div className="flex flex-wrap gap-4 p-2 mx-auto mt-4 w-auto rounded max-h-[290px] overflow-y-auto scrollbar-hide">
                 {filteredTasks.length > 0 ? (
-                    filteredTasks.map((task) => (
+                    filteredTasks.map((task,index) => (
                             <button
-                                key={task.task_id} 
+                                key={index} 
                                 onClick={() => onOpenReportTaskForm(task)} 
                                 className="btn-report py-2 rounded-md relative flex flex-col justify-center items-center">
 

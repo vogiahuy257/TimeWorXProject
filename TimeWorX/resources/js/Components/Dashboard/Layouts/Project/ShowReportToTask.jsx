@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import ReportComment from './ReportComment';
 
-const ShowReportToTask = ({ task, onClose }) => {
+const ShowReportToTask = ({ auth,task, onClose }) => {
     const [reportData, setReportData] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    // Function to fetch report data
+    const fetchReportData = () => {
+        axios.get(`/api/reports/${task.id}`, { params: { project_id: task.project_id, task_id: task.id } })
+            .then((response) => {
+                setReportData(response.data);
+                setLoading(false);
+            })
+            .catch(() => {
+                toast.error('Failed to load report data');
+                setLoading(false);
+            });
+    };
+
+
     useEffect(() => {
-        axios.get(`/api/reports/${task.id}`, {
-            params: {
-                project_id: task.project_id,
-                task_id: task.id
-            }
-        })
-        .then((response) => {
-            setReportData(response.data);
-            setLoading(false);
-        })
-        .catch((error) => {
-            toast.error('Failed to load report data');
-            setLoading(false);
-        });
-            
+        fetchReportData();
     }, [task]);
 
     const formatDate = (dateString) => {
@@ -39,61 +40,19 @@ const ShowReportToTask = ({ task, onClose }) => {
         return formattedDate;
     };
 
-    // if (loading) {
-    //     return <section id="report-to-task">
-    //     <div className="report-data m-auto h-full w-full max-w-[1000px] relative rounded-md ">
-    //         <button className="absolute btn-close z-50 top-4 right-4 p-1 rounded-md" onClick={onClose}>
-    //             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    //                 <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    //                 <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    //             </svg>
-    //         </button>
-    //         <div className='m-auto p-4 w-full h-full relative flex flex-col-reverse scrollbar-hide justify-center items-center gap-4 overflow-y-auto  md:flex-row'>
-    //             <div className='w-4/5 h-full report-content p-8 md:w-2/3'>
-    //                 <div className="report-content report-task-form p-8">
-    //                     <div className="text-base text-center text-gray-800">Loading...</div>
-    //                 </div>
-    //             </div>
-    //         </div>
-    //     </div>
-    // </section>;
-    // }
-
-    // if (!reportData || !reportData.user) {
-    //     return (
-    //         <section id="report-to-task">
-    //             <div className="report-data m-auto h-full w-full max-w-[1000px] relative rounded-md ">
-    //                 <button className="absolute btn-close z-50 top-4 right-4 p-1 rounded-md" onClick={onClose}>
-    //                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    //                         <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    //                         <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    //                     </svg>
-    //                 </button>
-    //                 <div className='m-auto p-4 w-full h-full relative flex flex-col-reverse scrollbar-hide justify-center items-center gap-4 overflow-y-auto  md:flex-row'>
-    //                     <div className='w-4/5 flex justify-center items-center h-full report-content p-8 md:w-2/3'>
-    //                         <div className='m-auto flex justify-center items-center'>
-    //                             <p className='text-center bg-gray-300 rounded-md p-8 text-gray-800'>This task has not been reported yet</p>
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         </section>
-    //     );
-    // }
-
     return (
         <section id="report-to-task" className='flex'>
-        <div className="report-data h-auto m-auto scrollbar-hide relative w-full max-w-[880px] max-h-full p-4 overflow-y-auto rounded-lg shadow-lg">
-            <button className=" absolute btn-close z-50 top-4 right-4 p-1.5 rounded-xl" onClick={onClose}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div className="report-data h-auto m-auto scrollbar-hide relative w-full max-h-full  max-w-[880px] p-4 overflow-y-auto rounded-lg shadow-lg lg:max-w-[80%]">
+            <button className=" absolute flex justify-center items-center btn-close z-50 top-4 right-4 p-1.5 rounded-xl" onClick={onClose}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
             </button>
 
-        <div className='flex flex-col items-center w-full gap-4 overflow-y-auto'>
+        <div className='flex flex-col-reverse  items-center w-full gap-4 overflow-y-auto lg:flex-row'>
             
-            <div className="report-content w-[88%] p-8 rounded-lg shadow">
+            <div className="report-content-task-form h-auto w-[80%] p-8 rounded-lg shadow lg:w-1/2">
             {reportData && reportData.user ?
             (
                 <>
@@ -158,67 +117,15 @@ const ShowReportToTask = ({ task, onClose }) => {
                     </div>
                 </>
             ):(
-                <>
+                <div className='flex flex-col justify-center h-[500px]'>
                 <p className="text-center bg-gray-300 rounded-md p-8 text-gray-800">This task has not been reported yet</p>
-                </>
+                </div>
             )}
             </div>
             
-
-                <div className='w-[90%] report-content h-auto bg-gray-100 p-4 rounded-lg shadow-md'>
-                    <h2 className="text-lg font-semibold mb-2">Comments</h2>
-                        {/* Display existing comments */}
-                        <div className="space-y-4 overflow-y-auto max-h-[300px] scrollbar-thin scrollbar-thumb-gray-300">
-                            {/* Example comment from a manager */}
-                            <div className="flex items-start gap-3">
-                                <img 
-                                    src="manager-avatar.jpg" 
-                                    alt="Manager avatar" 
-                                    className="w-8 h-8 rounded-full border border-blue-500"
-                                />
-                                <div className="bg-blue-100 p-3 rounded-lg flex-1">
-                                    <p className="text-xs text-blue-600 font-semibold">Manager</p>
-                                    <p className="text-sm text-gray-800">Good progress so far, please keep us updated on any challenges.</p>
-                                    <span className="text-xs text-gray-400">2 hours ago</span>
-                                </div>
-                            </div>
-
-                            {/* Example comment from a staff member */}
-                            <div className="flex items-start gap-3">
-                                <img 
-                                    src="staff-avatar.jpg" 
-                                    alt="Staff avatar" 
-                                    className="w-8 h-8 rounded-full border border-gray-500"
-                                />
-                                <div className="bg-gray-50 p-3 rounded-lg flex-1">
-                                    <p className="text-xs text-gray-600 font-semibold">Staff</p>
-                                    <p className="text-sm text-gray-800">I will update the report once the task progresses further.</p>
-                                    <span className="text-xs text-gray-400">1 hour ago</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Comment input box */}
-                        <div className="mt-4 flex items-center gap-3">
-                            <img 
-                                src="user-avatar.jpg" 
-                                alt="User avatar" 
-                                className="w-8 h-8 rounded-full border border-gray-500"
-                            />
-                            <textarea 
-                                className="flex-1 custom-textarea border-gray-300 p-2 rounded-lg resize-none focus:outline-none focus:ring focus:border-blue-300" 
-                                rows="1" 
-                                placeholder="Write a comment..."
-                            ></textarea>
-                            <button 
-                                className="btn-send text-white px-4 py-1.5 rounded-lg transition-colors duration-300"
-                            >
-                                Send
-                            </button>
-                        </div>
-
-                </div>
-                
+        <div className='w-[80%] report-content-task-form h-auto bg-gray-100 py-4 px-2 rounded-lg shadow-md lg:w-1/2'>
+                <ReportComment taskId={task.id} auth={auth} is_project_manager={true}/>
+        </div>
             </div>
         </div>
     </section>

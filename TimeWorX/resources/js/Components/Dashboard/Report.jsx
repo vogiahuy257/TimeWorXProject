@@ -25,7 +25,8 @@ export default function Report({ auth }) {
             setProjects(response.data);
             setSelectProject(response.data[0]);
         } catch (error) {
-            toast.error('Error fetching projects:', error.response ? error.response?.error : error.response?.message);
+            const errorMsg = error.response?.data?.message || "An error occurred while fetching projects.";
+            toast.error(errorMsg);
         }
     };
 
@@ -105,7 +106,7 @@ export default function Report({ auth }) {
                     <p>No projects available.</p>
                 )}
             </div>
-            {isOpenShowReportToTask && <ReportTaskForm onClose={openFormReportToTask} task={selectTask} />}
+            {isOpenShowReportToTask && <ReportTaskForm auth={auth} onClose={openFormReportToTask} task={selectTask} />}
         </section>
     );
 }

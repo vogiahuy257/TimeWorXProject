@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class ReportComment extends Model
 {
@@ -20,12 +21,12 @@ class ReportComment extends Model
     ];
 
     /**
-     * Định nghĩa quan hệ tới bảng Report
-     * Một ReportComment thuộc về một Report
+     * Định nghĩa quan hệ tới bảng Task
+     * Một ReportComment thuộc về một Task
      */
-    public function report()
+    public function task()
     {
-        return $this->belongsTo(Report::class, 'report_id', 'report_id');
+        return $this->belongsTo(Task::class, 'task_id', 'task_id');
     }
 
     /**
@@ -35,5 +36,27 @@ class ReportComment extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'comment_by_user_id', 'id');
+    }
+
+     /**
+     * Đánh dấu các bình luận là đã xem trong bảng task_user
+     */
+    public static function markCommentsAsSeen($taskId, $userId)
+    {
+        DB::table('task_user')
+            ->where('task_id', $taskId)
+            ->where('user_id', $userId)
+            ->update(['has_seen_comment' => false]);
+    }
+
+    /**
+     * Đặt cờ đã xem cho tất cả người dùng khác
+     */
+    public static function markOtherUsersCommentsAsSeen($taskId, $userId)
+    {
+        DB::table('task_user')
+            ->where('task_id', $taskId)
+            ->where('user_id', '!=', $userId)
+            ->update(['has_seen_comment' => true]);
     }
 }

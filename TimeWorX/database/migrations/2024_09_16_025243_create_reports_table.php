@@ -30,11 +30,11 @@ return new class extends Migration
 
         Schema::create('report_comments', function (Blueprint $table) {
             $table->id('comment_id'); // Primary key
-            $table->foreignId('report_id')->constrained('reports', 'report_id')->onDelete('cascade'); // Foreign key to 'reports' table
+            $table->foreignId('task_id')->constrained('tasks', 'task_id')->onDelete('cascade'); // Foreign key to 'tasks' table
             $table->uuid('comment_by_user_id'); // Foreign key to 'users' table
 
             $table->text('comment'); // Nội dung bình luận
-            $table->boolean('is_project_manager')->default(false);// Phân biệt giữa staff và manager
+            $table->boolean('is_project_manager')->default(false); // Phân biệt giữa staff và manager
             $table->timestamps(); // created_at, updated_at
 
             $table->foreign('comment_by_user_id')->references('id')->on('users')->onDelete('cascade');

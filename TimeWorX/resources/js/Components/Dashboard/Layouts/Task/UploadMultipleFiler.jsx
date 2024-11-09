@@ -149,7 +149,8 @@ const UploadMultipleFiler = ({ onFilesChange, setIsLink, setFileSizeError, exist
                                     <li key={index} className="flex justify-between items-center">
                                         <span
                                             onClick={() => handleDownload(file.file)} 
-                                            className="text-blue-500 hover:underline cursor-pointer"
+                                            className="text-blue-500 hover:underline cursor-pointer truncate max-w-xs inline-block"
+                                            title={file.file.name}
                                         >
                                             {file.file.name}
                                         </span>

@@ -22,34 +22,88 @@
 
 #dashboard #report-to-task .report-data
 {
-    background-color: rgba(var(--color-black-rgb), 0.1);
+    background-color: rgba(var(--color-black-rgb), 0.2);
     box-shadow: 0 0 12px var(--color-shadow);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     transition: .2s ease;
 }
 
-#dashboard #report-to-task .report-content{
+#dashboard #report-to-task .report-content-task-form{
     color: var(--color-black);
     background-color: var(--color-white);
 }
 
-#dashboard #report-to-task .report-content a
+#dashboard #report-to-task .report-content-task-form a
 {
     color: var(--color-light-blue);
 }
 
-#dashboard #report-to-task .report-content .custom-textarea
+#dashboard #report-comment .custom-textarea
 {
     background-color: rgba(var(--color-white-rgb), 0.8);
 }
 
-#dashboard #report-to-task .report-content .btn-send
+#dashboard #report-comment .btn-send
 {
     background-color: var(--color-black);
     color: var(--color-white);
 }
 
-#dashboard #report-to-task .report-content .btn-send:hover
+#dashboard #report-comment .btn-send:hover
 {
     background-color: rgb(42, 136, 212);
     color: #fff;
+}
+#dashboard #report-comment .custom-comment{
+    background-color: rgba(var(--color-black-rgb), 0.1);
+}
+
+@property --color-roler {
+    syntax: '<color>';
+    initial-value: hsl(209, 86%, 47%);
+    inherits: false;
+}
+
+#dashboard #report-comment .box-comment
+{
+    --color-roler: rgba(var(--color-light-blue-rgb), 1);
+    background-color: var(--color-white);
+    box-shadow: 0 4px 0 var(--color-roler);
+    margin-bottom: 28px;
+}
+
+#dashboard #report-comment .box-comment::before
+{
+    content: "manager";
+    position: absolute;
+    top: -10px;
+    right: 50%;
+    transform: translateX(50%);
+    font-size: var(--font-size-sSSmall);
+    color: #fff;
+    background-color: var(--color-roler);
+    padding: 4px 8px;
+    border-radius: 0.376rem;
+    box-shadow: 0 1px 4px var(--color-roler);
+}
+
+
+#dashboard #report-comment.box-comment.manager{
+    --color-roler: hsl(209, 86%, 47%);
+}
+
+#dashboard #report-comment .box-comment.manager::before
+{
+    --color-roler: hsl(209, 86%, 47%);
+}
+
+#dashboard #report-comment .box-comment.staff{
+    --color-roler: #30393E;
+}
+
+#dashboard #report-comment .box-comment.staff::before{
+    --color-roler: #30393E;
+    color: #FAEFEB;
+    content: "staff";
 }

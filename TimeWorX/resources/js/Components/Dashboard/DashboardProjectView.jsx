@@ -309,6 +309,7 @@ const DashboardProjectView = ({ auth }) => {
                 <ShowReportToTask
                     task = {selectedTask}
                     onClose = {toggleFormReportToTak}
+                    auth={auth}
                 />
             )}
 
