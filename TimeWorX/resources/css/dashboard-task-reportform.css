@@ -2,6 +2,7 @@
 #dashboard #report-form
 {
    background-color: rgba(var(--color-black-rgb), 0.1);
+   border-radius: var(--border-radius-large);
 }
 
 #dashboard #report-form .main

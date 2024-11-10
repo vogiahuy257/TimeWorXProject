@@ -32,10 +32,10 @@ return new class extends Migration
             $table->id('comment_id'); // Primary key
             $table->foreignId('task_id')->constrained('tasks', 'task_id')->onDelete('cascade'); // Foreign key to 'tasks' table
             $table->uuid('comment_by_user_id'); // Foreign key to 'users' table
-
             $table->text('comment'); // Nội dung bình luận
             $table->boolean('is_project_manager')->default(false); // Phân biệt giữa staff và manager
             $table->timestamps(); // created_at, updated_at
+            $table->boolean('is_pinned')->default(false); // Cờ ghim bình luận
 
             $table->foreign('comment_by_user_id')->references('id')->on('users')->onDelete('cascade');
         });

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 class ReportCommentController extends Controller
 {
     // Xem danh sách bình luận của một báo cáo
-    public function index($taskId,$userId)
+    public function index($taskId, $userId)
     {
         // Đánh dấu các bình luận là đã xem bằng cách đặt has_seen_comment thành false cho user hiện tại
         DB::table('task_user')
@@ -21,18 +21,25 @@ class ReportCommentController extends Controller
             ->where('user_id', $userId)
             ->update(['has_seen_comment' => false]);
 
-        // Lấy danh sách các bình luận của task kèm thông tin user
-        $comments = ReportComment::with(['user' => function($query) {
+        // Lấy bình luận được ghim
+        $pinnedComments = ReportComment::with(['user' => function($query) {
+            $query->select('id', 'name', 'profile_picture');
+        }])
+        ->where('task_id', $taskId)
+        ->where('is_pinned', true)
+        ->get();
+
+        // Lấy bình luận không ghim
+        $regularComments = ReportComment::with(['user' => function($query) {
             $query->select('id', 'name', 'profile_picture');
         }])
         ->where('task_id', $taskId)
         ->get();
 
-        if ($comments->isEmpty()) {
-            return response()->json(['message' => 'No comments found'], 200);
-        }
-    
-        return response()->json($comments);
+        return response()->json([
+            'pinned_comments' => $pinnedComments,
+            'regular_comments' => $regularComments
+        ]);
     }
 
 
@@ -57,6 +64,7 @@ class ReportCommentController extends Controller
         $comment->comment_by_user_id = $userId;
         $comment->comment = $request->comment;
         $comment->is_project_manager = $request->is_project_manager;
+        $comment->is_pinned = false;
         $comment->save();
 
         $comment = ReportComment::with(['user' => function($query) {
@@ -82,4 +90,25 @@ class ReportCommentController extends Controller
         
         return response()->json(['message' => 'Comment deleted successfully']);
     }
+
+     // Ghim bình luận
+     public function pinComment($commentId)
+     {
+         $comment = ReportComment::findOrFail($commentId);
+         $comment->is_pinned = true;
+         $comment->save();
+ 
+         return response()->json($comment);
+     }
+ 
+     // Gỡ ghim bình luận
+     public function unpinComment($commentId)
+     {
+         $comment = ReportComment::findOrFail($commentId);
+         $comment->is_pinned = false;
+         $comment->save();
+ 
+         return response()->json($comment);
+     }
+ 
 }

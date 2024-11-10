@@ -82,4 +82,6 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
     Route::get('/reports/{reportId}/comments/{userId}', [ReportCommentController::class, 'index']);
     Route::post('/reports/{reportId}/comments/{userId}', [ReportCommentController::class, 'store']);
     Route::delete('/reports/delete/{commentId}/{userId}', [ReportCommentController::class, 'destroy']);
+    Route::post('/reports/comments/{commentId}/pin', [ReportCommentController::class, 'pinComment']);
+    Route::post('/reports/comments/{commentId}/unpin', [ReportCommentController::class, 'unpinComment']);
 // });

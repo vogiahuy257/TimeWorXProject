@@ -124,11 +124,11 @@ const ReportForm = ({ onClose ,task ,auth}) => {
     
     
   return (
-    <section id="report-form" className='fixed top-0 left-0 w-full h-full z-[999] rounded-lg'>
+    <section id="report-form" className='fixed top-0 left-0 w-full h-full z-[999]'>
         <div className=' h-auto m-auto scrollbar-hide relative w-full max-h-full  max-w-[880px] p-4 overflow-y-auto rounded-lg shadow-lg lg:max-w-[80%]'>
             
-            <button className='btn-close p-1 rounded-md' onClick={onClose}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <button className='btn-close p-[0.5px] rounded-md' onClick={onClose}>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="square" strokeLinejoin="round" />
                     <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="square" strokeLinejoin="round" />
                 </svg>

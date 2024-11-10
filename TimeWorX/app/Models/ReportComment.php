@@ -18,6 +18,7 @@ class ReportComment extends Model
         'comment_by_user_id',
         'comment',
         'is_project_manager',
+        'is_pinned',
     ];
 
     /**
@@ -59,4 +60,12 @@ class ReportComment extends Model
             ->where('user_id', '!=', $userId)
             ->update(['has_seen_comment' => true]);
     }
+
+     // Hàm để lấy các bình luận được ghim
+     public static function getPinnedComments($taskId)
+     {
+         return self::where('task_id', $taskId)
+             ->where('is_pinned', true)
+             ->get();
+     }
 }

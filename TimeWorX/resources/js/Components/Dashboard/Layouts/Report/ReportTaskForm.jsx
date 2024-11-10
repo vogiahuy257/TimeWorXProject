@@ -56,7 +56,7 @@ const ReportTaskForm = ({ auth,task, onClose }) => {
                 <>
                     <div className="text mb-4 border-b border-gray-300 pb-3">
                         <h2 className="text-xl">
-                        <strong>Report for Task:</strong> {task.content}
+                        <strong>Report for Task:</strong> {task.task_name ? task.task_name : task.content}
                         </h2>
                         <p className="text-xs mt-1">
                             <strong>Create By:</strong> {reportData.user.name}
@@ -122,7 +122,7 @@ const ReportTaskForm = ({ auth,task, onClose }) => {
             </div>
             
 
-            <div className='w-[80%] report-content-task-form h-auto bg-gray-100 py-4 px-2 rounded-lg shadow-md lg:w-1/2'>
+            <div className='w-[80%] mt-10 report-content-task-form h-auto bg-gray-100 py-4 px-2 rounded-lg shadow-md lg:w-1/2'>
                 <ReportComment taskId={task.task_id} auth={auth} is_project_manager={true}/>
             </div>
 
