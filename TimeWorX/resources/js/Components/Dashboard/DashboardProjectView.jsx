@@ -24,6 +24,7 @@ const DashboardProjectView = ({ auth }) => {
     const [showComments,setShowComments] = useState(false);
     const [showFormReportToTask, setShowFormReportToTask] = useState(false);
     const [projectDeadLine,setProjectDeadLine] = useState();
+    const [countUserToProject, setCountUserToProject] = useState(null);
 
 
     const toggleComment = () => {
@@ -143,6 +144,7 @@ const DashboardProjectView = ({ auth }) => {
             const response = await axios.get(`/api/project-view/${project_id}`);
             const projectData = response.data;
             setProject(projectData.project);
+            setCountUserToProject(projectData.project.user_count);
             setProjectDeadLine(projectData.project.deadline);
             setTasks({
                 'to-do': projectData.tasks['to-do'] || [],
@@ -182,7 +184,7 @@ const DashboardProjectView = ({ auth }) => {
                     </div>
                 </div>
                 <div className='block-element-right'>
-                    <PrimaryButton onClick={toggleUserList} className='btn btn-person'>
+                    <PrimaryButton onClick={toggleUserList} className='btn btn-person justify-center items-center flex'>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="12" cy="9" r="4" fill="currentColor"/>
                             <circle cx="17" cy="9" r="3" fill="currentColor"/>
@@ -191,6 +193,7 @@ const DashboardProjectView = ({ auth }) => {
                             <path fillRule="evenodd" clipRule="evenodd" d="M9.12197 13.7991C8.57989 13.3205 7.88609 13 7 13C4.55208 13 3.57166 15.4458 3.20343 16.9162C3.05971 17.4901 3.51335 18 4.10498 18H6.43155C6.83464 16.4902 7.61422 14.7773 9.12197 13.7991Z" fill="currentColor"/>
                             <path d="M12 14C15.7087 14 16.6665 17.301 16.9139 19.0061C16.9932 19.5526 16.5523 20 16 20H8C7.44772 20 7.00684 19.5526 7.08614 19.0061C7.33351 17.301 8.29134 14 12 14Z" fill="currentColor"/>
                         </svg>
+                        <p className='pl-1 text-sm'> {countUserToProject}</p>
                     </PrimaryButton>
                     <PrimaryButton onClick={toggleDeletedTasks} className='btn btn-history'>
                         <svg width="25" height="25" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -303,6 +306,7 @@ const DashboardProjectView = ({ auth }) => {
                     projectId={project.id} 
                     auth = {auth}
                     onClose={toggleUserList} 
+                    setCountUserToProject = {setCountUserToProject}   
                 />
             )}
 

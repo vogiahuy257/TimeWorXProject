@@ -193,7 +193,7 @@ const ReportComment = ({ taskId, auth, is_project_manager }) => {
                         </div>
                     ))
                 ) : (
-                    <p className="text-sm text-gray-500">Chưa có bình luận nào.</p>
+                    <p className="text-sm text-gray-500">No comments.</p>
                 )}
                 <div ref={commentsEndRef} /> {/* ref để đánh dấu vị trí kết thúc danh sách bình luận */}
             </div>

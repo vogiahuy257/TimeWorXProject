@@ -3,12 +3,15 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PrimaryButton from '@/Components/PrimaryButton';
+import ConfirmationForm from '@/Components/ConfirmationForm';
 import "./css/TaskUserForm.css";
 
-const TaskUsers = ({ projectId, onClose ,auth}) => {
+const TaskUsers = ({ projectId, onClose ,auth ,setCountUserToProject}) => {
     const [users, setUsers] = useState([]);
     const [allUsers, setAllUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [confirmationError, setConfirmationError] = useState(false);
+    const [messageError, setMessageError] =useState(null);
     const [loading, setLoading] = useState(false);
     const [userManagerStatus, setUserManagerStatus] = useState({});
 
@@ -32,7 +35,8 @@ const TaskUsers = ({ projectId, onClose ,auth}) => {
             const response = await axios.get('/api/users'); 
             setAllUsers(response.data);
         } catch (error) {
-            toast.error('Error fetching all users.');
+            setMessageError(error.response.data.message || 'Error fetching all users.');
+            setConfirmationError(true);
         }
     };
     
@@ -41,6 +45,13 @@ const TaskUsers = ({ projectId, onClose ,auth}) => {
         fetchUsers();
         fetchAllUsers();
     }, [projectId]);
+
+    useEffect(() => {
+        if(users.length > 0)
+        {
+            setCountUserToProject(users.length);
+        }
+    }, [users])
     
     const handleAddUser = async (user) => {
         if (!users.some(users => users.id === user.id)) {
@@ -48,7 +59,8 @@ const TaskUsers = ({ projectId, onClose ,auth}) => {
                 const response = await axios.post(`/api/projects/${projectId}/users`, { user_id: user.id });
                 setUsers([...users, user]);
             } catch (error) {
-                toast.error(error.response.data.message || 'Error adding user to project.'); 
+                setMessageError(error.response.data.message || 'Error adding user to project.');
+                setConfirmationError(true);
             }
         } else {
             toast.warning('User is already added to this project.'); 
@@ -61,7 +73,8 @@ const TaskUsers = ({ projectId, onClose ,auth}) => {
                 const response = await axios.delete(`/api/projects/${projectId}/remove-user/${auth.user.id}`, {data: { user_id: user.id }} );
                 setUsers(users.filter(existingUser => existingUser.id !== user.id));
             } catch (error) {
-                console.log(error.response.data.message || 'Error adding user to project.'); 
+                setMessageError(error.response.data.message || 'Error adding user to project.');
+                setConfirmationError(true);
             }
         } else {
             toast.warning('User is already added to this project.'); 
@@ -185,7 +198,15 @@ const TaskUsers = ({ projectId, onClose ,auth}) => {
                 </div>
 
 
-
+                {confirmationError ? (
+                    <ConfirmationForm 
+                        type = {"error"}
+                        styleToBox={"absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pr-2"}
+                        styleToChildren={``}
+                        children={messageError}
+                        handleConfirm={setConfirmationError}
+                    />
+                ):null}
             </div>
         </div>
     );

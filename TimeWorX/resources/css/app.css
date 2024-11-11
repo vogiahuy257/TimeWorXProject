@@ -132,6 +132,12 @@ li
     animation: slide-up 0.2s ease-in-out forwards;
 }
 
+#confirmation-form.error{
+    --color-bg:  246, 75, 60;  /*rgba*/
+   --color-content: #C81912;
+
+}
+
 @keyframes slide-up {
     from {
         transform: translate(-50%,-20%);
@@ -180,10 +186,20 @@ li
 #confirmation-form .btn button:nth-child(1)
 {
     background-color: rgba(var(--color-bg), 1);
-    transition: background-color .2s ease-in-out;
+    transition: .2s ease-in-out;
 }
 
 #confirmation-form .btn button:nth-child(1):hover
 {
     background-color: var(--color-red);
+}
+
+#confirmation-form.error .btn button:nth-child(1)
+{
+    background-color: var(--color-content);
+}
+
+#confirmation-form.error .btn button:nth-child(1):hover{
+    background-color: #F2F8FC;
+    color: var(--color-content);
 }

@@ -237,6 +237,15 @@ class Project extends Model
             });
     }
 
+    /**
+     * Đếm số lượng người dùng tham gia dự án.
+     *
+     * @return int
+     */
+    public function countProjectUsers()
+    {
+        return $this->users()->count();
+    }
 
     /**
      * Thống kê trang thái của các task trong project
