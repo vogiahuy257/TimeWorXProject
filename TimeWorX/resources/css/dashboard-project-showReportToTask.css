@@ -11,6 +11,19 @@
    border-radius: var(--border-radius-large);
 }
 
+#dashboard #report-to-task .btn-done
+{
+    background-color: #0b0b0b;
+    color: #fff;
+    transition: background-color .2s ease-in-out,box-shadow .2s ease-in-out;
+}
+
+#dashboard #report-to-task .btn-done:hover
+{
+    background-color: var(--color-green);
+    box-shadow: 0 0 8px var(--color-green);
+}
+
 #dashboard #report-to-task .btn-close
 {
     background-color: #222222;

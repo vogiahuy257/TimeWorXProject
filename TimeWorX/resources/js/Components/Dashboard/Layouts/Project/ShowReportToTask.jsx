@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import ReportComment from './ReportComment';
 
-const ShowReportToTask = ({ auth,task, onClose }) => {
+const ShowReportToTask = ({ auth,task, onClose ,updateTaskStatus }) => {
     const [reportData, setReportData] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -20,10 +20,14 @@ const ShowReportToTask = ({ auth,task, onClose }) => {
             });
     };
 
-
     useEffect(() => {
         fetchReportData();
     }, [task]);
+
+    const handDoneReport = (taskId) => {
+        updateTaskStatus(taskId,'done');
+        onClose();
+    }
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -52,11 +56,11 @@ const ShowReportToTask = ({ auth,task, onClose }) => {
 
             <div className='flex flex-col-reverse scrollbar-hide items-center w-full gap-4 overflow-y-auto lg:flex-row'>
                 
-                <div className="report-content-task-form h-full w-[80%] p-8 rounded-lg shadow lg:w-1/2">
+                <div className="report-content-task-form h-full w-[80%] p-8 pb-4 rounded-lg shadow lg:w-1/2">
                 {reportData && reportData.user ?
                 (
                     <>
-                        <div className="text mb-4 border-b border-gray-300 pb-3">
+                        <div className="text border-b border-gray-300 pb-3">
                             <h2 className="text-xl">
                             <strong>Report for Task:</strong> {task.content}
                             </h2>
@@ -114,6 +118,14 @@ const ShowReportToTask = ({ auth,task, onClose }) => {
                                 <h3 className="text-sm font-semibold mb-1">Problems encountered/difficulties:</h3>
                                 <p className="text-sm">{reportData.issues}</p>
                             </div>
+                        </div>
+                        <div className='btn w-full pt-2'>
+                                <button onClick={() => handDoneReport(reportData.task_id)} className='px-2 py-[1.5px] rounded-lg m-auto btn-done flex justify-center items-center'>
+                                    <h1 className='pl-1 font-medium'>done</h1>
+                                    <svg className='ml-1' xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
+                                        <path d="m382-354 339-339q12-12 28-12t28 12q12 12 12 28.5T777-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"/>
+                                    </svg>
+                                </button>
                         </div>
                     </>
                 ):(

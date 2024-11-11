@@ -37,6 +37,8 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
     Route::get('/projects/statistics/{user_id}', [ProjectController::class, 'getStatisticsOfTasks']);
     Route::post('/projects/{project_id}/statistics', [ProjectController::class, 'getProjectStatistics']);
 
+    Route::delete('/projects/{projectId}/remove-user/{userId}', [ProjectController::class, 'removeUserFromProject']);
+
 
 
     // Route Projectview (TASK)

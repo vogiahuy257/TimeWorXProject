@@ -104,6 +104,7 @@ const DashboardProjectView = ({ auth }) => {
             await axios.put(`/api/project-view/${taskId}`, {
                 status: newStatus
             });
+            fetchProjectData();
         } catch (error) {
             toast.error("Error updating task status: " + error.message);
         }
@@ -300,6 +301,7 @@ const DashboardProjectView = ({ auth }) => {
             {showUserList && (
                 <TaskUsers 
                     projectId={project.id} 
+                    auth = {auth}
                     onClose={toggleUserList} 
                 />
             )}
@@ -309,6 +311,7 @@ const DashboardProjectView = ({ auth }) => {
                 <ShowReportToTask
                     task = {selectedTask}
                     onClose = {toggleFormReportToTak}
+                    updateTaskStatus = {updateTaskStatus}
                     auth={auth}
                 />
             )}

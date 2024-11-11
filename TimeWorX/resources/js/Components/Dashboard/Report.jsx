@@ -45,7 +45,7 @@ export default function Report({ auth }) {
                 {projects.length > 0 ? (
                     <div className='m-4 w-full h-full flex flex-col lg:flex-row gap-4'>
                         {/* Danh sách Project */}
-                        <div className='gap-4 w-full h-full flex flex-col-reverse lg:w-1/2'>
+                        <div className='gap-4 w-full h-full flex flex-col-reverse lg:w-full'> {/* w-1/2 */}
                             
                             <div className='gap-4 flex flex-col md:flex-row'>   
                                 <div className={`report-content report-project p-4 rounded-md shadow-md md:w-1/2 mx-auto`}>
@@ -94,13 +94,12 @@ export default function Report({ auth }) {
                         </div>
                         
                         {/* Task Done của Project */}
-                        <div className='w-full h-full flex flex-row lg:w-1/2'>
-                            {/* Tổng Hợp */}
+                        {/* <div className='w-full h-full flex flex-row lg:w-1/2'>
                             <div className="w-full report-content report-summary p-2 rounded-md shadow-md  relative">
                                 <h2 className="text-header">Summary Report</h2>
                                 <SummaryReport/>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 ) : (
                     <p>No projects available.</p>
