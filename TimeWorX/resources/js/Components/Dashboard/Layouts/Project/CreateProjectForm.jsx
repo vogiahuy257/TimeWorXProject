@@ -179,20 +179,6 @@ const CreateProjectForm = ({ user_id,  onClose, onSubmit, title, project }) => {
                         </div>
                         {error && <p className="error-message">{error}</p>}
                     </div>
-                    {/* bỏ status vì dự án sẽ tự động cập nhật */}
-                    {/* <label>Status</label>
-                   <div className='project-status mb-3'>
-                    <select
-                        value={status}
-                        onChange={(e) =>  setStatus(e.target.value)}
-                    >
-                        <option value="null">Select Status</option>
-                        <option value="done">Done</option>
-                        <option value="in-progress">In Progress</option>
-                        <option value="to-do">To Do</option>
-                        <option value="verify">Verify</option>
-                    </select>
-                    </div> */}
 
                     <PrimaryButton type="submit" className="btn-submit">
                         {project ? 'Save' : 'Create'}
