@@ -13,10 +13,35 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($user_id)
     {
-        
+        // Lấy toàn bộ project mà user_id là project_manager
+        $projects = Project::nonDeleted()
+        ->where(function ($query) use ($user_id) 
+        {
+            $query->where('project_manager', $user_id)
+                  ->orWhereHas('users', function ($query) use ($user_id) 
+                  {
+                      $query->where('user_id', $user_id)
+                            ->where('is_project_manager', true);
+                  });
+        })
+        ->get();
+
+        // Kiểm tra nếu user không phải là project_manager của bất kỳ project nào
+        if ($projects->isEmpty()) {
+            return response()->json(['message' => 'User không phải là project manager của bất kỳ dự án nào'], 404);
+        }
+        foreach ($projects as $project) {
+            $project->updateProjectStatus();
+            $project->tasks_count = $project->tasks()->count();
+            $project->user_count = $project->users()->count();
+        }
+        return response()->json([
+            'projects' => $projects
+        ], 200);
     }
+
 
     /**
      * Show the form for creating a new resource.

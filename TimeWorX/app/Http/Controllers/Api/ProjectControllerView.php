@@ -58,6 +58,7 @@ class ProjectControllerView extends Controller
                     }),
                     'deadline' => $task->formatted_deadline,
                     'status' => $task->status_key,
+                    'created_at' => $task->created_at,
                     'is_late' => $task->is_late,
                     'is_near_deadline' => $task->is_near_deadline,
                 ];

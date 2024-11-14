@@ -12,6 +12,7 @@ use App\Http\Controllers\API\PersonalPlanController;
 use App\Http\Controllers\API\TaskCommentController;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 use App\Http\Controllers\API\ReportCommentController;
+use App\Http\Controllers\API\CalendarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,9 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
 
 // Route::middleware(['auth:sanctum'])->group(function () {
     // Route Project
-    Route::apiResource('projects', ProjectController::class);
+    Route::apiResource('projects', ProjectController::class)->except(['index']);
+    Route::get('/projects/{user_id}/projects-tasks', [ProjectController::class, 'index']);
+
     Route::get('/projects/deleted/{user_id}', [ProjectController::class, 'getDeletedProjects']);
     Route::delete('/projects/permanently-delete/{id}', [ProjectController::class, 'permanentlyDeleteProject']);
     Route::get('/projects/restore/{id}', [ProjectController::class, 'restoreProject']);
@@ -86,4 +89,6 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
     Route::delete('/reports/delete/{commentId}/{userId}', [ReportCommentController::class, 'destroy']);
     Route::post('/reports/comments/{commentId}/pin', [ReportCommentController::class, 'pinComment']);
     Route::post('/reports/comments/{commentId}/unpin', [ReportCommentController::class, 'unpinComment']);
+
+    Route::post('/calendar/update-event/{eventId}', [CalendarController::class, 'updateEvent']);
 // });

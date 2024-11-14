@@ -58,6 +58,10 @@ class Project extends Model
     {
         return $this->belongsTo(User::class, 'project_manager');
     }
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'project_id');
+    }
 
     /**
      * Scope a query to only include non-deleted projects.
