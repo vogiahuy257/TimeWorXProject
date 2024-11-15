@@ -14,6 +14,7 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                baloo: ['Baloo', 'sans-serif'],
             },
         },
     },

@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('personal_access_tokens');
         Schema::create('personal_access_tokens', function (Blueprint $table) {
             $table->id();
             $table->uuid('tokenable_id'); // Đổi tokenable_id thành uuid

@@ -22,7 +22,7 @@
     --color-red: rgb(218, 30, 40);
     --color-red-rgb: 218, 30, 40;
     --color-green: #25a249;
-    /* --background: linear-gradient(135deg, #F2F8FC,#fbfcdb); */
+    --background-y-p: linear-gradient(135deg, #f7d7ff,#fbfcdb);
     --background: linear-gradient(135deg, #F2F8FC,#e6f7ff);
     --background-blue: linear-gradient(135deg, rgba(45, 106, 185, 0.9), rgba(77, 144, 214, 0.9));
     --bg-color-blue-while: #F2F8FC;
@@ -69,8 +69,7 @@
     left: 50%;
     transform: translateX(-50%);
     border-radius: 50%;
-    background-color: #000000;
-    color: white;
+    background-color: #ffffff;
 }
 
 a{

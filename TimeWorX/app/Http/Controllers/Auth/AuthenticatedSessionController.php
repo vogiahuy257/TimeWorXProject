@@ -30,12 +30,14 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-       
+       \Log::info(Auth::user());
         $token = Auth::user()->createToken('timeworx')->plainTextToken;
 
         $request->session()->put('sanctum_token', $token);
 
         $request->session()->regenerate();
+
+        Auth::guard('web')->login(Auth::user());
 
         return redirect()->intended(route('dashboard', absolute: false));
     }
@@ -46,15 +48,20 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         
-        Auth::user()->tokens()->delete();
-
+        \Log::info('logout');
         $request->session()->forget('sanctum_token');
-
-        Auth::guard('web')->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+        if(Auth::user()->tokens())
+        {
+            Auth::user()->tokens()->delete();
+        }
+        
+        Auth::guard('web')->logout();
+        
+       
 
         return redirect('/');
     }

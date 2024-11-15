@@ -1,0 +1,55 @@
+
+#welcome .text-logo {
+    --width: 130px; 
+    --height: 130px; 
+
+    background-image: url("/image/logo-full.svg");
+    background-size: contain; 
+    width: var(--width);
+    height: var(--height);
+    margin: auto;
+    background-position: center; 
+    background-repeat: no-repeat; 
+}
+#welcome .btn
+{
+    background-color: #222222;
+    color: #ffff;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+
+
+
+#welcome .btn-contact
+{
+    background-color: transparent;
+    color: #000000;
+    border: 1px solid #000000;
+}
+
+#welcome .btn:hover
+{
+    background-color: var(--color-light-blue);
+    color: #ffff;
+    box-shadow: 0 0 12px var(--color-light-blue);
+}
+
+#welcome .btn:active
+{
+    background-color:#ffff;
+    color: #000000;
+}
+
+#welcome .btn-contact:hover{
+    color: var(--color-light-blue);
+    border-color: var(--color-light-blue);
+    background-color: #ffff;
+    box-shadow: 0 0 18px var(--color-light-blue);
+}
+#welcome .btn-contact:active
+{
+    box-shadow: 0 0 0px var(--color-light-blue);
+    background-color: #000000;
+    color: #ffff;
+}

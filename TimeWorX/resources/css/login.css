@@ -5,7 +5,7 @@
 
 #login{
     font-family: 'Poppins', sans-serif;
-    background: var(--background);
+    background: var(--background-y-p);
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -102,12 +102,12 @@
 {
     transform: translateY(-160%);
     font-size: var(--font-size-sSmall); 
-    color: var(--color-yellow);
+    color: var(--color-light-blue);
 }
 
 #login .block .block-element.focused::before input
 {
-    border-color: var(--color-yellow);
+    border-color: var(--color-light-blue);
 }
 
 #login .block .block-button
@@ -132,15 +132,15 @@
 
 #login .block .block-button .button
 {
-    background-color: var(--color-yellow);
-    color: var(--color-black);
-    font-weight: 600;
+    background-color: var(--color-light-blue);
+    color: var(--color-white);
+    font-weight: 500;
 }
 
 #login .block .block-button .button:hover
 {
     background-color: var(--color-black);
-    color: var(--color-yellow);
+    color: var(--color-light-blue);
 }
 
 .block-button-text

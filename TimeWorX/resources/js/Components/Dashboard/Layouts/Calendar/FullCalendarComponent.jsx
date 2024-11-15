@@ -62,7 +62,7 @@ function FullCalendarComponent({ auth }) {
   const [date, setDate] = useState(new Date())
   const [events, setEvents] = useState([])
   const [projects, setProjects] = useState([])
-  const [selectedProjectId, setSelectedProjectId] = useState(null)
+  const [selectedProjectId, setSelectedProjectId] = useState('allproject')
   const [currentView, setCurrentView] = useState('dayGridMonth')
   const calendarRef = useRef(null)
 
@@ -224,15 +224,6 @@ function FullCalendarComponent({ auth }) {
     new Date(event.start).toDateString() === new Date().toDateString()
   )
 
-  // useEffect(() => {
-  //     if (calendarRef.current && calendarRef.current.getApi) {
-  //       const calendarApi = calendarRef.current.getApi()
-  //       if (calendarApi && typeof calendarApi.destroy === 'function') {
-  //         calendarApi.destroy()
-  //       }
-  //     }
-  // }, [])
-
   const handleDateSelect = (selectInfo) => {
     setDate(selectInfo.start)
   }
@@ -257,7 +248,7 @@ function FullCalendarComponent({ auth }) {
   return (
     <div id='calendar' className="flex h-auto">
       {/* Sidebar */}
-      <div className="w-1/4 border-r pr-4 flex flex-col">
+      <div className="w-1/4 max-h-[590px] overflow-auto border-r pr-4 flex flex-col scrollbar-hide">
        
         <div className="mb-4 relative">
           <SimpleCalendar
@@ -271,32 +262,36 @@ function FullCalendarComponent({ auth }) {
             to day
           </button>
         </div>
-        <div className="menu mb-2 flex gap-2 items-center">
+        <div className="menu mb-4 flex gap-2 items-center">
           <h1 className='text-base font-semibold'>Filter: </h1>
           <select
-            className="project-dropdown rounded-md text-sm"
+            className="project-dropdown rounded-md text-sm w-full"
             value={selectedProjectId || ''}
             onChange={(e) => setSelectedProjectId(e.target.value)}
           >
             <option value="allproject">All Project</option>
             {projects.map((project) => (
               <option key={project.project_id} value={project.project_id}>
-                {project.project_name}
+                Task to {project.project_name}
               </option>
             ))}
           </select>
         </div>
+        {selectedProjectId !== 'allproject' && (
+          <div className="p-4 space-y-4 flex-grow rounded-lg border border-gray-300 shadow-lg">
+            <h2 className="font-base text-base">Today</h2>
+            <ul className="p-2 space-y-3 max-h-[150px] overflow-auto scrollbar-hide">
+              {todayEvents.map((event) => (
+                <li key={event.id} className="flex items-center p-3 rounded-md text-sm shadow-md border border-gray-300">
+                  <span className="font-medium ">{format(new Date(event.start), 'HH:mm')}</span> - 
+                  <span className="font-medium ">{format(new Date(event.end), 'HH:mm')}</span> 
+                  <span className="ml-auto">{event.title}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
-        <div className="space-y-4 flex-grow">
-          <h2 className="font-semibold">Today</h2>
-          <ul className="space-y-2">
-            {todayEvents.map((event) => (
-              <li key={event.id} className="p-2 rounded-md text-sm bg-gray-100">
-                <span className="font-medium">{format(new Date(event.start), 'HH:mm')}</span> - {event.title}
-              </li>
-            ))}
-          </ul>
-        </div>
       </div>
 
       {/* Main Content */}
