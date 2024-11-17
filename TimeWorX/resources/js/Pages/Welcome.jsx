@@ -52,7 +52,7 @@ export default function Welcome({ auth }) {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center text-center">
+      <section className="hero-welcome relative h-screen flex items-center justify-center text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -80,6 +80,13 @@ export default function Welcome({ auth }) {
             </motion.a>
           </div>
         </motion.div>
+        <motion.svg 
+          initial={{ opacity: 0, x: 300, y:-300, rotate: 360 }}
+          animate={{ opacity: 1, x: 0, y: 0, rotate: -360 }}
+          transition={{ duration: 1.3, ease: "easeInOut" }}
+          className='be-cheese'>
+          
+          </motion.svg>
       </section>
 
       {/* Main Content Section */}
@@ -104,7 +111,7 @@ export default function Welcome({ auth }) {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="bg-gray-100 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="bg-gray-50  p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
                 <h3 className="text-2xl font-semibold mb-4">{item.title}</h3>
                 <p className="text-gray-600">{item.description}</p>

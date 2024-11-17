@@ -1,7 +1,17 @@
-#welcome
+#welcome .be-cheese
 {
-    background-color: pink;
+    background-image: url('/image/cheese-hi.svg');
+    background-size: 100%; 
+    background-position:center;
+    background-repeat: no-repeat; 
+    width: 100px;
+    height: auto;
+    position: absolute;
+    top: 148px;
+    left: 51%;
+    transform: translateX(0);
 }
+
 #welcome .text-logo {
     --width: 130px; 
     --height: 130px; 

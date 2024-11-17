@@ -6,6 +6,7 @@ import PrimaryButton from '../PrimaryButton';
 import { useState,useEffect } from 'react';
 import MeetingForm from './Layouts/Meeting/MeetingForm';
 import { format } from 'date-fns';
+import { Link } from 'react-router-dom';
 
 export default function Home({ auth,callCreateToken }) {
     const [isFormOpen, setIsFormOpen] = useState(false); 
@@ -51,7 +52,6 @@ export default function Home({ auth,callCreateToken }) {
             <section id="home" className=' overflow-auto scrollbar-hide'>
 
                 <div className='box box-header'>
-
                 </div>
 
                 <div className='box box-meeting '>
@@ -99,9 +99,15 @@ export default function Home({ auth,callCreateToken }) {
                     </div>
                 </div>
                 
-                <div className='box box-content'>
-                    <h1>khong6v iết đê gì</h1>
+                <div className='box box-content flex justify-center items-center flex-col relative'>
+                    <h1 className='header font-baloo text-4xl'>Welcome To DashBoard</h1>
+                    <p className='pt-1 text-gray-500'>To start your project you need to click this button</p>
+                    <Link to="/dashboard/project" className="btn-home mt-4 px-4 py-2 rounded-xl text-white bg-blue-700 text-center">Go Project</Link>
+
+
+                    <img src="/image/cheese-hi.svg" alt="cheese" className='absolute -bottom-3 right-28 be-cheese' />
                 </div>
+
             </section>
 
             {isFormOpen && (
