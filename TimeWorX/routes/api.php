@@ -13,6 +13,7 @@ use App\Http\Controllers\API\TaskCommentController;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 use App\Http\Controllers\API\ReportCommentController;
 use App\Http\Controllers\API\CalendarController;
+use App\Http\Controllers\API\MeetingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,4 +92,9 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
     Route::post('/reports/comments/{commentId}/unpin', [ReportCommentController::class, 'unpinComment']);
 
     Route::post('/calendar/update-event/{eventId}', [CalendarController::class, 'updateEvent']);
+
+    Route::middleware('auth:sanctum')->get('/meetings', [MeetingController::class, 'getUserMeetings']);
+    Route::post('/meetings', [MeetingController::class, 'createMeeting']);
+    Route::middleware('auth:sanctum')->put('/meetings/{meetingId}', [MeetingController::class, 'updateMeeting']);
+    Route::delete('/meetings/{meetingId}', [MeetingController::class, 'deleteMeeting']);
 // });

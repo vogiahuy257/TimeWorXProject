@@ -43,6 +43,7 @@ class ComposerStaticInit7e8c3c14ff33b199b4a0838993eb8423
         'c72349b1fe8d0deeedd3a52e8aa814d8' => __DIR__ . '/..' . '/mockery/mockery/library/helpers.php',
         'ce9671a430e4846b44e1c68c7611f9f5' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         'd634523d799d97a8ab4807b650bf5cea' => __DIR__ . '/..' . '/pestphp/pest-plugin-laravel/src/Autoload.php',
+        '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -592,10 +593,14 @@ class ComposerStaticInit7e8c3c14ff33b199b4a0838993eb8423
     );
 
     public static $classMap = array (
+        'App\\Http\\Controllers\\Api\\CalendarController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/CalendarController.php',
+        'App\\Http\\Controllers\\Api\\MeetingController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/MeetingController.php',
         'App\\Http\\Controllers\\Api\\PersonalPlanController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/PersonalPlanController.php',
         'App\\Http\\Controllers\\Api\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ProfileController.php',
         'App\\Http\\Controllers\\Api\\ProjectController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ProjectController.php',
         'App\\Http\\Controllers\\Api\\ProjectControllerView' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ProjectControllerView.php',
+        'App\\Http\\Controllers\\Api\\ReportCommentController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ReportCommentController.php',
+        'App\\Http\\Controllers\\Api\\ReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ReportController.php',
         'App\\Http\\Controllers\\Api\\TaskCommentController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/TaskCommentController.php',
         'App\\Http\\Controllers\\Api\\TaskController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/TaskController.php',
         'App\\Http\\Controllers\\Api\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/UserController.php',
@@ -615,6 +620,8 @@ class ComposerStaticInit7e8c3c14ff33b199b4a0838993eb8423
         'App\\Http\\Requests\\Auth\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/LoginRequest.php',
         'App\\Http\\Requests\\ProfileUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProfileUpdateRequest.php',
         'App\\Kernel' => __DIR__ . '/../..' . '/app/Kernel.php',
+        'App\\Mail\\MeetingNotificationMail' => __DIR__ . '/../..' . '/app/Mail/MeetingNotificationMail.php',
+        'App\\Mail\\MeetingUpdatedNotificationMail' => __DIR__ . '/../..' . '/app/Mail/MeetingUpdatedNotificationMail.php',
         'App\\Models\\ChatMessage' => __DIR__ . '/../..' . '/app/Models/ChatMessage.php',
         'App\\Models\\EmployeePerformance' => __DIR__ . '/../..' . '/app/Models/EmployeePerformance.php',
         'App\\Models\\File' => __DIR__ . '/../..' . '/app/Models/File.php',
@@ -623,12 +630,14 @@ class ComposerStaticInit7e8c3c14ff33b199b4a0838993eb8423
         'App\\Models\\PersonalPlan' => __DIR__ . '/../..' . '/app/Models/PersonalPlan.php',
         'App\\Models\\Project' => __DIR__ . '/../..' . '/app/Models/Project.php',
         'App\\Models\\Report' => __DIR__ . '/../..' . '/app/Models/Report.php',
+        'App\\Models\\ReportComment' => __DIR__ . '/../..' . '/app/Models/ReportComment.php',
         'App\\Models\\Role' => __DIR__ . '/../..' . '/app/Models/Role.php',
         'App\\Models\\Setting' => __DIR__ . '/../..' . '/app/Models/Setting.php',
         'App\\Models\\Task' => __DIR__ . '/../..' . '/app/Models/Task.php',
         'App\\Models\\TaskComment' => __DIR__ . '/../..' . '/app/Models/TaskComment.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
+        'App\\Services\\FileStorageService' => __DIR__ . '/../..' . '/app/Services/FileStorageService.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Brick\\Math\\BigDecimal' => __DIR__ . '/..' . '/brick/math/src/BigDecimal.php',
         'Brick\\Math\\BigInteger' => __DIR__ . '/..' . '/brick/math/src/BigInteger.php',
@@ -751,7 +760,6 @@ class ComposerStaticInit7e8c3c14ff33b199b4a0838993eb8423
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
         'Database\\Seeders\\EmployeePerformanceTab' => __DIR__ . '/../..' . '/database/seeders/EmployeePerformanceTab.php',
         'Database\\Seeders\\EmployeePerformanceTableSeeder' => __DIR__ . '/../..' . '/database/seeders/EmployeePerformanceTableSeeder.php',
-        'Database\\Seeders\\FilesTableSeeder' => __DIR__ . '/../..' . '/database/seeders/FilesTableSeeder.php',
         'Database\\Seeders\\MeetingsTableSeeder' => __DIR__ . '/../..' . '/database/seeders/MeetingsTableSeeder.php',
         'Database\\Seeders\\NotificationsTableSeeder' => __DIR__ . '/../..' . '/database/seeders/NotificationsTableSeeder.php',
         'Database\\Seeders\\PersonalPlansTableSeeder' => __DIR__ . '/../..' . '/database/seeders/PersonalPlansTableSeeder.php',

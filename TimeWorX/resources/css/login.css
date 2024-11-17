@@ -68,8 +68,8 @@
 
 #login .block-element .toggle-password {
     position: absolute;
-    top: 60%;
-    right: 50px;
+    top: 50%;
+    right: 48px;
     transform: translateY(-50%);
     color: var(--color-gray);
     cursor: pointer;
@@ -78,6 +78,8 @@
 
 #login .block-element .toggle-password i{
     font-size: var(--font-size-medium);
+    width: 20px;
+    height: 20px;
 }
 
 #login .block .block-element:before

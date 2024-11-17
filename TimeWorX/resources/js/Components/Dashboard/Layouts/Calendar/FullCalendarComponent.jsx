@@ -9,6 +9,7 @@ import axios from 'axios'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import './css/customCalendar.css'
 
+
 const SimpleCalendar = ({ selectedDate, onChange }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date(selectedDate))
 
@@ -194,7 +195,7 @@ function FullCalendarComponent({ auth }) {
     const backgroundColor = calendarColors[eventInfo.event.extendedProps.status] || 'bg-gray-600 border-gray-700 shadow-gray-300';
   
     return (
-      <div className={`${backgroundColor} w-full h-full mb-1 p-2 rounded-lg border text-white shadow-md`}>
+      <div className={`${backgroundColor} w-full h-full mb-1 rounded-md border text-white shadow-md`}>
         <div className="flex gap-1">
           <p className="text-sm font-medium">{eventInfo.event.title}</p>
           {eventInfo.event.description && (
@@ -220,9 +221,22 @@ function FullCalendarComponent({ auth }) {
     );
   };
 
-  const todayEvents = events.filter(event => 
-    new Date(event.start).toDateString() === new Date().toDateString()
-  )
+  const todayEvents = events.filter(event => {
+    const now = new Date(); // Lấy thời gian hiện tại
+    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0); // Bắt đầu ngày hôm nay (00:00:00)
+    const todayEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999); // Kết thúc ngày hôm nay (23:59:59)
+  
+    const eventStart = new Date(event.start); // Thời gian bắt đầu của sự kiện
+    const eventEnd = new Date(event.end); // Thời gian kết thúc của sự kiện
+  
+    // Kiểm tra nếu sự kiện nằm trong khoảng thời gian của hôm nay
+    return (
+      (eventStart >= todayStart && eventStart <= todayEnd) || // Bắt đầu trong hôm nay
+      (eventEnd >= todayStart && eventEnd <= todayEnd) || // Kết thúc trong hôm nay
+      (eventStart <= todayStart && eventEnd >= todayEnd) // Bao trùm cả ngày hôm nay
+    );
+  });
+  
 
   const handleDateSelect = (selectInfo) => {
     setDate(selectInfo.start)
@@ -248,7 +262,7 @@ function FullCalendarComponent({ auth }) {
   return (
     <div id='calendar' className="flex h-auto">
       {/* Sidebar */}
-      <div className="w-1/4 max-h-[590px] overflow-auto border-r pr-4 flex flex-col scrollbar-hide">
+      <div className="w-1/4 max-h-[590px] overflow-auto border-r p-2 pr-4 flex flex-col scrollbar-hide">
        
         <div className="mb-4 relative">
           <SimpleCalendar
@@ -277,9 +291,9 @@ function FullCalendarComponent({ auth }) {
             ))}
           </select>
         </div>
-        {selectedProjectId !== 'allproject' && (
-          <div className="p-4 space-y-4 flex-grow rounded-lg border border-gray-300 shadow-lg">
-            <h2 className="font-base text-base">Today</h2>
+        {todayEvents && selectedProjectId !== 'allproject' && (
+          <div className="p-4 space-y-2 flex-grow rounded-lg border border-gray-300 shadow-lg">
+            <h2 className="font-base text-base">Today Task</h2>
             <ul className="p-2 space-y-3 max-h-[150px] overflow-auto scrollbar-hide">
               {todayEvents.map((event) => (
                 <li key={event.id} className="flex items-center p-3 rounded-md text-sm shadow-md border border-gray-300">

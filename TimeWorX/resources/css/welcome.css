@@ -1,4 +1,7 @@
-
+#welcome
+{
+    background-color: pink;
+}
 #welcome .text-logo {
     --width: 130px; 
     --height: 130px; 
@@ -32,7 +35,7 @@
 {
     background-color: var(--color-light-blue);
     color: #ffff;
-    box-shadow: 0 0 12px var(--color-light-blue);
+    box-shadow: 0 0 8px var(--color-light-blue);
 }
 
 #welcome .btn:active
@@ -45,7 +48,7 @@
     color: var(--color-light-blue);
     border-color: var(--color-light-blue);
     background-color: #ffff;
-    box-shadow: 0 0 18px var(--color-light-blue);
+    box-shadow: 0 0 10px var(--color-light-blue);
 }
 #welcome .btn-contact:active
 {

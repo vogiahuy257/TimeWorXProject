@@ -103,4 +103,10 @@ class User extends Authenticatable
     {
         return $this->projects()->wherePivot('is_project_manager', true);
     }
+
+    public function meetings()
+    {
+        return $this->belongsToMany(Meeting::class, 'meeting_user', 'user_id', 'meeting_id');
+    }
+
 }
