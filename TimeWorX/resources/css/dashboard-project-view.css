@@ -83,16 +83,16 @@
     background-color: var(--color-black);
     border-radius: var(--border-radius-sSmall);
     padding: 8px 8px;
-    transition: all 0.2s ease-in-out;
+    transition: 0.1s ease-in-out;
 }
 
 #dashboard .block #main .content main #project-view .block-project .block-element-right .btn-person
 {
-    padding: 5px 8px;
+    padding: 6px 8px;
     background-color: var(--color-white);
     color: var(--color-black);
-    transform: translate(-2px,-2px);
-    box-shadow: 2px 2px 0px var(--color-black);
+    transform: translate(0px,-2px);
+    box-shadow: 0px 2px 0px var(--color-black);
 }
 
 #dashboard .block #main .content main #project-view .block-project .block-element-right .btn-history
@@ -138,14 +138,16 @@
 
 #dashboard .block #main .content main #project-view main
 {
-    margin-top: 15px;
+    margin-top: 32px;
     display: flex;
     justify-content: center;
+    width: 100%;
+    margin: auto;
 }
 
 #dashboard .block #main .content main #project-view main .block-task
 {
-    margin: 10px 5px;
+    margin: 10px 10px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -318,17 +320,25 @@
     background-color: var(--color-status);
     border-bottom-left-radius: var(--border-radius-sSmall);
     border-bottom-right-radius: var(--border-radius-sSmall);
-    color: #222222;
+    color: #000000;
+    position: relative;
+}
+
+#dashboard .block #main .content main #project-view main .block-task .task-card-element.pesonal-plan
+{
+    --color-status: var(--color-black);
+    color: var(--color-white);
 }
 
 #dashboard .block #main .content main #project-view main .block-task .task-card
 {
-    transition: transform 0.3s ease,box-shadow 0.3s ease;
+    box-shadow: 0px 4px 4px var(--color-shadow);
+    transition: transform .2s ease,box-shadow .2s ease;
 }
 
 #dashboard .block #main .content main #project-view main .block-task .task-card:hover
 {
-  transform: translateY(-2px);   
+  transform: translateY(-4px);   
   box-shadow: 0px 8px 8px var(--color-shadow);
 }
 
@@ -338,18 +348,84 @@
     gap: 2px;
     transition: all 0.2s ease-in-out;
 }
+
+
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content
+{
+    position: relative;
+}
+
+/* custom is_late_deadline */
+#dashboard .block #main .content main #project-view main .block-task .task-card.is_late,
+#dashboard .block #main .content main #project-view main .block-task .task-card.is_near_deadline
+{
+    margin-top: 18px;
+}
+
+#dashboard .block #main .content main #project-view main .block-task .task-card.is_late .task-card-content,
+#dashboard .block #main .content main #project-view main .block-task .task-card.is_near_deadline .task-card-content
+{
+    border-top-left-radius: var(--border-radius-sSmall);
+    border-top-right-radius: var(--border-radius-sSmall);
+}
+
+#dashboard .block #main .content main #project-view main .block-task .task-card.is_late .task-card-content
+{
+    background-color: rgba(var(--color-red-rgb),0.1);
+}
+
+#dashboard .block #main .content main #project-view main .block-task .task-card.is_near_deadline .task-card-content
+{
+    background-color: rgba(var(--color-yellow-rgb), 0.2);
+}
+
+#dashboard .block #main .content main #project-view main .block-task .task-card.is_late .task-card-content::before,
+#dashboard .block #main .content main #project-view main .block-task .task-card.is_near_deadline .task-card-content::before 
+{
+    content: "Deadline missed !";
+    position: absolute;
+    top: -10px;
+    right: 8px;
+    font-size: var(--font-size-sSmall);
+    color: var(--color-red);
+    background-color: rgba(var(--color-red-rgb), 0.2);
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+/* custom project name to task */
+
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .project-name{
+    position: absolute;
+    font-size: calc(var(--font-size-sSmall) + 1px);
+    top: -8px;
+    left: 8px;
+    font-weight: var(--font-weight-medium);
+}
+
+#dashboard .block #main .content main #project-view main .block-task .task-card.is_near_deadline .task-card-content::before
+{
+    content: "Near deadline !";
+    color: var(--color-yellow);
+    background-color: rgba(var(--color-yellow-rgb), 0.2);
+}
+
+
 #dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-comment
 {
     padding: 5px;
 }
 #dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-comment,
 #dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-view,
-#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-delete{
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-delete,
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-report
+{
     position: relative;
 }
 #dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-comment::after,
 #dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-view::after,
-#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-delete::after
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-delete::after,
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-report::after
 {
     position: absolute;
     background-color: var(--color-black);
@@ -361,8 +437,15 @@
     font-size: var(--font-size-sSmall);
     border-radius: 4px;
     opacity: 0;
-    transition: opacity 0.3s ease-in-out,top 0.3s ease-in-out;
+    z-index: 9999;
+    transition: opacity 0.2s ease-in-out,top 0.2s ease-in-out;
 }
+
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-report::after
+{
+    content: 'report';
+}
+
 
 #dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-view::after
 {
@@ -379,18 +462,17 @@
 }
 #dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-comment:hover:after,
 #dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-view:hover::after,
-#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-delete:hover::after
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-delete:hover::after,
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-report:hover:after
 {
     opacity: 1;
     top: -50%;
 }
 
-#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-view:hover
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-view:hover,
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-delete:hover,
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-comment:hover,
+#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-report:hover
 {
    color: var(--color-status);
-}
-
-#dashboard .block #main .content main #project-view main .block-task .task-card .task-card-content .btn-group .btn-delete:hover
-{
-    color: var(--color-green);
 }

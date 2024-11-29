@@ -1,29 +1,34 @@
 
+
+
 #dashboard .block #main .content main #project-view #task-form
 {
-   background-color: rgba(0, 0, 0, 0.337);
-    width: 100vw;
-    height: 100vh;
+   background-color: transparent;
+    width: 100%;
+    height: 100%;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%); 
     z-index: 9999;
+    border-radius: var(--border-radius-large);
 }
 
 #dashboard .block #main .content main #project-view #task-form .task-form-container
 {
-    background-color: var(--color-white);
-    width: 70%;
-    max-width: 750px;
-    height: 600px;
+    width: 80%;
+    max-width: 1000px;
+    height: 95%;
     position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
+    padding: 10px;
     border-radius: var(--border-radius-medium);
-    padding: 30px;
     color: var(--color-black);
+    background-color: rgba(var(--color-black-rgb), 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 #dashboard .block #main .content main #project-view #task-form .task-form-container form
@@ -34,15 +39,11 @@
 
 #dashboard .block #main .content main #project-view #task-form .task-form-container form .task-form-header
 {
-    width: 80%;
-    border-right: 1px solid var(--color-gray);
-}
-
-#dashboard .block #main .content main #project-view #task-form .task-form-container form .task-form-header h2
-{
-    font-size: var(--font-size-large);
-    font-weight: var(--font-weight-bold);
-    padding-bottom: 10px;
+    width: 70%;
+    box-shadow: 0 2px 8px var(--color-shadow);
+    background-color: var(--color-white);
+    padding: 12px;
+    border-radius: 0.5rem;
 }
 
 #dashboard .block #main .content main #project-view #task-form .task-form-container form .form-group
@@ -60,10 +61,10 @@
    font-weight: var(--font-weight-medium);
 }
 
-#dashboard .block #main .content main #project-view #task-form .task-form-container form .form-group:not(.time-group) input,
+#dashboard .block #main .content main #project-view #task-form .task-form-container form .form-group input,
 #dashboard .block #main .content main #project-view #task-form .task-form-container form .form-group textarea
 {
-    width: 95%;
+    width: 100%;
     border-radius: var(--border-radius-sSmall);
     color: var(--color-black);
 }
@@ -80,7 +81,7 @@
 {
     border-radius: var(--border-radius-sSmall);
     width: 100%;
-    max-width: 180px;
+    max-width: 220px;
     color: var(--color-black);
 }
 
@@ -109,7 +110,7 @@
 
 #dashboard .block #main .content main #project-view #task-form .task-form-container form .user-list .user-item
 {
-    width: 80%;
+    width: 100%;
     border: 1px solid var(--color-black);
     padding: 15px 0px;
     border-radius: var(--border-radius-sSmall);
@@ -142,19 +143,29 @@
 
 #dashboard .block #main .content main #project-view #task-form .task-form-button .close-button
 {
-    position: absolute;
-    top: -15px;
-    right: -15px;
-    transition: color 0.1s ease-in;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-red);
     font-weight: var(--font-weight-bold);
+    padding: 2px;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    transition: background-color .1s ease,color .1s ease;
+    box-shadow: 0px -10px 0 var(--color-red);
 }
 
 #dashboard .block #main .content main #project-view #task-form .task-form-button .close-button:hover
 {
-    color: var(--color-red);
+    background-color: var(--color-red);
+    color: var(--color-white);
 }
 
-#dashboard .block #main .content main #project-view #task-form .task-form-button .add-user-button,
 #dashboard .block #main .content main #project-view #task-form .task-form-button .save-button
 {
     padding: 5px 8px;
@@ -166,20 +177,6 @@
     transition: box-shadow 0.1s ease-in-out,transform 0.1s ease-in-out;
 }
 
-#dashboard .block #main .content main #project-view #task-form .task-form-button .add-user-button:hover
-{
-    transform: translate(-2px,-3px);
-    box-shadow: 2px 3px 0 var(--color-black);
-}
-
-#dashboard .block #main .content main #project-view #task-form .task-form-button .add-user-button
-{
-    margin: auto;
-    margin-top: 70px;
-    justify-content: center;
-    align-items: center;
-}
-
 #dashboard .block #main .content main #project-view #task-form .task-form-button .save-button
 {
     background-color: var(--color-whiteGray);
@@ -189,11 +186,10 @@
 
 #dashboard .block #main .content main #project-view #task-form .task-form-button .save-button:hover
 {
-    transform: translate(-2px,-3px);
-    box-shadow: 2px 3px 0 var(--color-light-blue);
+    transform: translate(0,-3px);
+    box-shadow: 0 3px 0 var(--color-light-blue);
 }
 
-#dashboard .block #main .content main #project-view #task-form .task-form-button .add-user-button:active,
 #dashboard .block #main .content main #project-view #task-form .task-form-button .save-button:active
 {
     transform: translate(0,0);
@@ -202,18 +198,14 @@
 
 #dashboard .block #main .content main #project-view #task-form .task-form-button .user-box
 {
-    margin: auto;
-    position: absolute;
-    top: 24%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
     height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-left: 2px;
     gap: 5px;
+    background-color: var(--color-white);
 }
 
 #dashboard .block #main .content main #project-view #task-form .task-form-button .user-box ul
@@ -222,6 +214,7 @@
     flex-direction: column;
     gap: 5px;
     width: 100%;
+    color: var(--color-black);
 }
 
 #dashboard .block #main .content main #project-view #task-form .task-form-button .user-box ul li
@@ -229,6 +222,18 @@
     display: flex;  
     align-items: center;
     width: 100%;
+    border-radius: var(--border-radius-sSmall);
+}
+
+#dashboard .block #main .content main #project-view #task-form .task-form-button .user-box ul li:hover
+{
+    background-color: rgba(var(--color-black-rgb), 0.1);
+    cursor: pointer;
+}
+
+#dashboard .block #main .content main #project-view #task-form .active-task-count
+{
+    color: rgba(var(--color-black-rgb), 0.9);
 }
 
 #dashboard .block #main .content main #project-view #task-form .task-form-button .user-box ul li input
@@ -241,4 +246,16 @@
 #dashboard .block #main .content main #project-view #task-form .task-form-button .user-box h3
 {
     font-weight: var(--font-weight-medium);
+}
+
+#dashboard .block #main .content main #project-view #task-form .text-error
+{
+    color: var(--color-red);
+    font-size: var(--font-size-sSmall);
+    margin-left: 2px;
+    font-weight: var(--font-weight-medium);
+}
+#dashboard .block #main .content main #project-view #task-form .task-box
+{
+    background-color: var(--color-white);
 }

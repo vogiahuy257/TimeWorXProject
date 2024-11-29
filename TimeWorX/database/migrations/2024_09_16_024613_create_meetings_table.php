@@ -17,11 +17,22 @@ return new class extends Migration
             $table->text('meeting_description')->nullable(); // Meeting description
             $table->date('meeting_date'); // Meeting date
             $table->time('meeting_time'); // Meeting time
-            $table->foreignId('created_by_user_id')->constrained('users', 'id')->onDelete('cascade'); // Foreign key to 'users' table
+            $table->uuid('created_by_user_id'); // Foreign key to 'users' table
             $table->timestamps(); // created_at, updated_at
             $table->string('meeting_type', 60)->nullable(); // Meeting type
+            $table->foreign('created_by_user_id')->references('id')->on('users')->onDelete('cascade');
             $table->softDeletes();
         });
+
+        Schema::create('meeting_user', function (Blueprint $table) {
+            $table->uuid('user_id'); // Foreign key tới bảng users
+            $table->unsignedBigInteger('meeting_id'); // Foreign key tới bảng meetings
+            $table->primary(['user_id', 'meeting_id']); // Composite key
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('meeting_id')->references('meeting_id')->on('meetings')->onDelete('cascade');
+            $table->timestamps(); // created_at, updated_at
+        });
+
     }
 
     /**
@@ -30,5 +41,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('meetings');
+
+        Schema::dropIfExists('meeting_user');
     }
 };

@@ -15,8 +15,13 @@ return new class extends Migration
         Schema::create('task_user', function (Blueprint $table) {
             $table->id(); 
             $table->foreignId('task_id')->constrained('tasks', 'task_id')->onDelete('cascade'); // Foreign key to 'tasks' table
-            $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade'); // Foreign key to 'users' table
+            $table->uuid('user_id'); // Foreign key to 'users' table
             $table->timestamps();
+            // cờ đánh dấu thông báo
+            $table->boolean('has_seen_report')->default(false);
+            $table->boolean('has_seen_comment')->default(false);
+            
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -27,6 +27,8 @@ class ProjectControllerView extends Controller
                 'id' => $project->project_id, 
                 'name' => $project->project_name, 
                 'description' => $project->project_description, 
+                'deadline' => $project->end_date,
+                'user_count' => $project->countProjectUsers(),
             ],
             'tasks' => [
                 'to-do' => [],
@@ -37,12 +39,16 @@ class ProjectControllerView extends Controller
         ];
 
         foreach ($tasks as $task) {
+
+            $task->checkDeadlineStatus();
+            
             $statusKey = $task->status_key ?? 'to-do'; 
             if (array_key_exists($statusKey, $response['tasks'])) {
                 $response['tasks'][$statusKey][] = [
                     'id' => strval($task->task_id), 
                     'content' => $task->task_name, 
                     'description' => $task->task_description,
+                    'project_id' => $task->project_id,
                     'user_count' => $task->users->count(), 
                     'users' => $task->users->map(function ($user) {
                         return [
@@ -52,6 +58,9 @@ class ProjectControllerView extends Controller
                     }),
                     'deadline' => $task->formatted_deadline,
                     'status' => $task->status_key,
+                    'created_at' => $task->created_at,
+                    'is_late' => $task->is_late,
+                    'is_near_deadline' => $task->is_near_deadline,
                 ];
             }
         }
@@ -69,12 +78,6 @@ class ProjectControllerView extends Controller
             'users' => 'nullable|array', 
             'users.*' => 'exists:users,id',
         ]);
-    
-        $project = Project::find($id);
-    
-        if (!$project) {
-            return response()->json(['error' => 'Không tìm thấy dự án'], 404);
-        }
     
         $task = new Task([
             'task_name' => $request->input('task_name'),
@@ -127,7 +130,7 @@ class ProjectControllerView extends Controller
 
         $task->status_key = $request->input('status');
         $task->save();
-
+        $task->checkDeadlineStatus();
         return response()->json();
     }
 
@@ -156,6 +159,7 @@ class ProjectControllerView extends Controller
         if (isset($validatedData['users'])) {
             $task->users()->sync($validatedData['users']);
         }
+        $task->checkDeadlineStatus();
 
         return response()->json();
     }
@@ -177,7 +181,7 @@ class ProjectControllerView extends Controller
 
     public function getDeletedTasks($projectId)
     {
-        $deletedTasks = Task::onlyTrashed()->where('project_id', $projectId)->with('users')->get();
+        $deletedTasks = Task::onlyTrashed()->where('project_id', $projectId)->get();
 
         return response()->json($deletedTasks);
     }
@@ -210,19 +214,16 @@ class ProjectControllerView extends Controller
 
     public function getUsersByProject($projectId)
     {
-        $userIds = Task::where('project_id', $projectId)
-        ->with('users')
-        ->get()
-        ->pluck('users')
-        ->flatten()
-        ->pluck('id')
-        ->unique();
+        $project = Project::findOrFail($projectId);
 
         // Fetch unique users from the list of user IDs
-        $users = User::whereIn('id', $userIds)->get(['id', 'name']);
+        $users = $project->users()->get();
+
+        $users->each(function($user) {
+            $user->active_tasks_count = $user->countActiveTasks();
+        });
 
         return response()->json($users);
     }
-
 
 }

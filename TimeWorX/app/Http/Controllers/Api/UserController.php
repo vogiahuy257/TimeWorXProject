@@ -13,10 +13,31 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-
-        // Trả về danh sách user dưới dạng JSON
+        $users->each(function($user) {
+            $user->active_tasks_count = $user->countActiveTasks();
+        });
+    
         return response()->json($users);
     }
+
+    /**
+     * Tìm kiếm người dùng theo tên hoặc email.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search');
+
+        $users = User::where('name', 'like', "%{$searchTerm}%")
+                     ->orWhere('email', 'like', "%{$searchTerm}%")
+                     ->take(20) 
+                     ->get(['id', 'name']);
+
+        return response()->json($users);
+    }
+
 
     public function showUserToTask($task_id)
     {
@@ -53,5 +74,18 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    // Phương thức lấy tất cả tên các task mà user tham gia
+    public function getAllTaskNameToUser($userId)
+    {
+        $user = User::where('id', $userId)->firstOrFail(); 
+        $taskNames = $user->getAllTaskNames(); 
+
+        return response()->json([
+            'user_id' => $userId,
+            'name' => $user->name,
+            'tasks' => $taskNames
+        ]);
     }
 }

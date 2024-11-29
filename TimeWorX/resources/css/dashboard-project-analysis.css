@@ -1,0 +1,157 @@
+
+#dashboard #project-analysis
+{
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%); 
+    z-index: 9999;
+    border-radius: var(--border-radius-large);
+}
+
+#dashboard #project-analysis .main
+{
+    width: 80%;
+    max-width: 1000px;
+    height: 100%;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    padding: 18px;
+    border-radius: var(--border-radius-medium);
+    color: var(--color-black);
+    background-color: var(--color-whiteGray);
+    transition: .1s ease-in-out;
+}
+
+@media screen and (max-width: 1048px) {
+    #dashboard #project-analysis .main {
+        width: 100%;
+    }
+}
+
+#dashboard #project-analysis .btn-close
+{
+    position: absolute;
+    top: 10px;
+    right: 18px;
+    background-color: var(--color-black);
+    color: var(--color-white);
+    border-bottom-left-radius: var(--border-radius-small);
+    border-bottom-right-radius: var(--border-radius-small);
+    padding: 2px;
+    z-index: 999;
+    box-shadow: 0px -10px 0px var(--color-black);
+    transition: background-color .1s ease-in-out,box-shadow .1s ease-in-out;
+}
+
+#dashboard #project-analysis .btn-close:hover
+{
+    background-color: var(--color-red);
+    box-shadow: 0px -10px 0px var(--color-red);
+}
+
+#dashboard #project-analysis .custom-title
+{
+    position: absolute;
+    top: 8px;
+    left: 18px;
+    background-color: var(--color-black);
+    color: var(--color-white);
+    border-bottom-left-radius: var(--border-radius-small);
+    border-bottom-right-radius: var(--border-radius-small);
+    padding: 2px;
+    padding-left: 14px;
+    padding-right: 14px;
+    z-index: 999;
+    box-shadow: 0px -8px 0px var(--color-black);
+    transition: background-color .1s ease-in-out,box-shadow .1s ease-in-out;
+}
+
+#dashboard #project-analysis .btn-card-analysis
+{
+    background-color: var(--color-white);
+    transition: 0.2s ease-in-out;
+    perspective: 800px;
+    position: relative;
+}
+
+#dashboard #project-analysis .btn-card-analysis .custom-pie-chart
+{
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: 0.2s ease-in-out;
+}
+
+#dashboard #project-analysis .btn-card-analysis:hover
+{
+    transform: perspective(60px) rotateX(6deg) translateY(-18px);
+    box-shadow: 0px 10px 20px rgba(var(--color-black-rgb), 0.3);
+    z-index: 999;
+}
+
+#dashboard #project-analysis .btn-card-analysis:hover .custom-pie-chart
+{
+    transform: perspective(60px) rotateX(-6deg) translateY(-4px) translateZ(8px);
+    border: 1px solid var(--color-white);
+    z-index: 999;
+    box-shadow: 0px 5px 20px rgba(var(--color-black-rgb), 0.3);
+}
+
+#dashboard #project-analysis .btn-card-analysis:active .custom-pie-chart
+{
+    transition: transform 0.05s ease-in-out;
+    transform: perspective(60px) rotateX(-6deg) translateY(-12px) translateZ(4px);
+}
+  
+#dashboard #dashboard-analysis{
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 92%;
+    display: grid;
+    grid-template-areas: "top top"
+                         "bottom-left bottom-right";
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    gap: 10px;
+    z-index: 999;
+}
+
+#dashboard #dashboard-analysis .dashboard-item
+{
+    background-color: var(--color-white);
+    color: var(--color-black);
+    width: 100%;
+    height: auto;
+    padding: 0.5rem;
+    box-shadow: 0px 2px 8px rgba(var(--color-black-rgb), 0.2);
+}
+
+#dashboard #dashboard-analysis .dashboard-item:nth-child(1)
+{
+    grid-area: top;
+}
+
+#dashboard #dashboard-analysis .dashboard-item:nth-child(2)
+{
+    grid-area: bottom-left;
+}
+
+#dashboard #dashboard-analysis .dashboard-item:nth-child(3)
+{
+    grid-area: bottom-right;
+}
+
+@media screen and (max-width: 780px) {
+    #dashboard #dashboard-analysis{
+        grid-template-areas: 
+            "top"
+            "bottom-left"
+            "bottom-right";
+    }
+}

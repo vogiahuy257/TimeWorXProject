@@ -1,0 +1,218 @@
+
+#dashboard #report-to-task
+{
+   position: fixed;
+   top: 0;
+   left: 0;
+   z-index: 9999;
+   width: 100%;
+   height: 100%;
+   background-color: #28282831;
+   border-radius: var(--border-radius-large);
+}
+
+#dashboard #report-to-task .btn-done
+{
+    background-color: #0b0b0b;
+    color: #fff;
+    transition: background-color .2s ease-in-out,box-shadow .2s ease-in-out;
+}
+
+#dashboard #report-to-task .btn-done:hover
+{
+    background-color: var(--color-green);
+    box-shadow: 0 0 8px var(--color-green);
+}
+
+#dashboard #report-to-task .btn-close
+{
+    background-color: #222222;
+    color: #fff;
+    box-shadow: 0px 0px 6px rgba(var(--color-white-rgb), 0.8);
+}
+
+#dashboard #report-to-task .btn-close:hover
+{
+    background-color: var(--color-red);
+    box-shadow: 0px 0px 6px #ff4646e1;
+}
+
+#dashboard #report-to-task .report-data
+{
+    background-color: rgba(var(--color-black-rgb), 0.2);
+    box-shadow: 0 0 12px var(--color-shadow);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: .2s ease;
+}
+
+#dashboard #report-to-task .report-content-task-form{
+    color: var(--color-black);
+    background-color: var(--color-white);
+}
+
+#dashboard #report-to-task .report-content-task-form a
+{
+    color: var(--color-light-blue);
+}
+
+#dashboard #report-comment .custom-textarea
+{
+    background-color: rgba(var(--color-white-rgb), 0.8);
+}
+
+#dashboard #report-comment .btn-send
+{
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
+
+#dashboard #report-comment .btn-send:hover
+{
+    background-color: rgb(42, 136, 212);
+    color: #fff;
+}
+#dashboard #report-comment .custom-comment{
+    background-color: rgba(var(--color-black-rgb), 0.1);
+}
+
+@property --color-roler {
+    syntax: '<color>';
+    initial-value: hsl(209, 86%, 47%);
+    inherits: false;
+}
+
+#dashboard #report-comment .box-comment
+{
+    --color-roler: rgba(var(--color-light-blue-rgb), 1);
+    background-color: var(--color-white);
+    box-shadow: 0 4px 0 var(--color-roler);
+    margin-bottom: 28px;
+}
+
+#dashboard #report-comment .box-comment::before
+{
+    content: "manager";
+    position: absolute;
+    top: -10px;
+    right: 50%;
+    transform: translateX(50%);
+    font-size: var(--font-size-sSSmall);
+    color: #fff;
+    background-color: var(--color-roler);
+    padding: 4px 8px;
+    border-radius: 0.376rem;
+    box-shadow: 0 1px 4px var(--color-roler);
+}
+
+
+#dashboard #report-comment.box-comment.manager{
+    --color-roler: hsl(209, 86%, 47%);
+}
+
+#dashboard #report-comment .box-comment.manager::before
+{
+    --color-roler: hsl(209, 86%, 47%);
+}
+
+#dashboard #report-comment .box-comment.staff{
+    --color-roler: #30393E;
+}
+
+#dashboard #report-comment .box-comment.staff::before{
+    --color-roler: #30393E;
+    color: #FAEFEB;
+    content: "staff";
+}
+
+#dashboard #report-comment .btn-scroll{
+    color: #fff;
+    background-color: #30393E;
+    box-shadow: 0 0 5px var(--color-light-blue);
+}
+
+#dashboard #report-comment .btn-scroll:hover
+{
+    background-color: var(--color-light-blue);
+}
+
+#dashboard #report-comment .btn-delete,
+#dashboard #report-comment .btn-pin
+{
+    opacity: 0;
+    color: #fff;
+    background-color: black;
+    box-shadow: 0 0 4px #fff;
+    border-radius: 0.5rem;
+    transform: translateY(-10px);
+    transition: opacity .3s ease-in-out,transform .3s ease-in-out,background-color .1s ease;
+}
+
+#dashboard #report-comment .btn-pin:hover{
+    background-color: var(--color-light-blue);
+}
+
+#dashboard #report-comment .btn-delete:hover{
+    background-color: red;
+}
+
+#dashboard #report-comment .btn-pin:active,
+#dashboard #report-comment .btn-delete:active
+{
+    background-color: #fff;
+    color: black;
+}
+
+#dashboard #report-comment .box-comment:hover .btn-delete,
+#dashboard #report-comment .box-comment:hover .btn-pin
+{
+    transform: translateY(0);
+    opacity: 1;
+}
+
+
+#dashboard .box-pin
+{
+    background-color: #ffee8f;
+    color: #0b0b0b;
+}
+
+#dashboard .box-pin .btn-delete
+{
+    color: #6b7c86;
+    
+}
+
+#dashboard .box-pin .btn-delete svg{
+    transform: rotate(10deg);
+    transition: .2s ease-in-out;
+    filter: drop-shadow(2px 4px 1px rgba(0, 0, 0, 0.4));
+}
+
+#dashboard .box-pin .btn-delete:hover svg
+{
+    transform: rotate(10deg) translate(1px,-10px);
+    filter: drop-shadow(3px 6px 1px rgba(0, 0, 0, 0.4));
+}
+
+#dashboard #pinned-box .btn-show-pin
+{
+    background-color: var(--color-black);
+    color: var(--color-white);
+    border: 6px solid var(--color-white);
+    padding: 2px;
+    border-radius: 100%;
+    position: absolute;
+    top: -17px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+#dashboard #pinned-box .btn-show-pin svg
+{
+    transform: translateY(1px) rotate(0deg);
+    transition: all .2s ease-in-out;
+}
+#dashboard #pinned-box .btn-show-pin svg.isshow
+{
+    transform: translateY(-1px) rotate(180deg) ;
+}

@@ -13,7 +13,6 @@ return array(
     '8825ede83f2f289127722d4e842cf7e8' => $vendorDir . '/symfony/polyfill-intl-grapheme/bootstrap.php',
     'b6b991a57620e2fb6b2f66f03fe9ddc2' => $vendorDir . '/symfony/string/Resources/functions.php',
     '662a729f963d39afe703c9d9b7ab4a8c' => $vendorDir . '/symfony/polyfill-php83/bootstrap.php',
-    '25072dd6e2470089de65ae7bf11d3109' => $vendorDir . '/symfony/polyfill-php72/bootstrap.php',
     'f598d06aa772fa33d905e87be6398fb1' => $vendorDir . '/symfony/polyfill-intl-idn/bootstrap.php',
     '667aeda72477189d0494fecd327c3641' => $vendorDir . '/symfony/var-dumper/Resources/functions/dump.php',
     'a4a119a56e50fbb293281d9a48007e0e' => $vendorDir . '/symfony/polyfill-php80/bootstrap.php',
@@ -32,6 +31,8 @@ return array(
     'c7a3c339e7e14b60e06a2d7fcce9476b' => $vendorDir . '/laravel/framework/src/Illuminate/Events/functions.php',
     'f57d353b41eb2e234b26064d63d8c5dd' => $vendorDir . '/laravel/framework/src/Illuminate/Filesystem/functions.php',
     'f0906e6318348a765ffb6eb24e0d0938' => $vendorDir . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
+    '7f7ac2ddea9cc3fb4b2cc201d63dbc10' => $vendorDir . '/laravel/framework/src/Illuminate/Log/functions.php',
+    '493c6aea52f6009bab023b26c21a386a' => $vendorDir . '/laravel/framework/src/Illuminate/Support/functions.php',
     '58571171fd5812e6e447dce228f52f4d' => $vendorDir . '/laravel/framework/src/Illuminate/Support/helpers.php',
     'aadac1114cab8dc19489a7f6dc24c003' => $vendorDir . '/pestphp/pest-plugin-arch/src/Autoload.php',
     'f83ed111c2f97a0449abf067f157f418' => $vendorDir . '/pestphp/pest/src/Functions.php',
@@ -41,4 +42,5 @@ return array(
     'c72349b1fe8d0deeedd3a52e8aa814d8' => $vendorDir . '/mockery/mockery/library/helpers.php',
     'ce9671a430e4846b44e1c68c7611f9f5' => $vendorDir . '/mockery/mockery/library/Mockery.php',
     'd634523d799d97a8ab4807b650bf5cea' => $vendorDir . '/pestphp/pest-plugin-laravel/src/Autoload.php',
+    '2c102faa651ef8ea5874edb585946bce' => $vendorDir . '/swiftmailer/swiftmailer/lib/swift_required.php',
 );

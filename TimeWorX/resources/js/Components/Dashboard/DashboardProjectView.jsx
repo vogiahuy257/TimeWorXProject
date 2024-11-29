@@ -10,6 +10,7 @@ import TaskForm from './Layouts/Project/TaskForm';
 import DeletedTasks from './Layouts/Project/DeletedTasks';
 import TaskUsers from './Layouts/Project/TaskUsersForm';
 import TaskComments from './Layouts/Project/TaskComments';
+import ShowReportToTask from './Layouts/Project/ShowReportToTask';
 
 const DashboardProjectView = ({ auth }) => {
     const navigate = useNavigate();
@@ -21,6 +22,9 @@ const DashboardProjectView = ({ auth }) => {
     const [showDeletedTasks, setShowDeletedTasks] = useState(false);
     const [showUserList, setShowUserList] = useState(false);
     const [showComments,setShowComments] = useState(false);
+    const [showFormReportToTask, setShowFormReportToTask] = useState(false);
+    const [projectDeadLine,setProjectDeadLine] = useState();
+    const [countUserToProject, setCountUserToProject] = useState(null);
 
 
     const toggleComment = () => {
@@ -34,6 +38,17 @@ const DashboardProjectView = ({ auth }) => {
     const toggleUserList = () => {
         setShowUserList(!showUserList);
     };
+
+    const toggleFormReportToTak = () =>
+    {
+        setShowFormReportToTask(!showFormReportToTask);
+    }
+
+    const handleShowReportClick = (task) =>
+    {
+        setSelectedTask(task);
+        toggleFormReportToTak();
+    }
 
     const handleCommentClick = (task) => 
     {
@@ -90,6 +105,7 @@ const DashboardProjectView = ({ auth }) => {
             await axios.put(`/api/project-view/${taskId}`, {
                 status: newStatus
             });
+            fetchProjectData();
         } catch (error) {
             toast.error("Error updating task status: " + error.message);
         }
@@ -128,6 +144,8 @@ const DashboardProjectView = ({ auth }) => {
             const response = await axios.get(`/api/project-view/${project_id}`);
             const projectData = response.data;
             setProject(projectData.project);
+            setCountUserToProject(projectData.project.user_count);
+            setProjectDeadLine(projectData.project.deadline);
             setTasks({
                 'to-do': projectData.tasks['to-do'] || [],
                 'in-progress': projectData.tasks['in-progress'] || [],
@@ -141,7 +159,7 @@ const DashboardProjectView = ({ auth }) => {
 
     useEffect(() => {
         fetchProjectData();
-    }, [project_id]);
+    }, []);
 
     if (!project) {
         return <p>Loading project details...</p>;
@@ -150,10 +168,9 @@ const DashboardProjectView = ({ auth }) => {
     return (
         <>
         
-        <ToastContainer className="custom_toast"/>
+        
         <section id='project-view'>
             <Head title={`${project.name}`} />
-
             {/* Menu */}
             <div className="block-project">
                 <div className='block-element-left'>
@@ -167,7 +184,7 @@ const DashboardProjectView = ({ auth }) => {
                     </div>
                 </div>
                 <div className='block-element-right'>
-                    <PrimaryButton onClick={toggleUserList} className='btn btn-person'>
+                    <PrimaryButton onClick={toggleUserList} className='btn btn-person justify-center items-center flex'>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="12" cy="9" r="4" fill="currentColor"/>
                             <circle cx="17" cy="9" r="3" fill="currentColor"/>
@@ -176,6 +193,7 @@ const DashboardProjectView = ({ auth }) => {
                             <path fillRule="evenodd" clipRule="evenodd" d="M9.12197 13.7991C8.57989 13.3205 7.88609 13 7 13C4.55208 13 3.57166 15.4458 3.20343 16.9162C3.05971 17.4901 3.51335 18 4.10498 18H6.43155C6.83464 16.4902 7.61422 14.7773 9.12197 13.7991Z" fill="currentColor"/>
                             <path d="M12 14C15.7087 14 16.6665 17.301 16.9139 19.0061C16.9932 19.5526 16.5523 20 16 20H8C7.44772 20 7.00684 19.5526 7.08614 19.0061C7.33351 17.301 8.29134 14 12 14Z" fill="currentColor"/>
                         </svg>
+                        <p className='pl-1 text-sm'> {countUserToProject}</p>
                     </PrimaryButton>
                     <PrimaryButton onClick={toggleDeletedTasks} className='btn btn-history'>
                         <svg width="25" height="25" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -210,22 +228,32 @@ const DashboardProjectView = ({ auth }) => {
                                     <div className="block-task-list">
                                             {tasks[columnId].map((task, index) => (
                                                 <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
+                                                    {/* is_late && is_near_deadline deadline  */}
                                                     {(provided) => (
                                                         <div 
-                                                            className="task-card"
+                                                        className={`task-card ${columnId === 'done' ? null : task.is_late ? "is_late" : task.is_near_deadline ? "is_near_deadline" : ""}`}
                                                             ref={provided.innerRef}
                                                             {...provided.draggableProps}
                                                             {...provided.dragHandleProps}
                                                         >
                                                             <div className='task-card-content'>
-                                                                <p>{task.content}</p>
+                                                                <p className="truncate max-w-56">{task.content}</p>
                                                                 <div className='btn-group'>
+
+                                                                        <PrimaryButton className='btn-report mr-1.5' onClick={() => handleShowReportClick(task)}>
+                                                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path d="M11.6998 21.6001H5.69979C4.37431 21.6001 3.2998 20.5256 3.2998 19.2001L3.2999 4.80013C3.29991 3.47466 4.37442 2.40015 5.6999 2.40015H16.5002C17.8256 2.40015 18.9002 3.47466 18.9002 4.80015V9.60015M7.50018 7.20015H14.7002M7.50018 10.8001H14.7002M14.7002 15.5541V18.4985C14.7002 19.9534 16.2516 21.2879 17.7065 21.2879C19.1615 21.2879 20.7002 19.9535 20.7002 18.4985V14.7793C20.7002 14.009 20.2574 13.2273 19.2723 13.2273C18.2186 13.2273 17.7065 14.009 17.7065 14.7793V18.3435M7.50018 14.4001H11.1002" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                                                            </svg>
+                                                                        </PrimaryButton> 
+
                                                                     <PrimaryButton className='btn-view' onClick={() => handleViewClick(task)}>
                                                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                         <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
                                                                         <path d="M20.188 10.9343C20.5762 11.4056 20.7703 11.6412 20.7703 12C20.7703 12.3588 20.5762 12.5944 20.188 13.0657C18.7679 14.7899 15.6357 18 12 18C8.36427 18 5.23206 14.7899 3.81197 13.0657C3.42381 12.5944 3.22973 12.3588 3.22973 12C3.22973 11.6412 3.42381 11.4056 3.81197 10.9343C5.23206 9.21014 8.36427 6 12 6C15.6357 6 18.7679 9.21014 20.188 10.9343Z" stroke="currentColor" strokeWidth="2"/>
                                                                     </svg>
                                                                     </PrimaryButton>
+                                                                    
+                                                                    
                                                                     {columnId == 'done' ? 
                                                                     (
                                                                         <PrimaryButton className='btn-delete'  onClick={() => handleDeleteTask(task)}>
@@ -243,7 +271,7 @@ const DashboardProjectView = ({ auth }) => {
                                                                     )}
                                                                 </div>
                                                             </div>
-                                                            <div className='task-card-element'>
+                                                            <div className='task-card-element '>
                                                                 <div className='task-element element-left'>
                                                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                     <path d="M11.4635 11.3199C11.7859 11.2527 11.978 10.9152 11.8178 10.6274C11.4645 9.99297 10.908 9.43544 10.1961 9.01056C9.27918 8.46335 8.15577 8.16675 7.00007 8.16675C5.84436 8.16675 4.72095 8.46335 3.80407 9.01055C3.09215 9.43543 2.53563 9.99296 2.18238 10.6274C2.02214 10.9152 2.21419 11.2527 2.53667 11.3199C5.48064 11.9334 8.51949 11.9334 11.4635 11.3199Z" fill="currentColor"/>
@@ -276,7 +304,19 @@ const DashboardProjectView = ({ auth }) => {
             {showUserList && (
                 <TaskUsers 
                     projectId={project.id} 
+                    auth = {auth}
                     onClose={toggleUserList} 
+                    setCountUserToProject = {setCountUserToProject}   
+                />
+            )}
+
+            {/* hiển thị report to task form */}
+            {showFormReportToTask && (
+                <ShowReportToTask
+                    task = {selectedTask}
+                    onClose = {toggleFormReportToTak}
+                    updateTaskStatus = {updateTaskStatus}
+                    auth={auth}
                 />
             )}
 
@@ -292,7 +332,12 @@ const DashboardProjectView = ({ auth }) => {
              {/* Hiển thị TaskForm */}
              {isFormOpen && (
                 <TaskForm 
-                    onClose={toggleForm} projectId={project_id} refreshTasks={fetchProjectData} task={selectedTask} task_status={taskStatus}
+                    onClose={toggleForm} 
+                    projectId={project_id} 
+                    refreshTasks={fetchProjectData} 
+                    task={selectedTask} 
+                    task_status={taskStatus} 
+                    project_deadline={projectDeadLine} 
                 />
              )}
         </section>

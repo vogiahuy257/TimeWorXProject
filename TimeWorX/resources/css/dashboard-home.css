@@ -1,50 +1,13 @@
 
-/* Global Styles */
-:root{
-    --color-yellow: #FABB18; 
-    --color-cream: #FEF8E8;
-    --color-black: #000000; 
-    --color-black-gray: #383838; 
-    --color-gray: #D9D9D9;
-    --color-white: #FFFFFF; 
-    --color-whiteGray:#F4F8F7;
-    --color-light-gray: #F9F9F9;
-    --color-light-blue: #31AFE5;
-    --color-red: #E53131;
-    --color-green: rgb(3, 205, 3);
-    --background: linear-gradient(155deg,#FFFFFF,#D3D3D3);
-
-    --color-shadow:rgba(85, 85, 85, 0.425);
-
-    /* Font Sizes */
-    --font-size-sSmall: 0.7rem;
-    --font-size-small: 0.875rem;
-    --font-size-medium: 1rem;
-    --font-size-large: 1.25rem;
-    --font-size-xlarge: 1.5rem;
-    
-    /* Font Weights */
-    --font-weight-light: 300;
-    --font-weight-regular: 400;
-    --font-weight-medium: 500;
-    --font-weight-bold: 700;
-
-    /* Border Radius */
-    
-    --border-radius-sSmall: 8px;
-    --border-radius-small: 10px;
-    --border-radius-medium: 16px;
-    --border-radius-large: 28px;
-}
 #dashboard #home {
     width: 100%;
     height: 100%;
     display: grid;
     grid-template-areas:
-        "header header"
-        "meeting content";
-    grid-template-columns: 400px auto;
-    grid-template-rows: 180px auto;
+        "content meeting"
+        "header meeting";
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows:  auto 200px;
     font-family: "Poppins", sans-serif;
 }
 
@@ -87,16 +50,111 @@
     }
 }
 
-#dashboard #home .box
+
+/* cấu hình tạm để sau này thiết kế sau */
+#dashboard #home .box:not(.box-content,.box-header)
 {
     background-color: var(--color-white);
-    box-shadow: inset 0px 0px 5px var(--color-shadow);
+    box-shadow: 0px 0px 2px rgba(var(--color-black-rgb), 0.5);
     border-radius: var(--border-radius-sSmall);
     margin: 10px;
 }
 
-#dashboard #home .box-meeting .meeting-header
+#dashboard #home .btn-home
 {
-    align-items: center;
-    padding: 15px 35px;
+    border: 1px solid var(--color-light-blue);
+    color: #fff;
+    transition: .2s ease-in-out;
+}
+#dashboard #home .btn-home:hover
+{
+    background-color: #ffff;
+    color: var(--color-light-blue);
+    box-shadow: 0px 0px 18px var(--color-light-blue);
+}
+#dashboard #home .btn-home:active
+{
+    background-color: #000000;
+    color: #ffff;
+}
+#dashboard #home .box-header {
+    background-image: url("/image/logo-full.svg");
+    background-size: 60%; 
+    background-position:center;
+    background-repeat: no-repeat; 
+    background-color: #ffff;
+    box-shadow: 0px 0px 2px rgba(var(--color-black-rgb), 0.5);
+    border-radius: var(--border-radius-sSmall);
+    margin: 10px;
+}
+
+#dashboard #home .be-cheese
+{
+    width: 138px;
+    height: auto;
+}
+
+
+#dashboard #home .btn-add-meeting
+{
+    background-color: #000000;
+    color: #ffff;
+    box-shadow: 0 0 8px #ffff;
+    position: relative;
+    transition: background-color .2s ease-in-out;
+}
+
+#dashboard #home .btn-add-meeting svg
+{
+    transform: rotate(0deg);
+    transition: transform .2s ease-in-out;
+}
+
+#dashboard #home .btn-add-meeting::after
+{
+    content: 'created';
+    background-color: #000000cb;
+    font-size: var(--font-size-sSmall);
+    color: #ffff;
+    padding: 2px 6px;
+    border-radius: 0.375rem;
+    position: absolute;
+    transform: translateX(-28px);
+    opacity: 0;
+    transition: transform .2s ease-in-out,opacity .2s ease-in-out;
+}
+
+#dashboard #home .btn-add-meeting:hover::after
+{
+    transform: translateX(-50px);
+    opacity: 1;
+}
+
+
+#dashboard #home .btn-add-meeting:hover
+{
+    background-color: var(--color-light-blue);
+}
+
+#dashboard #home .btn-add-meeting:hover svg
+{
+    transform: rotate(-180deg);
+}
+
+#dashboard #home .btn-add-meeting:active
+{
+    background-color: #ffff;
+    color: #000000;
+}
+
+#dashboard #home .text-meeting
+{
+    background-color: #000000;
+    box-shadow: 0 0 2px rgba(var(--color-black-rgb), 0.5);
+    color: #ffff;
+}
+
+#dashboard #home .meeting-item:hover
+{
+    background-color: rgba(var(--color-black-rgb), 0.05);
 }

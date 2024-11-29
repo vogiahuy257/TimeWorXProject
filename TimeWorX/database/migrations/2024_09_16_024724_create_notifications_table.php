@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id('notification_id'); // Primary key
-            $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade'); // Foreign key to 'users' table
+            $table->uuid('user_id');  // Foreign key to 'users' table
             $table->string('notification_type', 50); // Notification type
             $table->text('message'); // Notification message
             $table->timestamp('notification_date')->useCurrent(); // Notification date
             $table->boolean('read_status')->default(false); // Read status (0 or 1)
             $table->string('link', 255)->nullable(); // Link for the notification
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

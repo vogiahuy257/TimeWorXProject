@@ -1,11 +1,12 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import FullCalendarComponent from './Layouts/Calendar/FullCalendarComponent';
 import { Head } from '@inertiajs/react';
 
-export default function Calendar({ auth }) {
+export default function DashboardCalendar({ auth ,callCreateToken}) {
     return (
         <>
         <Head title="Calendar" />
-        <h1>this is Calendar</h1>
+        <FullCalendarComponent auth = {auth} callCreateToken={callCreateToken}/>
         </>
     );
 }

@@ -20,8 +20,20 @@ return new class extends Migration
             $table->timestamps();
             $table->string('project_priority', 20)->nullable(); // Project priority
             $table->string('project_status', 200)->nullable(); // Project status
-            $table->foreignId('project_manager')->constrained('users', 'id')->onDelete('cascade'); // Foreign key to users table
+            $table->uuid('project_manager'); // Chuyển từ foreignId sang uuid
             $table->softDeletes();
+
+            $table->foreign('project_manager')->references('id')->on('users')->onDelete('cascade');
+        });
+
+        Schema::create('project_user', function (Blueprint $table) {
+            $table->id(); // Primary key
+            $table->foreignId('project_id')->constrained('projects', 'project_id')->onDelete('cascade'); // Khóa ngoại tới bảng projects
+            $table->uuid('user_id');  // Khóa ngoại tới bảng users
+            $table->boolean('is_project_manager')->default(false); // Đánh dấu người dùng có phải là project manager hay không
+            $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -31,5 +43,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('projects');
+        
+        Schema::dropIfExists('project_user');
     }
 };

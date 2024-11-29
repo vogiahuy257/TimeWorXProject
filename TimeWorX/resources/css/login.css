@@ -5,7 +5,7 @@
 
 #login{
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(360deg,var(--color-cream),var(--color-white));
+    background: var(--background-y-p);
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -68,8 +68,8 @@
 
 #login .block-element .toggle-password {
     position: absolute;
-    top: 60%;
-    right: 50px;
+    top: 50%;
+    right: 48px;
     transform: translateY(-50%);
     color: var(--color-gray);
     cursor: pointer;
@@ -78,6 +78,8 @@
 
 #login .block-element .toggle-password i{
     font-size: var(--font-size-medium);
+    width: 20px;
+    height: 20px;
 }
 
 #login .block .block-element:before
@@ -102,12 +104,12 @@
 {
     transform: translateY(-160%);
     font-size: var(--font-size-sSmall); 
-    color: var(--color-yellow);
+    color: var(--color-light-blue);
 }
 
 #login .block .block-element.focused::before input
 {
-    border-color: var(--color-yellow);
+    border-color: var(--color-light-blue);
 }
 
 #login .block .block-button
@@ -132,15 +134,15 @@
 
 #login .block .block-button .button
 {
-    background-color: var(--color-yellow);
-    color: var(--color-black);
-    font-weight: 600;
+    background-color: var(--color-light-blue);
+    color: var(--color-white);
+    font-weight: 500;
 }
 
 #login .block .block-button .button:hover
 {
     background-color: var(--color-black);
-    color: var(--color-yellow);
+    color: var(--color-light-blue);
 }
 
 .block-button-text

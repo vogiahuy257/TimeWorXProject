@@ -3,21 +3,20 @@
     color: var(--color-black);
 }
 
-
-
 #dashboard
 {
-   background: var(--background);
+   background: var(--background-y-p);
    width: 100%;
    height: 100vh;
    position: relative;
    color: var(--color-black);
-   transition: .5s;
-   font-family: "Poppins", system-ui;
+   transition: .3s;
+   font-family: "Poppins", system-ui;;
+   overflow: hidden;
 }
 
 #dashboard.dark-mode {
-    --color-black: #FFFFFF; 
+    --color-black: #ffffff; 
     --color-gray: #292B2C;
     --color-white: #151515; 
     --color-whiteGray:#232323;
@@ -26,6 +25,7 @@
     --color-black-gray: #d2d2d2; 
     --background: linear-gradient(155deg, #232222, #373737);
     --color-shadow:#424242df;
+    --bg-color-blue-while: #222222;
 }
 
 #dashboard img{
@@ -35,7 +35,7 @@
 
 #dashboard .block
 {
-    width: 85%;
+    width: 90%;
     height: 100%;
     max-height: 690px;
     background-color: var(--color-whiteGray);
@@ -43,7 +43,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 28px;
+    border-radius: var(--border-radius-large);
     box-shadow: 0 0 5px var(--color-shadow);
 }
 
@@ -145,7 +145,7 @@
     text-align: center;
     position: relative;
     transition: .5s;
-    font-size: var(--font-size-sSmall);
+    font-size: var(--font-size-sSSmall);
 }
 
 
@@ -161,14 +161,14 @@
 
 #dashboard .block .block-menu-left .menu-top button
 {
-    width: 45px;
-    height: 45px;
+    width: 42px;
+    height: 42px;
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 56%;
     transform: translate(-50%,-50%);
     background-color: var(--color-black);
     border-radius: var(--border-radius-small);
@@ -178,8 +178,8 @@
 
 #dashboard .block .block-menu-left .menu-top button svg
 {
-    width: 25px;
-    height: 25px;
+    width: 22px;
+    height: 22px;
     transition: transform 0.3s ease-in-out;
 }
 
@@ -190,7 +190,7 @@
 
 /* expand event */
 #dashboard .block .block-menu-left.expanded {
-    width: 180px;
+    width: 148px;
 }
 
 /* expand event menu mid */
@@ -198,12 +198,13 @@
 #dashboard .block .block-menu-left.expanded .menu-mid li a p
 {
     top: 50%;
-    left: 60%;
+    left: 90%;
     width: 100%;
     opacity: 1;
-    font-size: var(--font-size-small);
+    font-size: var(--font-size-sSSmall);
     transition: opacity 1s ease-in-out;
     color: var(--color-black);
+    text-align: left;
 }
 
 #dashboard .block .block-menu-left.expanded .menu-bot li 
@@ -252,7 +253,7 @@
 {
     transition: transform 0.3s ease-in-out;
     color: var(--color-black);
-    width: 25px;
+    width: 22px;
     height: auto;
 }
 
@@ -265,6 +266,7 @@
    transform: translate(-50%,-50%);
    transition: opacity 0.3s ease-in-out;
    transition: top 0.3s ease-in-out;
+   font-size: var(--font-size-sSSmall);
 }
 
 #dashboard .block .block-menu-left:not(.expanded) .menu-mid li:not(.active):hover svg,
@@ -294,7 +296,7 @@
     top: 0;
     right: 0;
     border-top-left-radius: var(--border-radius-medium);
-    border-bottom-left-radius: var(--border-radius-small);
+    border-bottom-left-radius: var(--border-radius-medium);
     transform: translateY(var(--box-activeMove));
     transition: transform 0.3s ease-in-out;
 }
@@ -366,12 +368,13 @@
 #dashboard .block .block-menu-left .menu-bot li p {
     opacity: 0;
     transition: all 0.5s ease-in-out;
+    font-size: var(--font-size-sSSmall);
 }
 
 #dashboard .block .block-menu-left .menu-bot li svg {
-    background-size: 25px;
-    width: 25px;
-    height: 25px;
+    background-size: 22px;
+    width: 22px;
+    height: 22px;
     margin: auto;
     background-repeat: no-repeat;
     transition: transform 0.3s ease, background-image 0.3s ease;

@@ -13,11 +13,15 @@ return new class extends Migration
     {
         Schema::create('employee_performance', function (Blueprint $table) {
             $table->id('performance_id'); // Primary key
-            $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade'); // Foreign key to 'users' table
+            $table->uuid('user_id');// Foreign key to 'users' table
             $table->foreignId('task_id')->constrained('tasks', 'task_id')->onDelete('cascade'); // Foreign key to 'tasks' table
             $table->decimal('performance_score', 5, 2); // Performance score
             $table->text('feedback')->nullable(); // Feedback (nullable)
             $table->timestamp('review_date')->useCurrent(); // Review date
+
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
         });
     }
 

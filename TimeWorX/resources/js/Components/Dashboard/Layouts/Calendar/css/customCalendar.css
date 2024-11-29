@@ -1,0 +1,48 @@
+
+#calendar .menu .btn-meeting,
+#calendar .btn-today
+{
+  margin-left: auto;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  transition: background-color .2s ease-in-out;
+}
+
+#calendar select
+{
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+
+#calendar .menu .btn-meeting:hover,
+#calendar .btn-today:hover
+{
+  background-color: var(--color-light-blue);
+}
+
+#calendar .menu .btn-meeting:active,
+#calendar .btn-today:active{
+  transition: background-color .05s ease-in-out;
+  background-color: var(--color-white);
+  color: var(--color-light-blue);
+}
+
+/* Thêm màu sắc tùy chỉnh cho sự kiện */
+.fc-event.todo {
+  background-color: #117add;
+  color: white;
+}
+
+.fc-event.inprogress {
+  background-color: #FFD700;
+  color: white;
+}
+
+.fc-event.verify {
+  background-color: #FF0000;
+  color: white;
+}
+ .fc-event.meeting {
+  background-color: #000000;
+  color: white;
+}

@@ -31,9 +31,13 @@ class Report extends Model
      */
     protected $fillable = [
         'report_by_user_id',
-        'report_title',
-        'report_description',
-        'status_report',
+        'project_id',
+        'task_id',
+        'completion_goal',
+        'today_work',
+        'next_steps',
+        'issues',
+        'isLink'
     ];
 
     /**
@@ -53,5 +57,41 @@ class Report extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'report_by_user_id');
+    }
+
+    public function files()
+    {
+        return $this->belongsToMany(File::class, 'report_file', 'report_id', 'file_id');
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class, 'project_id');
+    }
+
+    public function task()
+    {
+        return $this->belongsTo(Task::class, 'task_id', 'task_id');
+    }
+
+    /**
+     * Get the comments for the report.
+     */
+    public function comments()
+    {
+        return $this->hasMany(ReportComment::class, 'report_id', 'report_id');
+    }
+
+    /**
+     * Lấy tất cả bình luận của báo cáo, phân biệt giữa project manager và staff.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getCommentsWithRole()
+    {
+        return $this->comments()->with('user')->get()->map(function ($comment) {
+            $comment->role = $comment->is_project_manager ? 'Project Manager' : 'Staff';
+            return $comment;
+        });
     }
 }

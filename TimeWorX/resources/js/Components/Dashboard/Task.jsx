@@ -1,26 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Head } from '@inertiajs/react';
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import TaskForm from './Layouts/Project/TaskForm';
 import DeletedTasks from './Layouts/Project/DeletedTasks';
-import TaskUsers from './Layouts/Project/TaskUsersForm';
 import TaskComments from './Layouts/Project/TaskComments';
+import ReportForm from './Layouts/Task/ReportForm';
 
 export default function Task({ auth }) {
-    const { project_id } = useParams();
-    const [project, setProject] = useState(null);
-    const [isFormOpen, setIsFormOpen] = useState(false); 
+    const [ project_id,setProjectId ] = useState();
+    const [selectProjectId, setSelectedProjectId] = useState();
+    const [isFormOpen, setIsFormOpen] = useState(false);
+    const [projects, setProjects] = useState([]); 
     const [selectedTask, setSelectedTask] = useState(null);
     const [taskStatus, setTaskStatus] = useState(null);
     const [totalTaskCount,setTotalTaskCount] = useState(0);
     const [showDeletedTasks, setShowDeletedTasks] = useState(false);
-    const [showUserList, setShowUserList] = useState(false);
     const [showComments,setShowComments] = useState(false);
+    const [showReportForm, setShowReportForm] = useState(false);
+    const [isStaff, setIsStaff] = useState(false);
+
+    const handleReportClick = (task) => {
+        setShowReportForm(!showReportForm);
+        setSelectedTask(task);
+      };
 
     const toggleDeletedTasks = () => {
         setShowDeletedTasks(!showDeletedTasks);
@@ -31,10 +37,10 @@ export default function Task({ auth }) {
     };
 
     const handleCommentClick = (task) => 
-        {
+    {
             setSelectedTask(task);
             toggleComment();
-        };
+    };
     
 
     const handleAddTask = (status) => {
@@ -43,9 +49,18 @@ export default function Task({ auth }) {
         toggleForm(); 
     };
 
-    const handleViewClick = (task) => {
+    const handleViewClick = (task,project_id) => {
         setSelectedTask(task);
         setTaskStatus(task.status);
+        setSelectedProjectId(project_id);
+        if(task.type == "task")
+        {
+            setIsStaff(true);
+        }
+        else
+        {
+            setIsStaff(false);
+        }
         toggleForm();
     };
 
@@ -66,7 +81,6 @@ export default function Task({ auth }) {
     const [tasks, setTasks] = useState({
         'to-do': [],
         'in-progress': [],
-        'verify': [],
         'done': [],
     });
 
@@ -102,35 +116,43 @@ export default function Task({ auth }) {
                 [destinationColumn]: destinationTasks,
             }));
             const isPersonalPlan = movedTask.type === 'personalPlan'; 
+            // Nếu là task và trạng thái là 'done', chuyển thành 'verify'
+        if (movedTask.type === 'task' && destinationColumn === 'done') {
+            updateTaskStatus(movedTask.id, 'verify', isPersonalPlan);
+        } else {
             updateTaskStatus(movedTask.id, destinationColumn, isPersonalPlan);
+        }
         }
     };
 
-    const fetchProjectData = async (user_id) => {
+    const fetchProjectData = async (user_id,project_id) => {
         try {
-            const response = await axios.get(`/api/tasks/${user_id}`);
+            const response = await axios.get(`/api/tasks/${user_id}`, { params: { project_id } });
             const projectData = response.data;
-
+            setProjects(response.data.projects);
             // Cập nhật các kế hoạch cá nhân với thuộc tính 'type'
             const updatedPersonalPlans = {
                 'to-do': projectData.personalPlans['to-do']?.map(task => ({ ...task, type: 'personalPlan' })) || [],
                 'in-progress': projectData.personalPlans['in-progress']?.map(task => ({ ...task, type: 'personalPlan' })) || [],
-                'verify': projectData.personalPlans['verify']?.map(task => ({ ...task, type: 'personalPlan' })) || [],
-                'done': projectData.personalPlans['done']?.map(task => ({ ...task, type: 'personalPlan' })) || [],
+                'done': [
+                ...(projectData.personalPlans['verify']?.map(task => ({ ...task, type: 'personalPlan' })) || []),
+                ...(projectData.personalPlans['done']?.map(task => ({ ...task, type: 'personalPlan' })) || [])
+                ],
             };
 
             // Cập nhật các tác vụ với thuộc tính 'type'
             const updatedTasks = {
                 'to-do': projectData.tasks['to-do']?.map(task => ({ ...task, type: 'task' })) || [],
                 'in-progress': projectData.tasks['in-progress']?.map(task => ({ ...task, type: 'task' })) || [],
-                'verify': projectData.tasks['verify']?.map(task => ({ ...task, type: 'task' })) || [],
-                'done': projectData.tasks['done']?.map(task => ({ ...task, type: 'task' })) || [],
+                'done': [
+                ...(projectData.tasks['verify']?.map(task => ({ ...task, type: 'task' })) || [])
+                ],
+                // đã đổi done thành verify vì nhân viên sẽ không nhìn thầy cột done
             };
 
             const mergedTasks = {
                 'to-do': [...updatedTasks['to-do'], ...updatedPersonalPlans['to-do']],
                 'in-progress': [...updatedTasks['in-progress'], ...updatedPersonalPlans['in-progress']],
-                'verify': [...updatedTasks['verify'], ...updatedPersonalPlans['verify']],
                 'done': [...updatedTasks['done'], ...updatedPersonalPlans['done']],
             };
 
@@ -144,34 +166,40 @@ export default function Task({ auth }) {
     };
 
     useEffect(() => {
-        fetchProjectData(auth.user.id);
-        
+        fetchProjectData(auth.user.id,project_id);
     }, [project_id]);
-
     return (
         <>
             <Head title="Task" />
-            <ToastContainer className="custom_toast"/>
         <section id='project-view'>
 
             {/* Menu */}
             <div className="block-project">
                 <div className='block-element-left'>
                     <div className='block-project-name'>
-                        <h1>My Task</h1>
+                        <h1>Task</h1>
                     </div>
+                    
+
+                    {/* Bộ lọc */}
+                    <div className="ml-4 filter-section flex items-center justify-center">
+                        {/* Bộ lọc theo trạng thái */}
+                        <select 
+                            className="border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-black-400 appearance-none bg-white text-gray-700 transition duration-150 ease-in-out"
+                            onChange={(e)=>setProjectId(e.target.value)}
+                        >
+                            <option value="">All</option>
+                                {projects.map(project => (
+                                    <option key={project.id} value={project.id}>
+                                        {project.name}
+                                    </option>
+                                ))}
+                            <option value="personalPlan">Your Pesonal Plan</option>
+                        </select>
+                    </div>
+
                 </div>
                 <div className='block-element-right'>
-                    {/* <PrimaryButton onClick={toggleUserList} className='btn btn-person'>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="9" r="4" fill="currentColor"/>
-                            <circle cx="17" cy="9" r="3" fill="currentColor"/>
-                            <circle cx="7" cy="9" r="3" fill="currentColor"/>
-                            <path fillRule="evenodd" clipRule="evenodd" d="M17.5685 18H19.895C20.4867 18 20.9403 17.4901 20.7966 16.9162C20.4284 15.4458 19.448 13 17 13C16.114 13 15.4201 13.3205 14.8781 13.7991C16.3858 14.7773 17.1654 16.4902 17.5685 18Z" fill="currentColor"/>
-                            <path fillRule="evenodd" clipRule="evenodd" d="M9.12197 13.7991C8.57989 13.3205 7.88609 13 7 13C4.55208 13 3.57166 15.4458 3.20343 16.9162C3.05971 17.4901 3.51335 18 4.10498 18H6.43155C6.83464 16.4902 7.61422 14.7773 9.12197 13.7991Z" fill="currentColor"/>
-                            <path d="M12 14C15.7087 14 16.6665 17.301 16.9139 19.0061C16.9932 19.5526 16.5523 20 16 20H8C7.44772 20 7.00684 19.5526 7.08614 19.0061C7.33351 17.301 8.29134 14 12 14Z" fill="currentColor"/>
-                        </svg>
-                    </PrimaryButton> */}
                     <PrimaryButton onClick={toggleDeletedTasks} className='btn btn-history'>
                         <svg width="25" height="25" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M3 13.1429V17.7143C3 18.9767 4.00736 20 5.25 20H18.75C19.9926 20 21 18.9767 21 17.7143V13.1429M3 13.1429L5.82751 5.48315C6.15683 4.59102 6.99635 4 7.93425 4H16.0657C17.0037 4 17.8432 4.59102 18.1725 5.48315L21 13.1429M3 13.1429H7.5L9 14.7429H15L16.5 13.1429H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -207,18 +235,19 @@ export default function Task({ auth }) {
                                                 <Draggable key={`${task.type}-${task.id}`} draggableId={`${task.type}-${task.id}`} index={index}>
                                                     {(provided) => (
                                                         <div 
-                                                            className="task-card"
+                                                            className={`task-card ${ columnId === 'done' ? null : task.is_late ? "is_late" : task.is_near_deadline ? "is_near_deadline" : ""}`}
                                                             ref={provided.innerRef}
                                                             {...provided.draggableProps}
                                                             {...provided.dragHandleProps}
                                                         >
                                                             <div className='task-card-content'>
-                                                                <p>{task.type == 'personalPlan' ? task.name :task.content}</p>
+                                                                <p className='project-name'>{task.type == 'personalPlan' ? null : task.project_name}</p>
+                                                                <p className='truncate max-w-xs'>{task.type == 'personalPlan' ? task.name :task.content}</p>
                                                                 <div className='btn-group'>
                                                                 {task.type === 'personalPlan' ? 
                                                                 (
                                                                     <>
-                                                                        <PrimaryButton className='btn-view' onClick={() => handleViewClick(task)}>
+                                                                        <PrimaryButton className='btn-view ml-4' onClick={() => handleViewClick(task)}>
                                                                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                                 <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
                                                                                 <path d="M20.188 10.9343C20.5762 11.4056 20.7703 11.6412 20.7703 12C20.7703 12.3588 20.5762 12.5944 20.188 13.0657C18.7679 14.7899 15.6357 18 12 18C8.36427 18 5.23206 14.7899 3.81197 13.0657C3.42381 12.5944 3.22973 12.3588 3.22973 12C3.22973 11.6412 3.42381 11.4056 3.81197 10.9343C5.23206 9.21014 8.36427 6 12 6C15.6357 6 18.7679 9.21014 20.188 10.9343Z" stroke="currentColor" strokeWidth="2"/>
@@ -234,22 +263,43 @@ export default function Task({ auth }) {
                                                                     </>
                                                                 ) : 
                                                                 (
+                                                                    <>
+                                                                    
+                                                                        <PrimaryButton className='btn-report mr-1.5' onClick={() => handleReportClick(task)}>
+                                                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                                    <path d="M11.6998 21.6001H5.69979C4.37431 21.6001 3.2998 20.5256 3.2998 19.2001L3.2999 4.80013C3.29991 3.47466 4.37442 2.40015 5.6999 2.40015H16.5002C17.8256 2.40015 18.9002 3.47466 18.9002 4.80015V9.60015M7.50018 7.20015H14.7002M7.50018 10.8001H14.7002M14.7002 15.5541V18.4985C14.7002 19.9534 16.2516 21.2879 17.7065 21.2879C19.1615 21.2879 20.7002 19.9535 20.7002 18.4985V14.7793C20.7002 14.009 20.2574 13.2273 19.2723 13.2273C18.2186 13.2273 17.7065 14.009 17.7065 14.7793V18.3435M7.50018 14.4001H11.1002" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                                                                </svg>
+                                                                            </PrimaryButton>
+                                                                        <PrimaryButton className='btn-view' onClick={() => handleViewClick(task,task.project_id)}>
+                                                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                                <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
+                                                                                <path d="M20.188 10.9343C20.5762 11.4056 20.7703 11.6412 20.7703 12C20.7703 12.3588 20.5762 12.5944 20.188 13.0657C18.7679 14.7899 15.6357 18 12 18C8.36427 18 5.23206 14.7899 3.81197 13.0657C3.42381 12.5944 3.22973 12.3588 3.22973 12C3.22973 11.6412 3.42381 11.4056 3.81197 10.9343C5.23206 9.21014 8.36427 6 12 6C15.6357 6 18.7679 9.21014 20.188 10.9343Z" stroke="currentColor" strokeWidth="2"/>
+                                                                            </svg>
+                                                                        </PrimaryButton>
                                                                         <PrimaryButton className='btn-comment' onClick={() => handleCommentClick(task)}>
                                                                             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                             <path d="M7.1999 7.20002H15.5999M7.1999 12H11.9999M11.6869 16.5913L6.67816 21.6V16.5913H4.7999C3.47442 16.5913 2.3999 15.5168 2.3999 14.1913V4.80003C2.3999 3.47454 3.47442 2.40002 4.7999 2.40002H19.1999C20.5254 2.40002 21.5999 3.47454 21.5999 4.80002V14.1913C21.5999 15.5168 20.5254 16.5913 19.1999 16.5913H11.6869Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                                                                             </svg>
                                                                         </PrimaryButton>
+                                                                    </>
                                                                 )}
                                                                 </div>
                                                             </div>
-                                                            <div className='task-card-element'>
-                                                                <div className='task-element element-left'>
-                                                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path d="M11.4635 11.3199C11.7859 11.2527 11.978 10.9152 11.8178 10.6274C11.4645 9.99297 10.908 9.43544 10.1961 9.01056C9.27918 8.46335 8.15577 8.16675 7.00007 8.16675C5.84436 8.16675 4.72095 8.46335 3.80407 9.01055C3.09215 9.43543 2.53563 9.99296 2.18238 10.6274C2.02214 10.9152 2.21419 11.2527 2.53667 11.3199C5.48064 11.9334 8.51949 11.9334 11.4635 11.3199Z" fill="currentColor"/>
-                                                                    <circle cx="6.99992" cy="4.66667" r="2.91667" fill="currentColor"/>
-                                                                </svg>
-                                                                    <span className='user-number'>{task.user_count}</span>
-                                                                </div>
+                                                            <div className={task.type == 'personalPlan' ? 'task-card-element pesonal-plan' : 'task-card-element'}>
+                                                                {/* number user to task */}
+                                                                {
+                                                                    task.type == 'personalPlan' ? null :
+                                                                    (
+                                                                        <div className='task-element element-left'>
+                                                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path d="M11.4635 11.3199C11.7859 11.2527 11.978 10.9152 11.8178 10.6274C11.4645 9.99297 10.908 9.43544 10.1961 9.01056C9.27918 8.46335 8.15577 8.16675 7.00007 8.16675C5.84436 8.16675 4.72095 8.46335 3.80407 9.01055C3.09215 9.43543 2.53563 9.99296 2.18238 10.6274C2.02214 10.9152 2.21419 11.2527 2.53667 11.3199C5.48064 11.9334 8.51949 11.9334 11.4635 11.3199Z" fill="currentColor"/>
+                                                                                <circle cx="6.99992" cy="4.66667" r="2.91667" fill="currentColor"/>
+                                                                            </svg>
+                                                                            <span className='user-number'>{task.user_count}</span>
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                                
                                                                 <div className='task-element element-right'>
                                                                     <p>deadline:</p>
                                                                     <p>{task.type == 'personalPlan' ? task.end_date : task.deadline || 'N/A'}</p>
@@ -274,17 +324,26 @@ export default function Task({ auth }) {
             {showComments && (
                 <TaskComments 
                     taskId={selectedTask.id} 
+                    user_id ={auth.user.id}
                     onClose={() => setShowComments(false)} 
                     isManagerComment ={false}
                 />
             )}
 
-             {/* Hiển thị TaskForm */}
-             {isFormOpen && (
-                <TaskForm 
-                    onClose={toggleForm} user_id={auth.user.id} projectId={null} refreshTasks={fetchProjectData} task={selectedTask} task_status={taskStatus}
-                />
-             )}
+             
+                {/* hiển thị ReportForm */}
+             {showReportForm && <ReportForm task={selectedTask} auth={auth} onClose={() => setShowReportForm(false)}/>}
+                {/* Hiển thị TaskForm */}
+                {isFormOpen && <TaskForm 
+                    onClose={toggleForm} 
+                    user_id={auth.user.id} 
+                    projectId={selectProjectId} 
+                    refreshTasks={fetchProjectData} 
+                    task={selectedTask} 
+                    task_status={taskStatus} 
+                    is_staff={isStaff}
+                />}
+
         </section>
         </>
     );

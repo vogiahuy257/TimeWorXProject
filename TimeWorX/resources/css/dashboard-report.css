@@ -1,0 +1,269 @@
+
+
+#dashboard #report
+{
+    --height-project-list: 330px;
+    --height-sumaryReport: 552px;
+
+    background: radial-gradient(circle, rgba(var(--color-blue-rgb), 0.2) 12%, transparent 12%);
+    background-size: 14px 14px; 
+    background-position: 0 0; 
+    background-color: var(--color-white);
+    box-shadow: inset 0px 4px 8px rgba(var(--color-black-rgb), 0.1);
+    height: 100%;
+}
+#dashboard #report .report-content:not(.report-task-form)
+{
+    position: relative;
+}
+#dashboard #report .report-content:not(.detail-box,.report-task-form) {
+    background-color: rgba(var(--color-black-rgb), 0.1);
+}
+
+
+#dashboard #report .text-header
+{
+   position: absolute;
+   top: 0;
+   left: 50%;
+   transform: translateX(-50%);
+   background-color: #000;
+   color: #fff;
+   font-size: var(--font-size-medium);
+   padding: 2px 12px;
+   border-bottom-left-radius: 0.375rem;
+   border-bottom-right-radius: 0.375rem;
+   z-index: 1;
+}
+
+
+#dashboard #report .project-box button
+{
+    font-size: var(--font-size-2sSSmall);
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease-in-out,background-color .2s ease-in-out;
+} 
+
+#dashboard #report .project-box button:hover
+{
+    background-color: var(--color-white);
+    box-shadow: 0 4px 4px rgba(var(--color-black-rgb),0.2);
+}
+
+#dashboard #report .project-box button.active
+{
+    background-color: var(--color-white);
+    box-shadow: 0 4px 4px rgba(var(--color-black-rgb),0.2);
+} 
+
+#dashboard #report .report-content.report-project
+{
+    height: var(--height-project-list);
+}
+
+#dashboard #report .project-box button svg{
+    width: 52px;
+    height: 52px;
+}
+#dashboard #report .project-box button.done svg path.icon-path2{
+    color: var(--color-green);
+}
+
+#dashboard #report .project-box button.done svg.image-done{
+    --size-image-done:16px;
+    position: absolute;
+    width: var(--size-image-done);
+    color: #fff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+#dashboard #report .project-box button:not(.active).done svg.image-done
+{
+    top: 11px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#dashboard #report .project-box button.in-progress svg path.icon-path2{
+    color: rgba(var(--color-yellow-rgb), 1);
+}
+
+#dashboard #report .project-box button svg path.icon-path1{
+    color: var(--color-black-gray);
+}
+#dashboard #report .project-box button svg path.icon-path2
+{
+    color: rgb(45, 106, 185);
+}
+
+/* custom-report-detail */
+
+#dashboard #report .detail-box
+{
+    background-color: transparent;
+    box-shadow: none;
+}
+
+#dashboard #report .project-detail .project-name
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 48%;
+    background-color: #000000;
+    color: #F9F9F9;
+    font-size: var(--font-size-small);
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+#dashboard #report .project-detail .project-name::after
+{
+    position: absolute;
+    bottom: 0;
+    right: -20px;
+    content: "";
+    width: 20px;
+    height: 20px;
+    border-bottom-left-radius: 0.5rem;
+    box-shadow: -5px 5px 0 #000000;
+}
+
+#dashboard #report .project-detail .project-date
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    background: var(--background-blue);
+    color: #F9F9F9;
+    font-size: var(--font-size-small);
+    box-shadow: 0 4px 10px rgba(var(--color-black-rgb), 0.15);
+}
+
+#dashboard #report .project-detail .detail-content
+{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 85%;
+    background-color: var(--color-white);
+    border: 3px solid #000000;
+    border-top-left-radius: 0px;
+}
+
+@media screen and (max-width: 1080px) {
+    #dashboard #report .project-detail .project-date,
+    #dashboard #report .project-detail .project-name
+    {
+        font-size: var(--font-size-sSSmall);
+    }
+}
+
+/* report task done */
+
+#dashboard #report .report-task-done
+{
+    height: var(--height-project-list);
+}
+#dashboard #report .report-task-done .task-done-box
+{
+    background-color: var(--color-white);
+    box-shadow: 0 4px 4px rgba(var(--color-black-rgb),0.2);
+    border: 1px solid rgba(var(--color-black-rgb), 0.1);
+}
+
+#dashboard #report .select-task-done
+{
+   position: absolute;
+   top: 0;
+   right:  4px;
+   width: 30%;
+   height: 41px;
+   text-align: center;
+   font-size: var(--font-size-2sSSmall);
+   border-radius: 0.375rem;
+}
+
+#dashboard #report .select-task-done select {
+    width: 90%;
+    padding: 2px 10px;
+    border: 1px solid rgba(var(--color-black-rgb), 0.3); 
+    margin-top: 8px;
+    height: 26px;
+    border-radius: 0.25rem;
+    font-size: inherit; 
+    color: var(--color-black);
+    appearance: none; 
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 16 16"><path fill="%23656565" d="M4 6l4 4 4-4H4z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center; 
+    background-size: 12px; 
+    background-color: var(--color-white);
+    cursor: pointer; 
+}
+
+#dashboard #report .select-task-done select:hover {
+    border-color: var(--color-blue);
+}
+
+#dashboard #report .select-task-done select:focus {
+    outline: none; 
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5); 
+}
+
+#dashboard #report .report-task-done .text-report-done
+{   
+   top: 0px;
+   left:  30%;
+   width: 50%;
+}
+
+#dashboard #report .report-task-done .btn-report
+{
+    background-color:transparent;
+   width: 70px;
+   height: auto;
+   transition: .2s ease-in-out;
+   font-size: var(--font-size-2sSSmall);
+}
+#dashboard #report .report-task-done .btn-report:hover
+{
+    background-color: var(--color-white);
+    box-shadow: 0 4px 4px rgba(var(--color-black-rgb),0.2);
+}
+#dashboard #report .report-task-done .btn-report:hover svg{
+    transform: translateY(-5px);
+}
+
+#dashboard #report .report-task-done .btn-report:active
+{
+    background-color: rgba(var(--color-while-rgb), 0.5);
+}
+
+#dashboard #report .report-task-done .btn-report svg
+{
+    --size: 50px;
+
+    transform: translateY(0px);
+    width: var(--size);
+    height: var(--size);
+}
+
+#dashboard #report .report-task-done .btn-report svg path.icon-path2
+{
+    color: var(--color-blue);
+}
+#dashboard #report .report-task-done .btn-report svg path.icon-path1
+{
+    color: #969696;
+}

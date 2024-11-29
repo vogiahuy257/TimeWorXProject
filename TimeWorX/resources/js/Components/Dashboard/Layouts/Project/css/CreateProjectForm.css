@@ -1,6 +1,6 @@
 
 
-#dashboard .block #main .content main #project #model-create
+#dashboard .block #main #model-create
 {
     background-color: rgba(0, 0, 0, 0.337);
     width: 100vw;
@@ -12,7 +12,7 @@
     z-index: 9999;
 }
 
-#dashboard .block #main .content main #project #model-create main
+#dashboard .block #main #model-create main
 {
     background-color: var(--color-white);
     width: 70%;
@@ -30,14 +30,14 @@
     border-radius: var(--border-radius-large);
 }
 
-#dashboard .block #main .content main #project #model-create main .header
+#dashboard .block #main #model-create main .header
 {
        font-size: var(--font-size-large);
        font-weight: 700;
        margin-top: 30px;
 }
 
-#dashboard .block #main .content main #project #model-create main .header .icon-delete
+#dashboard .block #main #model-create main .header .icon-delete
 {
     position: absolute;
     top: 15px;
@@ -45,54 +45,72 @@
     transition: color 0.3s ease-in-out;
 }
 
-#dashboard .block #main .content main #project #model-create main .header .icon-delete:hover svg
+#dashboard .block #main #model-create main .header .icon-delete:hover svg
 {
     color: var(--color-red);
 }
 
 /* from */
-#dashboard .block #main .content main #project #model-create main .create-project-form
+#dashboard .block #main #model-create main .create-project-form
 {
    width: 90%;
    color: var(--color-black);
    justify-content: center;
 }
 
-#dashboard .block #main .content main #project #model-create main .create-project-form .projectName input,
-#dashboard .block #main .content main #project #model-create main .create-project-form .project-date input,
-#dashboard .block #main .content main #project #model-create main .create-project-form .project-description textarea,
-#dashboard .block #main .content main #project #model-create main .create-project-form .project-status select{
-    width: 100%;
-    border-radius: var(--border-radius-sSmall);
-    margin-bottom: 10px;
+#dashboard .block #main #model-create main .create-project-form .box-input
+{
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+   margin-bottom: 8px;
 }
 
 
-#dashboard .block #main .content main #project #model-create main .create-project-form .project-date
+#dashboard .block #main #model-create main .create-project-form .error-message
+{
+    color: var(--color-red);
+    font-size:calc( var(--font-size-small) - 1px);
+}
+
+#dashboard .block #main #model-create main .create-project-form .projectName input,
+#dashboard .block #main #model-create main .create-project-form .project-date input,
+#dashboard .block #main #model-create main .create-project-form .project-description textarea,
+#dashboard .block #main #model-create main .create-project-form .project-status select{
+    width: 100%;
+    border-radius: var(--border-radius-sSmall);
+    margin-bottom: 2px;
+}
+
+
+#dashboard .block #main #model-create main .create-project-form .project-date
 {
     display: flex;
     gap: 30px;
     position: relative;
+    width: 100%;
 }
 
-#dashboard .block #main .content main #project #model-create main .create-project-form .project-date div
+#dashboard .block #main #model-create main .create-project-form .project-date div
 {
     width: 100%;
 }
 
-#dashboard .block #main .content main #project #model-create main .create-project-form .project-date div:nth-child(1)
+#dashboard .block #main #model-create main .create-project-form .project-date div:nth-child(1)
 {
     margin-left: auto;
 }
 
-#dashboard .block #main .content main #project #model-create main .create-project-form p{
+#dashboard .block #main #model-create main .create-project-form .text{
     position: absolute;
     top: 65%;
     left: 50%;
     transform: translate(-50%,-50%);
 }
 
-#dashboard .block #main .content main #project #model-create main .create-project-form button
+#dashboard .block #main #model-create main .create-project-form button
 {
    background-color: var(--color-black);
    color: var(--color-white);
@@ -100,13 +118,12 @@
    height: 40px;
    margin-top: 10px;
    border-radius: var(--border-radius-sSmall);
-   margin-bottom: 25px;
+   margin-bottom: 36px;
    transition: all 0.3s ease-in-out;
 }
 
-#dashboard .block #main .content main #project #model-create main .create-project-form button:hover
+#dashboard .block #main #model-create main .create-project-form button:hover
 {
    background-color: var(--color-light-blue);
 }
-
 
