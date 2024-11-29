@@ -13,10 +13,35 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($user_id)
     {
-        
+        // Lấy toàn bộ project mà user_id là project_manager
+        $projects = Project::nonDeleted()
+        ->where(function ($query) use ($user_id) 
+        {
+            $query->where('project_manager', $user_id)
+                  ->orWhereHas('users', function ($query) use ($user_id) 
+                  {
+                      $query->where('user_id', $user_id)
+                            ->where('is_project_manager', true);
+                  });
+        })
+        ->get();
+
+        // Kiểm tra nếu user không phải là project_manager của bất kỳ project nào
+        if ($projects->isEmpty()) {
+            return response()->json(['message' => 'User không phải là project manager của bất kỳ dự án nào'], 404);
+        }
+        foreach ($projects as $project) {
+            $project->updateProjectStatus();
+            $project->tasks_count = $project->tasks()->count();
+            $project->user_count = $project->users()->count();
+        }
+        return response()->json([
+            'projects' => $projects
+        ], 200);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -149,26 +174,62 @@ class ProjectController extends Controller
         return response()->json(['message' => 'Project restored successfully'], 200);
     }
 
-    public function addUserToProject(Request $request, $projectId)
+    //thêm người dùng vào dự án
+    public function addUserToProject(Request $request,$projectId)
     {
         $userId = $request->input('user_id');
 
         // Kiểm tra xem người dùng đã có trong dự án chưa
         $project = Project::find($projectId);
 
+        // kiểm tra có tồn tại trong dự án hay không
         if (!$project) {
             return response()->json(['message' => 'Project not found'], 404);
         }
 
+        // kiểm tra người dùng đó có trong dự án hay không
         if ($project->users()->where('user_id', $userId)->exists()) {
             return response()->json(['message' => 'User already added to this project'], 400);
         }
 
-        // Thêm người dùng vào dự án
         $project->users()->attach($userId);
+        return response()->json();
+    }
+
+    //xóa người dùng khỏi dự án
+    public function removeUserFromProject(Request $request, $projectId,$userId)
+    {
+        $user_id = $request->input('user_id');
+
+        // Kiểm tra xem dự án có tồn tại không
+        $project = Project::find($projectId);
+
+        if (!$project) {
+            return response()->json(['message' => 'Project not found'], 404);
+        }
+
+        // Kiểm tra xem người dùng có trong dự án không
+        if (!$project->users()->where('user_id', $user_id)->exists()) {
+            return response()->json(['message' => 'User not found in this project'], 400);
+        }
+        
+        //kiểm tra người bị xóa có phải là manager không
+        if($project->isUserProjectManager($user_id))
+        {
+            return response()->json(['message' => 'Cannot remove the project manager'], 400);
+        }
+
+        //kiểm tra người dùng thực hiện xóa có phải là manager không (chỉ manager mới có quyền xóa dự án)
+        if($project->isUserProjectManager($userId))
+        {
+            // Xóa người dùng khỏi dự án
+            $project->users()->detach($user_id);
+            return response()->json();
+        }
 
         return response()->json();
     }
+
 
     public function updateUserRoleInProject(Request $request, string $projectId)
     {

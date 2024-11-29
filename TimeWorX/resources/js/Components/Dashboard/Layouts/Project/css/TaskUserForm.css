@@ -103,4 +103,84 @@
     background-color: var(--color-black);
     color: var(--color-white);
     font-size: var(--font-size-large);
+    transition: background-color .2s ease-in-out;
+    position: relative;
+}
+
+#dashboard .block #main #project-view .user-list-search .custom-btn-app::after
+{
+    position: absolute;
+    content: "Add User";
+    color: var(--color-white);
+    background-color: var(--color-black);
+    font-size: var(--font-size-sSmall);
+    top: 0;
+    white-space: nowrap;
+    padding: 2px 6px;
+    border-radius: 0.375rem;
+    right: -24px;
+    transform: translateY(-10px);
+    opacity: 0;
+    transition: transform .2s ease-in-out,opacity .3s ease-in-out;
+}
+
+
+#dashboard .block #main #project-view .user-list-search .custom-btn-app:hover::after{
+    transform: translateY(-22px);
+    opacity: 1;
+}
+
+
+#dashboard .block #main .content main #project-view .btn-out{
+    background-color: var(--color-black);
+    color: var(--color-white);
+    border: 5px solid var(--color-white);
+    transition: background-color .2s ease-in-out;
+}
+
+#dashboard .block #main .content main #project-view .btn-out::after
+{
+    position: absolute;
+    content: "Remove User";
+    color: var(--color-white);
+    background-color: var(--color-black);
+    font-size: var(--font-size-sSmall);
+    top: 0;
+    white-space: nowrap;
+    padding: 2px 6px;
+    border-radius: 0.375rem;
+    right: -25px;
+    transform: translateY(-10px);
+    opacity: 0;
+    transition: transform .2s ease-in-out,opacity .3s ease-in-out;
+}
+
+#dashboard .block #main .content main #project-view .btn-out:hover::after
+{
+    transform: translateY(-28px);
+    opacity: 1;
+}
+
+#dashboard .block #main .content main #project-view .btn-out:hover,
+#dashboard .block #main #project-view .user-list-search .custom-btn-app:hover
+{
+    background-color: var(--color-blue);
+}
+#dashboard .block #main .content main #project-view .btn-out:active,
+#dashboard .block #main #project-view .user-list-search .custom-btn-app:active
+{
+    transition: background-color 0.05s ease-in-out;
+    background-color: var(--color-white);
+    color: var(--color-blue);
+}
+
+#dashboard .block #main .content main #project-view .user-list
+{
+    background-color: rgba(var(--color-black-rgb), 0.1);
+}
+
+#dashboard .block #main #project-view .custom-select
+{
+    background-color: rgba(var(--color-white-rgb), 0.8);
+    color: var(--color-black);
 }

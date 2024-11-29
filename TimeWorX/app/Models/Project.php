@@ -58,6 +58,10 @@ class Project extends Model
     {
         return $this->belongsTo(User::class, 'project_manager');
     }
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'project_id');
+    }
 
     /**
      * Scope a query to only include non-deleted projects.
@@ -237,6 +241,15 @@ class Project extends Model
             });
     }
 
+    /**
+     * Đếm số lượng người dùng tham gia dự án.
+     *
+     * @return int
+     */
+    public function countProjectUsers()
+    {
+        return $this->users()->count();
+    }
 
     /**
      * Thống kê trang thái của các task trong project

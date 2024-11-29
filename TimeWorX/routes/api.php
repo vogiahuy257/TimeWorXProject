@@ -11,6 +11,9 @@ use App\Http\Controllers\API\TaskController;
 use App\Http\Controllers\API\PersonalPlanController;
 use App\Http\Controllers\API\TaskCommentController;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
+use App\Http\Controllers\API\ReportCommentController;
+use App\Http\Controllers\API\CalendarController;
+use App\Http\Controllers\API\MeetingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +30,9 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
 
 // Route::middleware(['auth:sanctum'])->group(function () {
     // Route Project
-    Route::apiResource('projects', ProjectController::class);
+    Route::apiResource('projects', ProjectController::class)->except(['index']);
+    Route::get('/projects/{user_id}/projects-tasks', [ProjectController::class, 'index']);
+
     Route::get('/projects/deleted/{user_id}', [ProjectController::class, 'getDeletedProjects']);
     Route::delete('/projects/permanently-delete/{id}', [ProjectController::class, 'permanentlyDeleteProject']);
     Route::get('/projects/restore/{id}', [ProjectController::class, 'restoreProject']);
@@ -35,6 +40,8 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
     Route::put('/projects/{projectId}/user-role', [ProjectController::class, 'updateUserRoleInProject']);
     Route::get('/projects/statistics/{user_id}', [ProjectController::class, 'getStatisticsOfTasks']);
     Route::post('/projects/{project_id}/statistics', [ProjectController::class, 'getProjectStatistics']);
+
+    Route::delete('/projects/{projectId}/remove-user/{userId}', [ProjectController::class, 'removeUserFromProject']);
 
 
 
@@ -77,4 +84,17 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
     Route::get('/users/search', [UserController::class, 'search']);
     Route::get('/users/{userId}/tasks', [UserController::class, 'getAllTaskNameToUser'])->where('userId', '[0-9a-fA-F\-]{36}');
 
+     // Xem danh sách bình luận của một báo cáo
+    Route::get('/reports/{reportId}/comments/{userId}', [ReportCommentController::class, 'index']);
+    Route::post('/reports/{reportId}/comments/{userId}', [ReportCommentController::class, 'store']);
+    Route::delete('/reports/delete/{commentId}/{userId}', [ReportCommentController::class, 'destroy']);
+    Route::post('/reports/comments/{commentId}/pin', [ReportCommentController::class, 'pinComment']);
+    Route::post('/reports/comments/{commentId}/unpin', [ReportCommentController::class, 'unpinComment']);
+
+    Route::post('/calendar/update-event/{eventId}', [CalendarController::class, 'updateEvent']);
+
+    Route::middleware('auth:sanctum')->get('/meetings', [MeetingController::class, 'getUserMeetings']);
+    Route::post('/meetings', [MeetingController::class, 'createMeeting']);
+    Route::middleware('auth:sanctum')->put('/meetings/{meetingId}', [MeetingController::class, 'updateMeeting']);
+    Route::delete('/meetings/{meetingId}', [MeetingController::class, 'deleteMeeting']);
 // });

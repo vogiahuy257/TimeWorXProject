@@ -1,47 +1,30 @@
 
 #dashboard #report-form
 {
-   position: fixed;
-   z-index: 999;
-   background-color: rgba(var(--color-black-rgb), 0.3);
-   width: 100%;
-   height: 100%;
-   top: 0;
-   left: 0;
+   background-color: rgba(var(--color-black-rgb), 0.1);
    border-radius: var(--border-radius-large);
 }
 
 #dashboard #report-form .main
 {
     background-color: var(--color-white);
-    width: 70%;
-    max-width: 840px;
-    height: 100%;
-    margin: auto;
-    position: relative;
     border-radius: var(--border-radius-small);
     box-shadow: 0 0 12px var(--color-shadow);
-    display: flex;
-    flex-direction: column;
     transition: .3s ease;
 }
 
-@media screen and (max-width: 780px) {
-    #dashboard #report-form .main {
-        width: 100%;
-    }
-}
 
 
-#dashboard #report-form .main .btn-close
+#dashboard #report-form .btn-close
 {
     position: absolute;
     top: 14px;
     right: 14px;
     color: var(--color-black);
+    background-color: var(--color-white);
 }
 
-#dashboard #report-form .main .btn-close:hover
+#dashboard #report-form .btn-close:hover
 {
     color: var(--color-red);
 }
@@ -155,4 +138,9 @@
 {
     background-color: var(--color-white);
     color: var(--color-black);
+}
+
+#dashboard #report-form .report-content-task-form
+{
+    background-color: rgba(var(--color-white-rgb), 1);
 }

@@ -4,7 +4,7 @@
 
 /* Global Styles */
 :root{
-    --color-yellow: rgb(241, 194, 27); 
+    --color-yellow: #f1c21b; 
     --color-yellow-rgb: 241, 194, 27;
     --color-cream: #FEF8E8;
     --color-black: #000000; 
@@ -21,8 +21,8 @@
     --color-blue-rgb: 45, 106, 185;
     --color-red: rgb(218, 30, 40);
     --color-red-rgb: 218, 30, 40;
-    --color-green: rgb(37, 162, 73);
-    /* --background: linear-gradient(135deg, #F2F8FC,#fbfcdb); */
+    --color-green: #25a249;
+    --background-y-p: linear-gradient(135deg, #f7d7ff,#fbfcdb);
     --background: linear-gradient(135deg, #F2F8FC,#e6f7ff);
     --background-blue: linear-gradient(135deg, rgba(45, 106, 185, 0.9), rgba(77, 144, 214, 0.9));
     --bg-color-blue-while: #F2F8FC;
@@ -69,8 +69,7 @@
     left: 50%;
     transform: translateX(-50%);
     border-radius: 50%;
-    background-color: #000000;
-    color: white;
+    background-color: #ffffff;
 }
 
 a{
@@ -132,6 +131,12 @@ li
     animation: slide-up 0.2s ease-in-out forwards;
 }
 
+#confirmation-form.error{
+    --color-bg:  246, 75, 60;  /*rgba*/
+   --color-content: #C81912;
+
+}
+
 @keyframes slide-up {
     from {
         transform: translate(-50%,-20%);
@@ -180,10 +185,85 @@ li
 #confirmation-form .btn button:nth-child(1)
 {
     background-color: rgba(var(--color-bg), 1);
-    transition: background-color .2s ease-in-out;
+    transition: .2s ease-in-out;
 }
 
 #confirmation-form .btn button:nth-child(1):hover
 {
     background-color: var(--color-red);
+}
+
+#confirmation-form.error .btn button:nth-child(1)
+{
+    background-color: var(--color-content);
+}
+
+#confirmation-form.error .btn button:nth-child(1):hover{
+    background-color: #F2F8FC;
+    color: var(--color-content);
+}
+
+@layer base {
+  :root {
+        --background: 0 0% 100%;
+        --foreground: 240 10% 3.9%;
+        --card: 0 0% 100%;
+        --card-foreground: 240 10% 3.9%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 240 10% 3.9%;
+        --primary: 240 5.9% 10%;
+        --primary-foreground: 0 0% 98%;
+        --secondary: 240 4.8% 95.9%;
+        --secondary-foreground: 240 5.9% 10%;
+        --muted: 240 4.8% 95.9%;
+        --muted-foreground: 240 3.8% 46.1%;
+        --accent: 240 4.8% 95.9%;
+        --accent-foreground: 240 5.9% 10%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 240 5.9% 90%;
+        --input: 240 5.9% 90%;
+        --ring: 240 10% 3.9%;
+        --chart-1: 12 76% 61%;
+        --chart-2: 173 58% 39%;
+        --chart-3: 197 37% 24%;
+        --chart-4: 43 74% 66%;
+        --chart-5: 27 87% 67%;
+        --radius: 0.5rem;
+    }
+  .dark {
+        --background: 240 10% 3.9%;
+        --foreground: 0 0% 98%;
+        --card: 240 10% 3.9%;
+        --card-foreground: 0 0% 98%;
+        --popover: 240 10% 3.9%;
+        --popover-foreground: 0 0% 98%;
+        --primary: 0 0% 98%;
+        --primary-foreground: 240 5.9% 10%;
+        --secondary: 240 3.7% 15.9%;
+        --secondary-foreground: 0 0% 98%;
+        --muted: 240 3.7% 15.9%;
+        --muted-foreground: 240 5% 64.9%;
+        --accent: 240 3.7% 15.9%;
+        --accent-foreground: 0 0% 98%;
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 240 3.7% 15.9%;
+        --input: 240 3.7% 15.9%;
+        --ring: 240 4.9% 83.9%;
+        --chart-1: 220 70% 50%;
+        --chart-2: 160 60% 45%;
+        --chart-3: 30 80% 55%;
+        --chart-4: 280 65% 60%;
+        --chart-5: 340 75% 55%;
+    }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
 }

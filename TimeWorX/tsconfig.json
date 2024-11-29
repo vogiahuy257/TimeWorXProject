@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "jsx": "react-jsx",                // Hỗ trợ JSX
+    "target": "esnext",                // Mục tiêu biên dịch
+    "module": "esnext",                // Module sử dụng
+    "moduleResolution": "node",       // Cách resolve module
+    "allowSyntheticDefaultImports": true, // Hỗ trợ import mặc định
+    "esModuleInterop": true,          // Tương thích với các module ES
+    "strict": true,                   // Bật chế độ kiểm tra nghiêm ngặt
+    "skipLibCheck": true              // Bỏ qua kiểm tra file .d.ts
+  }
+}

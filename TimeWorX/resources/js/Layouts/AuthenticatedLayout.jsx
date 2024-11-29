@@ -197,7 +197,7 @@ export default function Authenticated({ user, header, children }) {
                                     <p>Reports</p>
                                 </Link>
                             </li>
-                            <li
+                            {/* <li
                                 className={
                                     url.startsWith('/dashboard/chat') ? 'active' : ''
                                 }
@@ -220,7 +220,7 @@ export default function Authenticated({ user, header, children }) {
                                     </svg>
                                     <p>Chat</p>
                                 </Link>
-                            </li>
+                            </li> */}
                             <div style={ url === '/profile' ? { display: 'none' } : {} } className="box-active"></div>
                         </ul>
                     </nav>

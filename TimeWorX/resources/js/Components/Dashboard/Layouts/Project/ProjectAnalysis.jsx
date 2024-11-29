@@ -46,7 +46,7 @@ export default function ProjectAnalysis({ userId, onClose }) {
                     </svg>
                 </button>
 
-                <h1 className='text-xl custom-title'>Project Analysis</h1>
+                <h1 className='text-xl custom-title'>Project Progress</h1>
 
                 <section className='mt-8 space-y-4 max-h-[626px] overflow-y-auto overflow-x-hidden scrollbar-hide'>
                     {loading ? (

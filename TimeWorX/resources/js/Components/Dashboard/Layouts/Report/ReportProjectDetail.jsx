@@ -20,7 +20,6 @@ const ReportProjectDetail = ({ project ,user_id}) => {
                 data['in-progress'] || 0,
                 data['verify'] || 0,
             ]);
-            console.log(pieChartDataValues);
         } catch (error) {
             toast.error("Failed to fetch project statistics.");
         }

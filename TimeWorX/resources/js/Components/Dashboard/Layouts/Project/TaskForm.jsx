@@ -13,7 +13,7 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
     const [deadLineError, setDeadLineError] =useState('');
     // giới hạn task tối đa
     const [confirmUser, setConfirmUser] = useState(null);
-    const taskLimit = 6;
+    const taskLimit = 4;
     
     // sự kiện xem user
     const [viewTaskToUser, setViewTaskToUser] = useState(null);
@@ -48,7 +48,7 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
         const selectedDate = e.target.value;
         setDeadLine(selectedDate);
     
-        if (project_deadline && new Date(selectedDate) < new Date(project_deadline)) {
+        if (project_deadline && new Date(selectedDate) >= new Date(project_deadline)) {
             setDeadLineError(`Deadline cannot be greater than the project's end date: ${formatDeadline(project_deadline)}`);
         } 
         else 
@@ -106,7 +106,7 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
         event.preventDefault();
         let taskData = {};
 
-        if (project_deadline && new Date(deadline) < new Date(project_deadline)) {
+        if (project_deadline && new Date(deadline) >= new Date(project_deadline)) {
             setDeadLineError(`Deadline cannot be greater than the project's end date: ${formatDeadline(project_deadline)}`);
             return;
         }
@@ -261,7 +261,7 @@ const TaskForm = ({onClose, user_id,projectId, refreshTasks, task, task_status,p
                         </div>
 
                         {projectId && (
-                            <div className="user-list custom-scrollbar px-1">
+                            <div className="user-list flex flex-col justify-center items-center p-4 rounded-md custom-scrollbar">
                                 {selectedUsers.map((selectedUser) => (
                                     <div className="user-item" key={selectedUser.id}>
                                         <div className="user-info">

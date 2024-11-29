@@ -8,7 +8,6 @@ const CreateProjectForm = ({ user_id,  onClose, onSubmit, title, project }) => {
     const [projectDescription, setProjectDescription] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [status, setStatus] = useState('');
     const [error, setError] = useState('');
     const [nameError, setNameError] = useState('');
     const [descriptionError, setDescriptionError] = useState('');
@@ -29,7 +28,6 @@ const CreateProjectForm = ({ user_id,  onClose, onSubmit, title, project }) => {
             setProjectDescription(project.project_description);
             setStartDate(formatDate(project.start_date));
             setEndDate(formatDate(project.end_date));  
-            setStatus(project.project_status);
         }
     }, [project]);
 
@@ -109,7 +107,7 @@ const CreateProjectForm = ({ user_id,  onClose, onSubmit, title, project }) => {
             project_description: projectDescription,
             start_date: startDate,
             end_date: endDate,
-            project_status: status,
+            project_status: 'to-do',
             user_id: user_id,
         };
          onSubmit(projectData);
@@ -180,20 +178,6 @@ const CreateProjectForm = ({ user_id,  onClose, onSubmit, title, project }) => {
                             </div>
                         </div>
                         {error && <p className="error-message">{error}</p>}
-                    </div>
-
-                    <label>Status</label>
-                   <div className='project-status mb-3'>
-                    <select
-                        value={status}
-                        onChange={(e) =>  setStatus(e.target.value)}
-                    >
-                        <option value="null">Select Status</option>
-                        <option value="done">Done</option>
-                        <option value="in-progress">In Progress</option>
-                        <option value="to-do">To Do</option>
-                        <option value="verify">Verify</option>
-                    </select>
                     </div>
 
                     <PrimaryButton type="submit" className="btn-submit">

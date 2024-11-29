@@ -82,7 +82,7 @@ class ReportController extends Controller
      *
      * @param  Report  $report
      */
-    public function show(Request $request, $id)
+    public function show(Request $request)
     {
         $validatedData = $request->validate([
             'project_id' => 'required|exists:projects,project_id',

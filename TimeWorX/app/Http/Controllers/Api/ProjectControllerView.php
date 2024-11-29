@@ -27,7 +27,8 @@ class ProjectControllerView extends Controller
                 'id' => $project->project_id, 
                 'name' => $project->project_name, 
                 'description' => $project->project_description, 
-                'deadline' => $project->end_date
+                'deadline' => $project->end_date,
+                'user_count' => $project->countProjectUsers(),
             ],
             'tasks' => [
                 'to-do' => [],
@@ -57,6 +58,7 @@ class ProjectControllerView extends Controller
                     }),
                     'deadline' => $task->formatted_deadline,
                     'status' => $task->status_key,
+                    'created_at' => $task->created_at,
                     'is_late' => $task->is_late,
                     'is_near_deadline' => $task->is_near_deadline,
                 ];

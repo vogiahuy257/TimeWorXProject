@@ -97,6 +97,6 @@ class Task extends Model
     // Định nghĩa hàm để lấy định dạng ngày deadline (nếu cần)
     public function getFormattedDeadlineAttribute()
     {
-        return Carbon::parse($this->deadline)->format('d-m-Y');
+        return Carbon::parse($this->deadline)->format('d-m-Y h:i A');
     }
 }

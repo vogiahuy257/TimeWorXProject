@@ -73,4 +73,25 @@ class Report extends Model
     {
         return $this->belongsTo(Task::class, 'task_id', 'task_id');
     }
+
+    /**
+     * Get the comments for the report.
+     */
+    public function comments()
+    {
+        return $this->hasMany(ReportComment::class, 'report_id', 'report_id');
+    }
+
+    /**
+     * Lấy tất cả bình luận của báo cáo, phân biệt giữa project manager và staff.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getCommentsWithRole()
+    {
+        return $this->comments()->with('user')->get()->map(function ($comment) {
+            $comment->role = $comment->is_project_manager ? 'Project Manager' : 'Staff';
+            return $comment;
+        });
+    }
 }

@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'f7b7ea9710986872e99bd28a7b6844183f5bb51d',
+        'reference' => '7fd1748066edd37ac079d34ca050fe6e94c5b083',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -442,7 +442,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'f7b7ea9710986872e99bd28a7b6844183f5bb51d',
+            'reference' => '7fd1748066edd37ac079d34ca050fe6e94c5b083',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -1090,6 +1090,15 @@
             'replaced' => array(
                 0 => '*',
             ),
+        ),
+        'swiftmailer/swiftmailer' => array(
+            'pretty_version' => 'v5.4.12',
+            'version' => '5.4.12.0',
+            'reference' => '181b89f18a90f8925ef805f950d47a7190e9b950',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../swiftmailer/swiftmailer',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'symfony/clock' => array(
             'pretty_version' => 'v7.1.1',

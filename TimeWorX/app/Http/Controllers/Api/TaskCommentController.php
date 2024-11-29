@@ -40,10 +40,17 @@ class TaskCommentController extends Controller
     {
         $validatedData = $request->validate([
             'task_id' => 'required|integer|exists:tasks,task_id',
-            'user_id' => 'required|integer|exists:users,id',
+            'user_id' => [
+                'required',
+                'string',
+                'regex:/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/',
+                'exists:users,id'
+            ],
             'comment_text' => 'required|string',
             'is_manager_comment' => 'boolean',
         ]);
+        
+        
 
         // Tạo bình luận mới
         $comment = TaskComment::create($validatedData);
