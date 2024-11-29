@@ -7,6 +7,7 @@ import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list'
 import axios from 'axios'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import MeetingForm from '../Meeting/MeetingForm'
 import './css/customCalendar.css'
 
 
@@ -59,13 +60,27 @@ const SimpleCalendar = ({ selectedDate, onChange }) => {
   )
 }
 
-function FullCalendarComponent({ auth }) {
+function FullCalendarComponent({ auth , callCreateToken}) {
   const [date, setDate] = useState(new Date())
   const [events, setEvents] = useState([])
   const [projects, setProjects] = useState([])
   const [selectedProjectId, setSelectedProjectId] = useState('allproject')
   const [currentView, setCurrentView] = useState('dayGridMonth')
   const calendarRef = useRef(null)
+
+  const [meetings, setMeetings] = useState([]);
+  const [currentMeeting, setCurrentMeeting] = useState(null);
+  const [isFormOpen, setIsFormOpen] = useState(false); 
+
+  const handleOpenFormCreateMeeting = () => {
+        setCurrentMeeting(null);
+        setIsFormOpen(!isFormOpen);
+    };
+
+    const handleEditMeeting = (meeting) => {
+        setCurrentMeeting(meeting);
+        setIsFormOpen(true);
+    };
 
   const fetchProjects = async () => {
     try {
@@ -84,12 +99,42 @@ function FullCalendarComponent({ auth }) {
           isProject: true
         },
       }))
-      setEvents(mappedEvents)
+      setEvents(prevEvents => [...prevEvents, ...mappedEvents]);
       setProjects(projectData.projects)
     } catch (error) {
       console.error('Error fetching projects:', error)
     }
   }
+
+  const getDataMeeting = () => {
+    callCreateToken();
+      axios.get('/api/meetings')
+      .then(response => {
+        const meetingsData = response.data;
+
+        const mappedEvents = meetingsData.map((task) => ({
+          id: task.meeting_id,
+          title: task.meeting_name,
+          start: new Date(task.updated_at).toISOString(), // Chuyển đổi thành ISO 8601
+          end: new Date(task.meeting_date).toISOString(),
+          meeting_time: task.meeting_time,
+          description: task.meeting_description,
+          created_by: task.creator.name,
+          type:"meeting"
+        }))
+        setEvents(mappedEvents);
+
+        setMeetings(response.data);
+          
+      })
+      .catch(error => {
+          console.error('Error fetching meetings:', error);
+      });
+  }
+
+  useEffect(() => {
+    getDataMeeting();
+  }, [auth.user]);
 
   const fetchEvents = async (projectId) => {
     if (projectId === 'allproject') {
@@ -121,7 +166,7 @@ function FullCalendarComponent({ auth }) {
             },
           };
         });
-        setEvents(mappedEvents);
+        setEvents(prevEvents => [...prevEvents, ...mappedEvents]);
       } catch (error) {
         console.error('Error fetching events:', error);
       }
@@ -141,6 +186,8 @@ function FullCalendarComponent({ auth }) {
 
     // Kiểm tra loại sự kiện dựa trên thuộc tính extendedProps (hoặc thêm thuộc tính riêng để phân biệt)
     const isProject = event.extendedProps.isProject; // giả sử có thuộc tính isProject trong extendedProps
+
+    if(event.type_event == 'meeting') return;
 
     axios.post(`/api/calendar/update-event/${event.id}`, {
         start: event.start,
@@ -164,7 +211,7 @@ function FullCalendarComponent({ auth }) {
     const { event } = info
     // Kiểm tra loại sự kiện dựa trên thuộc tính extendedProps (hoặc thêm thuộc tính riêng để phân biệt)
     const isProject = event.extendedProps.isProject; // giả sử có thuộc tính isProject trong extendedProps
-
+    if(event.type_event == 'meeting') return;
     axios.post(`/api/calendar/update-event/${event.id}`, {
       start: event.start,
       end: event.end,
@@ -234,7 +281,7 @@ function FullCalendarComponent({ auth }) {
       (eventStart >= todayStart && eventStart <= todayEnd) || // Bắt đầu trong hôm nay
       (eventEnd >= todayStart && eventEnd <= todayEnd) || // Kết thúc trong hôm nay
       (eventStart <= todayStart && eventEnd >= todayEnd) // Bao trùm cả ngày hôm nay
-    );
+    )&& !(event.type && event.type === 'meeting');
   });
   
 
@@ -277,6 +324,7 @@ function FullCalendarComponent({ auth }) {
           </button>
         </div>
         <div className="menu mb-4 flex gap-2 items-center">
+
           <h1 className='text-base font-semibold'>Filter: </h1>
           <select
             className="project-dropdown rounded-md text-sm w-full"
@@ -306,6 +354,43 @@ function FullCalendarComponent({ auth }) {
           </div>
         )}
 
+        {meetings && (
+          <div className='p-4 mt-4 space-y-2 flex-grow rounded-lg border border-gray-300 shadow-lg'>
+            <h2 className="font-base text-base">Your Meeting</h2>
+                      {meetings.length === 0 ? (
+                            <p className='mx-auto mt-[38%] px-4 py-2 rounded-md'>Không có cuộc họp nào.</p>
+                        ) : (
+                            <ul className="p-3 meeting-list w-full flex flex-col h-auto overflow-y-auto max-h-[230px] scrollbar-hide rounded-xl sm:max-h-[500px]">
+                                {meetings.map((meeting) => (
+                                    <li key={meeting.meeting_id} className="meeting-item w-full border rounded-xl pt-2 p-4 mb-2 shadow">
+                                        <button 
+                                            className='flex flex-col w-full relative'
+                                            onClick={() => handleEditMeeting(meeting)}
+                                        >
+
+                                                <h3 className="text-base font-semibold mb-1">{meeting.meeting_name}</h3>
+
+                                                <div className=" flex items-center text-sm mb-3">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="currentColor"><path d="M580-240q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Z"/></svg>
+                                                    <p className='ml-1'> {format(new Date(meeting.meeting_date), 'dd-MM-yyyy')} - {format(new Date(`${format(new Date(meeting.meeting_date), 'yyyy-MM-dd')}T${meeting.meeting_time}.000000Z`), 'hh:mm a')}</p>
+                                                </div>
+
+                                            {/* <p className="text-sm">description: {meeting.meeting_description || 'Không có mô tả.'}</p> */}
+                                            <div className="flex items-center text-sm">
+                                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M11.4635 11.3199C11.7859 11.2527 11.978 10.9152 11.8178 10.6274C11.4645 9.99297 10.908 9.43544 10.1961 9.01056C9.27918 8.46335 8.15577 8.16675 7.00007 8.16675C5.84436 8.16675 4.72095 8.46335 3.80407 9.01055C3.09215 9.43543 2.53563 9.99296 2.18238 10.6274C2.02214 10.9152 2.21419 11.2527 2.53667 11.3199C5.48064 11.9334 8.51949 11.9334 11.4635 11.3199Z" fill="currentColor"/>
+                                                    <circle cx="6.99992" cy="4.66667" r="2.91667" fill="currentColor"/>
+                                                </svg>
+                                                <p className='ml-1'>Create by:  {meeting.creator.name}</p>
+                                            </div>
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+          </div>
+        )}
+
       </div>
 
       {/* Main Content */}
@@ -326,7 +411,7 @@ function FullCalendarComponent({ auth }) {
               <option value="timeGridDay">Day</option>
               <option value="listWeek">List</option>
             </select>
-              <button className="btn-meeting flex justify-center items-center px-2 py-2 rounded-md">
+              <button onClick={handleOpenFormCreateMeeting} className="btn-meeting flex justify-center items-center px-2 py-2 rounded-md">
                 Create meeting
               </button>
           </div>
@@ -365,6 +450,9 @@ function FullCalendarComponent({ auth }) {
           />
         </div>
       </div>
+      {isFormOpen && (
+                <MeetingForm styles={"z-50"} onClose={handleOpenFormCreateMeeting} auth={auth} meeting={currentMeeting} callCreateToken = {callCreateToken} getData = {getDataMeeting}/>
+            )}
     </div>
   )
 }

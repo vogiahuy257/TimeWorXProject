@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "./css/meeting.css";
 
-const MeetingForm =  ({ onClose, auth ,meeting ,callCreateToken ,getData}) => {
+const MeetingForm =  ({ styles, onClose, auth ,meeting ,callCreateToken ,getData}) => {
   const [formData, setFormData] = useState({
     meeting_name: "",
     meeting_description: "",
@@ -81,7 +81,7 @@ const MeetingForm =  ({ onClose, auth ,meeting ,callCreateToken ,getData}) => {
   );
 
   return (
-    <div id="form-meeting" className=" fixed flex w-full h-full top-0 left-0 rounded-lg">
+    <div id="form-meeting" className={`${styles} fixed flex w-full h-full top-0 left-0 rounded-lg`}>
         <div  className="main h-[90%] p-4 max-w-[800px] flex flex-row-reverse rounded-md relative w-[80%] m-auto">
 
             <button className="btn-close pt-4 px-1 pb-1 rounded-b-full absolute top-0 right-4 " onClick={onClose}>

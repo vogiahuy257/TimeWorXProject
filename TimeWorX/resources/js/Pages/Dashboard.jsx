@@ -29,7 +29,7 @@ export default function Dashboard({ auth ,token}) {
                 <Routes>
                     <Route path="/dashboard" element={<DashboardHome auth={auth} callCreateToken = {callCreateToken}/>} />
                     <Route path="/dashboard/chat" element={<DashboardChat auth={auth} />} />
-                    <Route path="/dashboard/calendar" element={<DashboardCalendar auth={auth}/>} />
+                    <Route path="/dashboard/calendar" element={<DashboardCalendar auth={auth} callCreateToken = {callCreateToken}/>} />
                     <Route path="/dashboard/project" element={<DashboardProject auth={auth}/>} />
                     <Route path="/dashboard/reports" element={<DashboardReport auth={auth}/>} />
                     <Route path="/dashboard/task" element={<DashboardTask auth={auth}/>} />

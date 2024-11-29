@@ -68,11 +68,13 @@ Welcome to **TimeWorX Project**! This is our project, developed by Võ Gia Huy a
 
 ```bash
  php artisan migrate
+
+ php artisan migrate:fresh --seed
 ```
 
 4. **Running the Application:**
 
-- Open two terminal tabs:
+- Open three terminal tabs:
  
 - **Backend:**
 
@@ -81,10 +83,15 @@ In one terminal, start the backend server:
 ```bash
  php artisan serve
 ```
+In another terminal, start the queue worker:
+
+```bash
+  php artisan queue:work
+```
 
 - **Frontend:**: 
 
-In the other terminal, start the frontend application:
+In the third terminal, start the frontend application:
 
 ```bash
    npm install && npm run dev
