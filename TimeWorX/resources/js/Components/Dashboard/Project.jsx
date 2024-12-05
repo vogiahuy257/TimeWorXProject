@@ -9,6 +9,7 @@ import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DeletedProjectsForm from './Layouts/Project/DeletedProjectsForm'; 
 import ProjectAnalysis from './Layouts/Project/ProjectAnalysis';
+import ConfirmationForm from '../ConfirmationForm';
 
 
 export default function Folder({ auth }) {
@@ -20,6 +21,7 @@ export default function Folder({ auth }) {
     const [isOpenProjectAnalysis, setIsOpenProjectAnalysis] = useState(false);
     const [editProject, setEditProject] = useState([]); 
     const [searchQuery, setSearchQuery] = useState('');
+    const [onChangeDeteleProject, setOnChangeDeteleProject] = useState(null);
     
     const statusOrder = {
         "verify": 1,
@@ -62,11 +64,9 @@ export default function Folder({ auth }) {
         setFilteredProjects(sortProjectsByStatus(filteredProjects));
     }, [searchQuery]);
 
-    // hàm mới form xóa
-    const handleDeletedFormToggle = () => {
-        setIsDeletedFormOpen(!isDeletedFormOpen);  
-    };
-
+    const handleDeletedFormToggle = () =>{
+        setIsDeletedFormOpen(!isDeletedFormOpen);
+    }
     //hàm đổi lại format lại ngày tháng năm
     const formatDateRange = (startDate, endDate) => {
         const optionsWithYear = { day: '2-digit', month: 'short', year: 'numeric' };
@@ -86,24 +86,16 @@ export default function Folder({ auth }) {
         }
     };
 
-    //hàm hiện thông báo khi xóa chọn yes hoặc no
-    const handleDelete = (projectId) => {
-        toast.info(
-            <div id='customToastInfo'>
-                <p>Are you sure you want to delete this project?</p>
-                <div className='box-btn'>
-                    <button  onClick={() => confirmDelete(projectId)}>Yes</button>
-                    <button onClick={()=>toast.dismiss()} className='btn-no'>No</button>
-                </div>
-            </div>,
-            { autoClose: false }
-        );
-    };
-    
-    const handleProjectAnalysis = () => 
-    {
-        setIsOpenProjectAnalysis(!isOpenProjectAnalysis);
+    const isDeteleProject = (project) => {
+        setOnChangeDeteleProject(project);
     }
+    //hàm hiện thông báo khi xóa chọn yes hoặc no
+    const handleConfirmDeleteProject = (isConfirmed) => {
+        if (isConfirmed && onChangeDeteleProject) {
+            confirmDelete(onChangeDeteleProject.project_id);
+        }
+        setOnChangeDeteleProject(null); 
+    };
     //hàm cho sự kiện khi nhấn vào nút xóa
     const confirmDelete = (projectId) => {
         axios.delete(`/api/projects/${projectId}`)
@@ -111,12 +103,19 @@ export default function Folder({ auth }) {
                 setProjects(projects.filter(project => project.project_id !== projectId));
                 toast.dismiss(); 
                 fetchProjectData();
+                handleDeletedFormToggle();
                 toast.success('Project deleted successfully!');
             })
             .catch(error => {
                 toast.error(`Error deleting project: ${error.response ? error.response.data : error.message}`);
             });
     };
+    
+    const handleProjectAnalysis = () => 
+    {
+        setIsOpenProjectAnalysis(!isOpenProjectAnalysis);
+    }
+    
 
     //hàm mở form tạo dự án
     const handleCreate = () => {
@@ -218,7 +217,7 @@ export default function Folder({ auth }) {
                                 key={project.project_id}
                                 project={project}
                                 formatDateRange={formatDateRange}
-                                handleDelete={handleDelete}
+                                handleDelete={isDeteleProject}
                                 handleEdit={handleEdit}
                             />
                         ))}
@@ -251,6 +250,24 @@ export default function Folder({ auth }) {
                     user_id={auth.user.id}
                 />
             )}
+
+                {onChangeDeteleProject && (
+                    <ConfirmationForm
+                        type={'help'}
+                        styleToBox = {"absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[530px]"}
+                        styleToChildren={``}
+                        children={
+                            <>
+                                Do you want to archive the project{' '}
+                                <span className="font-semibold text-indigo-700">
+                                    '{onChangeDeteleProject.project_name}'
+                                </span>
+                                {' '}?<br /> <span className='text-sm font-light text-gray-50'>It will be moved to history and can be restored later.</span>
+                            </>
+                          }                          
+                        handleConfirm={handleConfirmDeleteProject}
+                    />
+                )}
         </section>
     );
 }

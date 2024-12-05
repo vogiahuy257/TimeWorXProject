@@ -3,7 +3,7 @@ import React from "react";
 const ConfirmationForm = ({ type,styleToBox, styleToChildren,children, handleConfirm }) => {
 
     return (
-        <div id="confirmation-form" className={`${type} rounded-2xl pr-3 flex ${styleToBox}`}>
+        <div id="confirmation-form" className={`${type} rounded-2xl pr-2 flex ${styleToBox}`}>
 
             <div className="w-1/4 h-full relative">
                 {type == 'help' && 
@@ -48,7 +48,7 @@ const ConfirmationForm = ({ type,styleToBox, styleToChildren,children, handleCon
                     {type == "error" && (
                         <p className="ml-4 text-3xl mb-2">Oh snap!</p>
                     )}
-                    <p className={`${type == 'error' ? 'ml-4 text-sm':null} font-normal ${styleToChildren}`}>{children}</p>
+                    <p className={`${type == 'error' ? 'ml-4 text-sm':null} ${styleToChildren}`}>{children}</p>
                 </div>
                 <div className="btn mt-4">
                     {type == "error" ? (
