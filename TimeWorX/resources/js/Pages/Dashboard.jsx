@@ -28,14 +28,14 @@ export default function Dashboard({ auth ,token}) {
         };
 
         useEffect(() => {
-            const savedToken = localStorage.getItem('authToken') || token; // Kiểm tra cả localStorage và props
+            const savedToken = token || localStorage.getItem('authToken'); // Kiểm tra cả localStorage và props
             if (savedToken) {
                 callCreateToken(savedToken); // Thiết lập token
             } else {
                 console.warn("No token found, redirecting to login...");
                 setIsTokenReady(true); // Tiếp tục nếu token không có (dành cho các route công khai)
             }
-        }, [token]); // Lắng nghe thay đổi token từ props
+        }, [token]);        
 
         if (!isTokenReady) {
             // Render loading state hoặc giữ lại cho đến khi token được thiết lập
