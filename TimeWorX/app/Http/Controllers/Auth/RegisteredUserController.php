@@ -28,29 +28,59 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
+    // public function store(Request $request): RedirectResponse
+    // {
+    //     $request->validate([
+    //         'name' => 'required|string|max:255',
+    //         'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+    //         'password' => ['required', 'confirmed', Rules\Password::defaults()],
+    //     ]);
+
+    //     $user = User::create([
+    //         'name' => $request->name,
+    //         'email' => $request->email,
+    //         'password' => Hash::make($request->password),
+    //     ]);
+
+    //     event(new Registered($user));
+    //     $user = Auth::user();
+        
+    //     $token = $user->createToken('timeworx')->plainTextToken;
+    //     $request->session()->put('token', $token);
+
+    //     $user->createToken('timeworx')->plainTextToken;
+    //     Auth::login($user);
+        
+
+    //     return redirect(route('dashboard', absolute: false));
+    // }
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        // Tạo người dùng mới
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
+        // Tạo token và lưu vào session
         event(new Registered($user));
-        $user = Auth::user();
-        
+
+        // Đăng nhập người dùng
+        Auth::login($user);
+
+        // Tạo token sau khi login thành công
         $token = $user->createToken('timeworx')->plainTextToken;
         $request->session()->put('token', $token);
-        $user->createToken('timeworx')->plainTextToken;
-        Auth::login($user);
-        
 
+        // Chuyển hướng đến dashboard
         return redirect(route('dashboard', absolute: false));
     }
+
 }

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('profile_picture', 255)->nullable(); // Profile picture
-            $table->string('role');
+            $table->string('role')->default('user');
             $table->softDeletes();
             $table->timestamps();   
         });

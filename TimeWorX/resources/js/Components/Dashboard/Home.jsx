@@ -26,7 +26,6 @@ export default function Home({ auth,callCreateToken }) {
     };
 
     const getData = () => {
-        callCreateToken();
         axios.get('/api/meetings')
         .then(response => {
             setMeetings(response.data); // Lưu danh sách cuộc họp vào state
@@ -40,6 +39,7 @@ export default function Home({ auth,callCreateToken }) {
 
     useEffect(() => {
         getData();
+        callCreateToken();
     }, [auth.user]);
 
     if (loading) {

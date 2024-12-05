@@ -107,7 +107,6 @@ function FullCalendarComponent({ auth , callCreateToken}) {
   }
 
   const getDataMeeting = () => {
-    callCreateToken();
       axios.get('/api/meetings')
       .then(response => {
         const meetingsData = response.data;
@@ -134,6 +133,7 @@ function FullCalendarComponent({ auth , callCreateToken}) {
 
   useEffect(() => {
     getDataMeeting();
+    callCreateToken();
   }, [auth.user]);
 
   const fetchEvents = async (projectId) => {

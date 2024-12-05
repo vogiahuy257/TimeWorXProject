@@ -64,7 +64,10 @@ test('user can delete their account', function () {
         ->assertRedirect('/');
 
     $this->assertGuest();
-    $this->assertNull($user->fresh());
+    
+    // Kiểm tra xem người dùng đã bị soft delete (có trường deleted_at không)
+    $user = $user->fresh();  // Refresh lại người dùng từ database
+    $this->assertNotNull($user->deleted_at);  // Trường deleted_at phải được thiết lập
 });
 
 test('correct password must be provided to delete account', function () {
