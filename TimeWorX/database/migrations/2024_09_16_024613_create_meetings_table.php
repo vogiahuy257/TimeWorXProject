@@ -21,6 +21,8 @@ return new class extends Migration
             $table->timestamps(); // created_at, updated_at
             $table->string('meeting_type', 60)->nullable(); // Meeting type
             $table->foreign('created_by_user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->boolean('is_flagged')->default(false);
             $table->softDeletes();
         });
 
