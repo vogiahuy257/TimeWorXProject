@@ -23,6 +23,7 @@ return new class extends Migration
             $table->uuid('project_manager'); // Chuyển từ foreignId sang uuid
             $table->softDeletes();
 
+            $table->boolean('is_flagged')->default(false); // Cờ pinh thông báo project có thay đổi
             $table->foreign('project_manager')->references('id')->on('users')->onDelete('cascade');
         });
 

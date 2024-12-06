@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('next_steps')->nullable(); // Các việc sẽ làm tiếp
             $table->string('issues')->nullable(); // Vấn đề gặp phải/khó khăn
 
+            
+            $table->boolean('is_flagged')->default(false);//cờ pinh cho báo cáo mới
             $table->foreign('report_by_user_id')->references('id')->on('users')->onDelete('cascade');
         });
 

@@ -20,6 +20,8 @@ return new class extends Migration
             $table->uuid('user_id');  // Foreign key to 'users' table (người bình luận)
             $table->boolean('is_manager_comment')->default(false);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->boolean('is_flagged')->default(false); // cờ đánh dấu có bình luận mới
             $table->softDeletes();
         });
     }

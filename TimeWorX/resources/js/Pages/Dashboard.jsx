@@ -14,6 +14,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
 export default function Dashboard({ auth ,token}) {
+
+        
         const [isTokenReady, setIsTokenReady] = useState(false); // Trạng thái kiểm tra token
 
         const callCreateToken = (savedToken) => {
