@@ -1,27 +1,32 @@
 # TimeWorX Project - (28-08-2024)
-
-![TimeWorX Banner](backgourd.png)
+<div align="center">
+  <img src="./image/background.png" alt="TimeWorX Banner" style="border-radius: 1.75rem; width: 100%; max-width:980px" />
+</div>
 
 ## 💡 Introduction
 
-Welcome to **TimeWorX Project**! This is our project, developed by Võ Gia Huy and Lê Nguyễn Bảo Trân, aimed at creating an efficient time management and planning website. The project is built with modern technology to provide an optimal user experience. Võ Gia Huy serves as the **Full Stack Developer**, responsible for developing all components of the project, while Lê Nguyễn Bảo Trân plays a crucial role in **Business Analysis**, ensuring that the project meets business needs and user experience expectations.
+Welcome to TimeWorX Project! This is our project, developed by Võ Gia Huy and Lê Nguyễn Bảo Trân, aimed at creating an efficient time management and planning website. The project is built with modern technology to provide an optimal user experience. Võ Gia Huy serves as the Full Stack Developer, responsible for developing all components of the project, while Lê Nguyễn Bảo Trân plays a crucial role in Business Analysis, ensuring that the project meets business needs and user experience expectations.
+
+---
+
+## 🛠 Tech Stack
+
+| **Frontend**                                                                 | **Backend**                                                                  | **Database**                                                              |
+|:-----------------------------------------------------------------------------:|:---------------------------------------------------------------------------:|:-------------------------------------------------------------------------:|
+| <div style="text-align: center; padding: 10px;"> <img src="./image/react.svg" alt="React" width="24" style="vertical-align: middle; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/> <br /> React.js </div> | <div style="text-align: center; padding: 10px;"> <img src="./image/laravel.svg" alt="Laravel" width="24" style="vertical-align: middle;  box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/> <br /> Laravel </div> | <div style="text-align: center; padding: 10px;"> <img src="./image/mysql.svg" alt="MySQL" width="28" style="vertical-align: middle; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/> <br /> MySQL </div> |
 
 
-## 🚀 **Project Information**
+---
 
-- **Frontend**: React.js
-- **Backend**: Laravel
-- **Database**: MySQL
+## 🌟 Features
 
-## 💡 **Features**
-
-### **For Individuals**
+### **👤 For Individuals**
 
 - **Meeting Management**: Helps users organize their daily tasks and manage time more effectively.
 - **Personal Work Calendar**: Allows users to create and manage their personal work schedules.
 - **View Company Work Calendar**: Users can view the company's work calendar assigned by project managers, helping them review and organize their tasks more efficiently.
 
-### **For Organizations**
+### **🏢 For Organizations**
 
 - **Employee Management**: Project managers can easily manage employees with features like creating meeting schedules and assigning tasks.
 - **Task Assignment**: Allows for creating and assigning tasks to employees.
@@ -29,101 +34,78 @@ Welcome to **TimeWorX Project**! This is our project, developed by Võ Gia Huy a
 - **Comments**: Commenting feature for exchanging ideas and information among team members.
 - **Personal Task Management**: Project managers can use it to organize their own tasks.
 
+---
 
+## 🚀 Getting Started
 
-## 📦 **Setup**
+### Prerequisites
+- PHP: Version 8.3.7+
+- MySQL: Version 8.0.37+
 
-1. **Clone Repository:**
+### Setup
 
-- First, clone the repository to your local machine:
-
-```bash
+1. **Clone Repository**
+   ```bash
    git clone https://github.com/vogiahuy257/TimeWorXProject.git
    cd TimeWorX
-```
+   ```
 
-2. **Setup Frontend:**
-
-- Navigate to the front-end directory and install dependencies:
-
-```bash
-    npm install && npm run dev
-```
-
-3. **Setup Backend:**
-
-- Navigate to the back-end directory and install dependencies:
-
-```bash
-    composer install
-```
-
-- **Database Configuration::**
-
-- Create a MySQL database and configure the connection details in the .env file located in the /api directory.
-
- ![alt text](image.png)
-
-- After setup, run the following command to initialize the database with Laravel migrations:
-
-```bash
- php artisan migrate
-
- php artisan migrate:fresh --seed
-```
-
-4. **Running the Application:**
-
-- Open three terminal tabs:
- 
-- **Backend:**
-
-In one terminal, start the backend server:
-
-```bash
- php artisan serve
-```
-In another terminal, start the queue worker:
-
-```bash
-  php artisan queue:work
-```
-
-- **Frontend:**: 
-
-In the third terminal, start the frontend application:
-
-```bash
+2. **Setup Frontend**
+   ```bash
    npm install && npm run dev
-```
- 
-- **Open your browser and navigate to:**: http://localhost:8000
-- **Now, you are ready to use the application with both frontend and backend running.**
+   ```
 
-## 🌐 **About Us**
+3. **Setup Backend**
+   ```bash
+   composer install
+   ```
 
-### **Võ Gia Huy**
+4. **Database Configuration**
+   - Create a MySQL database
+   - Configure .env file in /api directory
 
-- **Role**: Full Stack Developer
-- **GitHub**: [https://github.com/vogiahuy257](https://github.com/vogiahuy257)
-- **Portfolio Page**: [https://vogiahuy257.github.io/VoGiaHuyProfolioReactjs/](https://vogiahuy257.github.io/VoGiaHuyProfolioReactjs/)
-- **Facebook**: [Gia Huy Vo](https://www.facebook.com/profile.php?id=100023020324055)
-- **LinkedIn**: [Võ Gia Huy](https://www.linkedin.com/in/v%C3%B5-gia-huy-2045352bb/)
+   <img src="./image/image.png" alt="Database Config" style="max-width: 100%;" />
 
-### **Lê Nguyễn Bảo Trân**
+5. **Run Migrations**
+   ```bash
+   php artisan migrate
+   php artisan migrate:fresh --seed
+   ```
 
-- **Role**: Business Analyst
-- **LinkedIn**: [Le Nguyen Bao Tran](https://www.linkedin.com/in/lenbtr/)
-- **Facebook**: [Bảo Trân (Cheese)](https://www.facebook.com/profile.php?id=61552261400890)
+6. **Run Application**
 
-## 📞 **Contact**
+   To run the application, **open 3 terminal tabs** and execute the following commands:
+   
+     1. **Backend:**
+        - In the first terminal, run the following command to start the backend server:
+        ```bash
+        php artisan serve
+        ```
 
-### **Võ Gia Huy**
-  - **Email**: [vogiahuy257@gmail.com](mailto:vogiahuy257@gmail.com)
-  - **Phone Number**: 0908335809
+     2. **Queue Worker:**
+        - In the second terminal, start the queue worker:
+        ```bash
+        php artisan queue:work
+        ```
 
-### **Lê Nguyễn Bảo Trân**
-  - **Email**: [lngbaotran3008@gmail.com](lngbaotran3008@gmail.com)
-  - **Phone Number**: 0348033026
+     3. **Frontend:**
+        - In the third terminal, run the following command to start the frontend application:
+        ```bash
+        npm run dev
+        ```
 
+   - **Visit the application:**
+     - Open your browser and navigate to [http://localhost:8000](http://localhost:8000).
+
+---
+
+## 👥 About Us
+
+### Võ Gia Huy
+- 💻 Full Stack Developer
+- [GitHub](https://github.com/vogiahuy257) | [Portfolio](https://vogiahuy257.github.io/VoGiaHuyProfolioReactjs/) | [Facebook](https://www.facebook.com/profile.php?id=100023020324055) | [LinkedIn](https://www.linkedin.com/in/v%C3%B5-gia-huy-2045352bb/)
+
+### Lê Nguyễn Bảo Trân
+- 📊 Business Analyst
+- [LinkedIn](https://www.linkedin.com/in/lenbtr/) | [Facebook](https://www.facebook.com/profile.php?id=61552261400890)
 
