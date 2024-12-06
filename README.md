@@ -39,7 +39,7 @@ Welcome to **TimeWorX Project**! This is our project, developed by Võ Gia Huy a
 
 ```bash
    git clone https://github.com/vogiahuy257/TimeWorXProject.git
-   cd TimeWorkX
+   cd TimeWorX
 ```
 
 2. **Setup Frontend:**

@@ -23,6 +23,8 @@ return new class extends Migration
             $table->timestamps();
             $table->uuid('assigned_to_user_id')->nullable(); // Chuyển khóa ngoại thành UUID
             $table->foreign('assigned_to_user_id')->references('id')->on('users')->onDelete('set null'); // Foreign key to 'users' table
+            
+            $table->boolean('is_flagged')->default(false); // Cờ pinh thông báo task có thay đổi
             $table->softDeletes();
         });
     }
