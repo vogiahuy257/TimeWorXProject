@@ -1,0 +1,1 @@
+import{j as s,a as r}from"./app-muOBJ7eE.js";function o({children:e}){return s.jsx("div",{children:s.jsxs("div",{children:[s.jsx(r,{href:"/",className:"logo shadow-md flex justify-center items-center",children:s.jsx("img",{src:"/image/logo-small.svg",alt:"Logo"})}),e]})})}export{o as G};
