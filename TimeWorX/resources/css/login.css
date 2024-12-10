@@ -13,32 +13,46 @@
     align-items: center;
 }
 
+#login .btn-back
+{
+    background-color: black;
+    color: white;
+    border-radius: 0.375rem;
+    padding: 0.275rem 0.2rem;
+    width: 80px;
+}
+
+#login .btn-back:hover{
+    background-color: #ffff;
+    color: black;
+}
+
 #login .block
 {
     display: flex;
     flex-direction: column;
     text-align: center;
     background: var(--color-white);
-    width: 400px; 
-    height: 500px; 
+    width: 380px; 
+    height: auto; 
     border-radius: var(--border-radius-large);
     box-shadow: 0px 4px 5px var(--color-shadow);
     position: fixed;
     top: 55%;
     left: 50%;
     transform: translate(-50%,-50%);
+    padding: 1.75rem 1.375rem;
 }
 
 #login .block .block-text{
-    margin-top: 2.5rem;
     font-size: var(--font-size-large);
     font-weight: var(--font-weight-bold);
 }
 
 #login .block-element .input{
-    width: 85%; 
+    width: 100%; 
     height: 50px; 
-    border-radius: var(--border-radius-medium);
+    border-radius: 0.5rem;
     border: 0.5px solid var(--color-black);
     padding-left: 20px;
 }
@@ -46,48 +60,42 @@
 #login .block-element{
     position: relative;
     transition: all 0.3s ease;
-    margin-top: 25px; /* Tăng từ 25px */
+    margin-top: 18px;
 }
 
 #login .block-remember-me{
     display: flex;
-    width: 85%; /* Tăng từ 80% */
+    width: 100%; /* Tăng từ 80% */
     margin-left: auto;
     margin-right: auto;
-    margin-top: 10px;
+    margin-top: 8px;
     font-size: var(--font-size-small);
     text-align: center;
     align-items: center;
     gap: 5px;
-
 }
 
 #login .block-remember-me .check-box{
-    border-radius: calc( var(--border-radius-small) - 1px);
+    border-radius: 0.375rem;
+    cursor: pointer;
 }
 
 #login .block-element .toggle-password {
     position: absolute;
-    top: 50%;
-    right: 48px;
+    top: 25px;
+    right: 5%;
     transform: translateY(-50%);
     color: var(--color-gray);
     cursor: pointer;
     pointer-events: auto;
 }
 
-#login .block-element .toggle-password i{
-    font-size: var(--font-size-medium);
-    width: 20px;
-    height: 20px;
-}
-
 #login .block .block-element:before
 {
     content: attr(data-label); 
     position: absolute;
-    top: 50%;
-    left: 50px;
+    top: 25px;
+    left: 4%;
     transform: translateY(-50%);
     color: var(--color-gray);
     font-size: var(--font-size-small); 
@@ -114,7 +122,7 @@
 
 #login .block .block-button
 {
-    margin-top: 20px;
+    margin-top: 12px;
 }
 
 #login .block .block-button h1{
@@ -122,34 +130,43 @@
     margin: 5px 0px;
 }
 
-#login .block .block-button .button{
-    width: 85%; /* Tăng từ 80% */
+#login .block .block-button .button
+{
+    width: 100%; /* Tăng từ 80% */
     height: 45px; /* Tăng từ 38px */
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-small);
     border: none;
     font-size: var(--font-size-small);
     font-weight: var(--font-weight-medium);
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 #login .block .block-button .button
 {
     background-color: var(--color-light-blue);
     color: var(--color-white);
+    border: 1.5px solid var(--color-light-blue);
     font-weight: 500;
+    cursor: pointer;
 }
 
 #login .block .block-button .button:hover
 {
-    background-color: var(--color-black);
+    background-color: var(--color-white);
     color: var(--color-light-blue);
+}
+
+#login .block .block-button .button:active
+{
+    background-color: var(--color-light-blue);
+    color: var(--color-white);
 }
 
 .block-button-text
 {
     font-size: var(--font-size-small);
     text-align: left;
-    width: 85%; /* Tăng từ 80% */
+    width: 100%; /* Tăng từ 80% */
     margin: auto;
     margin-top: 30px; /* Tăng từ 30px */
 }
@@ -176,60 +193,18 @@
     color: var(--color-black);
     background-color: var(--color-white);
     border: 1px solid var(--color-black);
+    cursor: pointer;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 382px)
+{
     #login .block {
-        width: 400px; /* Trả lại kích thước ban đầu */
-        height: 460px; /* Trả lại kích thước ban đầu */
-        top: 230px; /* Trả lại vị trí ban đầu */
+        width: 100%; 
+        height: auto; 
+        top: 230px; 
         position: fixed;
         top: 50%;
         left: 50%;
         transform: translate(-50%,-50%);
-    }
-
-    #login .block .block-text {
-        margin-top: 2.5rem; /* Trả lại giá trị ban đầu */
-        font-size: var(--font-size-medium); /* Trả lại kích thước font ban đầu */
-    }
-
-    #login .block-element .input {
-        width: 80%; /* Trả lại kích thước ban đầu */
-        height: 40px; /* Trả lại kích thước ban đầu */
-    }
-
-    #login .block-element {
-        margin-top: 25px; /* Trả lại giá trị ban đầu */
-    }
-
-    #login .block-remember-me {
-        width: 80%;
-        font-size: var(--font-size-sSmall);
-    }
-
-    #login .block .block-button .button {
-        width: 80%; 
-        height: 38px; 
-    }
-
-    #login .block .block-button
-    {
-        margin-top: 15px;
-    }
-
-    #login .block .block-button h1
-    {
-            margin: 5px 0;
-    }
-
-    #login .block .block-button-text {
-        width: 80%; /* Trả lại kích thước ban đầu */
-        margin-top: 30px; /* Trả lại giá trị ban đầu */
-        
-    }
-
-    #login .block .block-button-text p{
-        font-size: calc(var(--font-size-small) - 1.5px) ;
     }
 }

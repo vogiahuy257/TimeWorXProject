@@ -13,12 +13,15 @@ return new class extends Migration
         Schema::create('summary_reports', function (Blueprint $table) {
             $table->id('summary_report_id'); // Primary key
             $table->foreignId('project_id')->nullable()->constrained('projects', 'project_id')->onDelete('set null'); // Foreign key to 'projects' table, set to null when project is deleted
+            $table->text('name');
             $table->uuid('reported_by_user_id'); // Foreign key to 'users' table (the manager or admin who created the report)
             $table->date('report_date'); // Ngày báo cáo
             $table->text('summary'); // Tóm tắt báo cáo dự án
             $table->text('completed_tasks')->nullable(); // Các công việc đã hoàn thành
             $table->text('upcoming_tasks')->nullable(); // Các công việc sắp tới
             $table->text('project_issues')->nullable(); // Các vấn đề của dự án
+            $table->string('zip_name')->nullable(); // Tên file ZIP
+            $table->string('zip_file_path')->nullable(); // Đường dẫn file ZIP
             $table->timestamps(); // created_at, updated_at
             $table->softDeletes(); // Soft delete for future flexibility
 
