@@ -14,6 +14,7 @@ use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 use App\Http\Controllers\API\ReportCommentController;
 use App\Http\Controllers\API\CalendarController;
 use App\Http\Controllers\API\MeetingController;
+use App\Http\Controllers\API\SummaryReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,10 +64,7 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
     //Task Comment
     Route::apiResource('task-comments', TaskCommentController::class)->except(['index']);
     Route::get('tasks/{taskId}/comments', [TaskCommentController::class, 'index']);
-    
-
-
-
+  
     //Route Reports
     Route::apiResource('reports', ReportController::class)->except(['index','update']);
     Route::get('reports/{projectId}/reports', [ReportController::class, 'index']);
@@ -97,4 +95,11 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
     Route::post('/meetings', [MeetingController::class, 'createMeeting']);
     Route::middleware('auth:sanctum')->put('/meetings/{meetingId}', [MeetingController::class, 'updateMeeting']);
     Route::delete('/meetings/{meetingId}', [MeetingController::class, 'deleteMeeting']);
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/summary-reports', [SummaryReportController::class, 'getSummaryReports']);
+        Route::get('/summary-reports/{id}', [SummaryReportController::class, 'getSummaryReportById']);
+        Route::post('/summary-reports', [SummaryReportController::class, 'createSummaryReport']);
+    });
+    
 // });

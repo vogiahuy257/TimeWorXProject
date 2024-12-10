@@ -135,8 +135,8 @@ export default function Welcome({ auth }) {
           </motion.h2>
           <div className="grid md:grid-cols-2 gap-12">
             {[
-              { name: 'Võ Gia Huy', role: 'Full Stack Developer', bio: 'Alice is a passionate frontend developer with 5 years of experience in creating beautiful and responsive user interfaces.', image: 'https://scontent.fsgn10-2.fna.fbcdn.net/v/t39.30808-1/432772573_1564647400979256_2876089901854554961_n.jpg?stp=dst-jpg_s200x200&_nc_cat=103&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=nFkkfMR796QQ7kNvgG1phX7&_nc_zt=24&_nc_ht=scontent.fsgn10-2.fna&_nc_gid=AgOA2WvlccefVOpToyWGm6I&oh=00_AYB2clvoreax5FM_a8Ep3sAVKnUBHW1HrkeI0U_ZKYEaYw&oe=67405DFC' },
-              { name: 'Lê Nguyễn Bảo Trân', role: 'Business Analyst', bio: 'Bob is an experienced backend developer who specializes in building scalable and efficient server-side applications.', image: 'https://scontent.fsgn10-2.fna.fbcdn.net/v/t39.30808-1/464780211_122109600182075380_9057370931870382233_n.jpg?stp=cp6_dst-jpg_s200x200&_nc_cat=108&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=Ic4R7Jr5uk4Q7kNvgEABopu&_nc_zt=24&_nc_ht=scontent.fsgn10-2.fna&_nc_gid=AFhlKis5cLKB0xQ7OpXifcD&oh=00_AYCYhD3AZAhGGUQA6iJKpGw3pfexqPO4eSKhF640c61jsA&oe=67406C9C' },
+              { name: 'Võ Gia Huy', role: 'Full Stack Developer', bio: 'Alice is a passionate frontend developer with 5 years of experience in creating beautiful and responsive user interfaces.', image: 'https://scontent.fsgn10-2.fna.fbcdn.net/v/t39.30808-6/432772573_1564647400979256_2876089901854554961_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=dDi3PYiZjhcQ7kNvgEjF0Bi&_nc_zt=23&_nc_ht=scontent.fsgn10-2.fna&_nc_gid=A9uRh5Ja1gznhYrEQFx4hqG&oh=00_AYBI83_qjzghufyYHBp7qu6i5Ol8W4h3Eb6woapW5aNnPg&oe=675D697A' },
+              { name: 'Lê Nguyễn Bảo Trân', role: 'Business Analyst', bio: 'Bob is an experienced backend developer who specializes in building scalable and efficient server-side applications.', image: 'https://scontent.fsgn10-2.fna.fbcdn.net/v/t39.30808-1/464780211_122109600182075380_9057370931870382233_n.jpg?stp=cp6_dst-jpg_s200x200_tt6&_nc_cat=108&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=nBPqRsRXLzEQ7kNvgHc4sQc&_nc_zt=24&_nc_ht=scontent.fsgn10-2.fna&_nc_gid=AGIa7u49K-RBokzSrmzvrNS&oh=00_AYBpEB5VmZemeoysOWaYi_SxII_FM0PnpKbCHXmmyTpbsg&oe=675D6D9C' },
             ].map((developer, index) => (
               <motion.div
                 key={index}
@@ -168,10 +168,10 @@ export default function Welcome({ auth }) {
       <footer className="bg-black text-white py-12">
         <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
           <p className="mb-4 md:mb-0">&copy; 2024 MyWebsite. All rights reserved.</p>
-          <div className="space-x-6">
+          {/* <div className="space-x-6">
             <a className="text-white hover:text-gray-300 transition-colors duration-300">Privacy Policy</a>
             <a className="text-white hover:text-gray-300 transition-colors duration-300">Terms of Service</a>
-          </div>
+          </div> */}
         </div>
       </footer>
     </div>

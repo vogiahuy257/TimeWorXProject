@@ -21,7 +21,10 @@ export default function ForgotPassword({ status }) {
             <Head title="Forgot Password" />
  
             <section id='login' className='forgot-password'>
-                <div className='block'>
+                <div className='block relative'>
+                <a className="btn-back absolute -top-[46px] left-0 shadow" href="/login"  >
+                    back
+                </a>
 
                 <div className="block-text">
                     <p>
