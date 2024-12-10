@@ -43,7 +43,6 @@ class ComposerStaticInit7e8c3c14ff33b199b4a0838993eb8423
         'c72349b1fe8d0deeedd3a52e8aa814d8' => __DIR__ . '/..' . '/mockery/mockery/library/helpers.php',
         'ce9671a430e4846b44e1c68c7611f9f5' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         'd634523d799d97a8ab4807b650bf5cea' => __DIR__ . '/..' . '/pestphp/pest-plugin-laravel/src/Autoload.php',
-        '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -612,6 +611,7 @@ class ComposerStaticInit7e8c3c14ff33b199b4a0838993eb8423
         'App\\Http\\Controllers\\Api\\ProjectControllerView' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ProjectControllerView.php',
         'App\\Http\\Controllers\\Api\\ReportCommentController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ReportCommentController.php',
         'App\\Http\\Controllers\\Api\\ReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ReportController.php',
+        'App\\Http\\Controllers\\Api\\SummaryReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/SummaryReportController.php',
         'App\\Http\\Controllers\\Api\\TaskCommentController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/TaskCommentController.php',
         'App\\Http\\Controllers\\Api\\TaskController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/TaskController.php',
         'App\\Http\\Controllers\\Api\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/UserController.php',
@@ -629,6 +629,7 @@ class ComposerStaticInit7e8c3c14ff33b199b4a0838993eb8423
         'App\\Http\\Controllers\\ThemeController' => __DIR__ . '/../..' . '/app/Http/Controllers/ThemeController.php',
         'App\\Http\\Middleware\\HandleInertiaRequests' => __DIR__ . '/../..' . '/app/Http/Middleware/HandleInertiaRequests.php',
         'App\\Http\\Requests\\Auth\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/LoginRequest.php',
+        'App\\Http\\Requests\\CreateSummaryReportRequest' => __DIR__ . '/../..' . '/app/Http/Requests/CreateSummaryReportRequest.php',
         'App\\Http\\Requests\\ProfileUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProfileUpdateRequest.php',
         'App\\Kernel' => __DIR__ . '/../..' . '/app/Kernel.php',
         'App\\Mail\\MeetingNotificationMail' => __DIR__ . '/../..' . '/app/Mail/MeetingNotificationMail.php',
@@ -644,12 +645,12 @@ class ComposerStaticInit7e8c3c14ff33b199b4a0838993eb8423
         'App\\Models\\ReportComment' => __DIR__ . '/../..' . '/app/Models/ReportComment.php',
         'App\\Models\\Role' => __DIR__ . '/../..' . '/app/Models/Role.php',
         'App\\Models\\Setting' => __DIR__ . '/../..' . '/app/Models/Setting.php',
+        'App\\Models\\SummaryReport' => __DIR__ . '/../..' . '/app/Models/SummaryReport.php',
         'App\\Models\\Task' => __DIR__ . '/../..' . '/app/Models/Task.php',
         'App\\Models\\TaskComment' => __DIR__ . '/../..' . '/app/Models/TaskComment.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Services\\FileStorageService' => __DIR__ . '/../..' . '/app/Services/FileStorageService.php',
-        'App\\Services\\ReportExporter' => __DIR__ . '/../..' . '/app/Services/ReportExporter.php',
         'App\\Services\\ReportZipper' => __DIR__ . '/../..' . '/app/Services/ReportZipper.php',
         'App\\Services\\WordExporter' => __DIR__ . '/../..' . '/app/Services/WordExporter.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
