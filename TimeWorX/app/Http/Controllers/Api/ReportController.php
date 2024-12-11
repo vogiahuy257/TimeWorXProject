@@ -25,57 +25,68 @@ class ReportController extends Controller
      *
      * @param  Request  $request
      */
-    public function store(Request $request ,FileStorageService $fileStorageService)
+    public function store(Request $request, FileStorageService $fileStorageService)
     {
-        $validatedData = $request->validate([
-            'report_by_user_id' => 'required|exists:users,id',
-            'project_id' => 'required|exists:projects,project_id',
-            'task_id' => 'nullable|exists:tasks,task_id',
-            'completion_goal' => 'nullable|string',
-            'today_work' => 'nullable|string',
-            'next_steps' => 'nullable|string',
-            'issues' => 'nullable|string',
-            'isLink' => 'required|boolean',
-            'documents' => 'nullable',
-        ]);
-
-        // Tạo mới report
-        $report = Report::create($validatedData);
-
-        // Xử lý tài liệu
-        if ($request->isLink) {
-            // Nếu là link, tạo mới file với kiểu 'link'
-            $file = File::create([
-                'name' => $request->documents,  // Ở đây, documents là link tài liệu
-                'uploaded_by' => $request->report_by_user_id,
-                'project_id' => $report->project_id,
-                'type' => 'link',
-                'path' => $request->documents,
-            ]);
-
-            // Gắn file với report
-            $report->files()->attach($file->file_id);
-
-        } else {
-            // Nếu không phải link, xử lý file tải lên
-            foreach ($request->documents as $uploadedFile) {
-                // Sử dụng FileStorageService để lưu file
-                $filePath = $fileStorageService->storeFile($uploadedFile);
-                $file = File::create([
-                    'name' => $uploadedFile->getClientOriginalName(),
-                    'uploaded_by' => $request->report_by_user_id,
-                    'project_id' => $report->project_id,
-                    'type' => $uploadedFile->getClientMimeType(),
-                    'path' => $filePath,
+        return DB::transaction(function () use ($request, $fileStorageService) {
+            try {
+                $validatedData = $request->validate([
+                    'report_by_user_id' => 'required|exists:users,id',
+                    'project_id' => 'required|exists:projects,project_id',
+                    'task_id' => 'nullable|exists:tasks,task_id',
+                    'completion_goal' => 'nullable|string',
+                    'today_work' => 'nullable|string',
+                    'next_steps' => 'nullable|string',
+                    'issues' => 'nullable|string',
+                    'isLink' => 'required|boolean',
+                    'documents' => 'nullable',
                 ]);
 
-                // Gắn file với report
-                $report->files()->attach($file->file_id);
-            }
-        }
+                // Create report
+                $report = Report::create($validatedData);
 
-        return response()->json(['message' => 'Report create successfully!']);
+                // Handle files or link
+                if ($request->isLink) {
+                    // Handle link
+                    $file = File::create([
+                        'name' => $request->documents,
+                        'uploaded_by' => $request->report_by_user_id,
+                        'project_id' => $report->project_id,
+                        'type' => 'link',
+                        'path' => $request->documents,
+                    ]);
+                    $report->files()->attach($file->file_id);
+                } else {
+                    // Handle file upload
+                    foreach ($request->documents as $uploadedFile) {
+                        $filePath = $fileStorageService->storeFile($uploadedFile);
+                        $file = File::create([
+                            'name' => $uploadedFile->getClientOriginalName(),
+                            'uploaded_by' => $request->report_by_user_id,
+                            'project_id' => $report->project_id,
+                            'type' => $uploadedFile->getClientMimeType(),
+                            'path' => $filePath,
+                        ]);
+                        $report->files()->attach($file->file_id);
+                    }
+                }
+
+                // Log success message
+                \Log::info('Report created successfully', ['report_id' => $report->id]);
+
+                return response()->json(['message' => 'Report created successfully!', 'report' => $report]);
+            } catch (\Exception $e) {
+                // Log error message if an exception occurs
+                \Log::error('Error creating report', [
+                    'error' => $e->getMessage(),
+                    'stack' => $e->getTraceAsString(),
+                ]);
+
+                // Return error response
+                return response()->json(['error' => 'Failed to create report'], 500);
+            }
+        });
     }
+
 
     /**
      * Display the specified report.
@@ -113,96 +124,120 @@ class ReportController extends Controller
     public function update($report_id, Request $request, FileStorageService $fileStorageService)
     {
         return DB::transaction(function () use ($report_id, $request, $fileStorageService) {
-            $report = Report::find($report_id);
-            if (!$report) {
-                return response()->json(['error' => 'Report not found'], 404);
-            }
+            try {
+                $report = Report::find($report_id);
+                if (!$report) {
+                    \Log::warning('Report not found', ['report_id' => $report_id]);
+                    return response()->json(['error' => 'Report not found'], 404);
+                }
 
-            $validatedData = $request->validate([
-                'report_by_user_id' => 'required|exists:users,id',
-                'project_id' => 'required|exists:projects,project_id',
-                'task_id' => 'nullable|exists:tasks,task_id',
-                'completion_goal' => 'nullable|string',
-                'today_work' => 'nullable|string',
-                'next_steps' => 'nullable|string',
-                'issues' => 'nullable|string',
-                'isLink' => 'required|boolean',
-                'documents' => 'nullable',
-            ]);
+                $validatedData = $request->validate([
+                    'report_by_user_id' => 'required|exists:users,id',
+                    'project_id' => 'required|exists:projects,project_id',
+                    'task_id' => 'nullable|exists:tasks,task_id',
+                    'completion_goal' => 'nullable|string',
+                    'today_work' => 'nullable|string',
+                    'next_steps' => 'nullable|string',
+                    'issues' => 'nullable|string',
+                    'isLink' => 'required|boolean',
+                    'documents' => 'nullable',
+                ]);
 
-            $report->update($validatedData);
+                $report->update($validatedData);
 
-            if ($request->isLink) 
-            {
-                if ($report->isLink) 
-                {
-                    foreach ($report->files as $file) 
-                    {
+                if ($request->isLink) {
+                    // Remove old files and handle link
+                    if ($report->isLink) {
+                        foreach ($report->files as $file) {
+                            $fileStorageService->deleteFile($file->path);
+                            $file->delete();
+                        }
+                    }
+                    $report->files()->delete();
+
+                    $file = File::create([
+                        'name' => $request->documents,
+                        'uploaded_by' => $request->report_by_user_id,
+                        'project_id' => $report->project_id,
+                        'type' => 'link',
+                        'path' => $request->documents,
+                    ]);
+                    $report->files()->attach($file->file_id);
+                } else {
+                    if (!$request->documents) {
+                        return response()->json(['message' => 'Report updated successfully!']);
+                    }
+
+                    foreach ($report->files as $file) {
                         $fileStorageService->deleteFile($file->path);
                         $file->delete();
                     }
-                }
-                $report->files()->delete();
 
-                $file = File::create([
-                    'name' => $request->documents,
-                    'uploaded_by' => $request->report_by_user_id,
-                    'project_id' => $report->project_id,
-                    'type' => 'link',
-                    'path' => $request->documents,
+                    foreach ($request->documents as $uploadedFile) {
+                        $filePath = $fileStorageService->storeFile($uploadedFile);
+                        $file = File::create([
+                            'name' => $uploadedFile->getClientOriginalName(),
+                            'uploaded_by' => $request->report_by_user_id,
+                            'project_id' => $report->project_id,
+                            'type' => $uploadedFile->getClientMimeType(),
+                            'path' => $filePath,
+                        ]);
+                        $report->files()->attach($file->file_id);
+                    }
+                }
+
+                // Log success message
+                \Log::info('Report updated successfully', ['report_id' => $report->id]);
+
+                return response()->json(['message' => 'Report updated successfully!']);
+            } catch (\Exception $e) {
+                // Log error message if an exception occurs
+                \Log::error('Error updating report', [
+                    'error' => $e->getMessage(),
+                    'stack' => $e->getTraceAsString(),
                 ]);
-                $report->files()->attach($file->file_id);
-            } 
-            else 
-            {
-                if (!$request->documents) 
-                {
-                    return response()->json(['message' => 'Report updated successfully!']);
-                }
 
-                foreach ($report->files as $file) 
-                {
-                    $fileStorageService->deleteFile($file->path);
-                    $file->delete();
-                }
-
-                foreach ($request->documents as $uploadedFile) 
-                {
-                    $filePath = $fileStorageService->storeFile($uploadedFile);
-                    $file = File::create([
-                        'name' => $uploadedFile->getClientOriginalName(),
-                        'uploaded_by' => $request->report_by_user_id,
-                        'project_id' => $report->project_id,
-                        'type' => $uploadedFile->getClientMimeType(),
-                        'path' => $filePath,
-                    ]);
-                    $report->files()->attach($file->file_id);
-                }
+                // Return error response
+                return response()->json(['error' => 'Failed to update report'], 500);
             }
-
-            return response()->json(['message' => 'Report updated successfully!']);
         });
     }
+
     
 
     /**
      * Remove the specified report from storage.
      *
      */
-    public function destroy($id,FileStorageService $fileStorageService)
+    public function destroy($id, FileStorageService $fileStorageService)
     {
-        // Tìm và xóa report cùng với các file liên quan
-        $report = Report::findOrFail($id);
-        
-        // Xóa các file liên quan trước
-        foreach ($report->files as $file) {
-            $fileStorageService->deleteFile($file->path);
-            $file->delete();
-        }
-        
-        // Xóa report
-        $report->delete(); 
+        try {
+            // Find and delete report with related files
+            $report = Report::findOrFail($id);
 
-        return response()->json(['message' => 'Report deleted successfully!']);
+            // Delete files related to the report
+            foreach ($report->files as $file) {
+                $fileStorageService->deleteFile($file->path);
+                $file->delete();
+            }
+
+            // Delete the report
+            $report->delete();
+
+            // Log success message
+            \Log::info('Report deleted successfully', ['report_id' => $id]);
+
+            return response()->json(['message' => 'Report deleted successfully!']);
+        } catch (\Exception $e) {
+            // Log error message if an exception occurs
+            \Log::error('Error deleting report', [
+                'error' => $e->getMessage(),
+                'stack' => $e->getTraceAsString(),
+            ]);
+
+            return response()->json(['error' => 'Failed to delete report'], 500);
+        }
     }
+
+    
 }
