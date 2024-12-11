@@ -62,17 +62,25 @@ Welcome to TimeWorX Project! This is our project, developed by Võ Gia Huy and L
 
 4. **Database Configuration**
    - Create a MySQL database
-   - Configure .env file in /api directory
+   - Configure `.env` file in `/api` directory
 
    <img src="./image/image.png" alt="Database Config" style="max-width: 100%;" />
 
-5. **Run Migrations**
+5. **Create Storage Symbolic Link**
+   - **Run the following command to create the storage link:**
+     ```bash
+     php artisan storage:link
+     ```
+   - This will create a symbolic link from `public/storage` to `storage/app/public`. It allows the application to access files stored in the `storage` directory via URLs.
+   - If you encounter any issues with the symbolic link, please check the system permissions or remove any existing `public/storage` folder before running the command again.
+
+6. **Run Migrations**
    ```bash
    php artisan migrate
    php artisan migrate:fresh --seed
    ```
 
-6. **Run Application**
+7. **Run Application**
 
    To run the application, **open 3 terminal tabs** and execute the following commands:
    
@@ -96,7 +104,7 @@ Welcome to TimeWorX Project! This is our project, developed by Võ Gia Huy and L
 
    - **Visit the application:**
      - Open your browser and navigate to [http://localhost:8000](http://localhost:8000).
-
+     
 ---
 
 ## 👥 About Us
