@@ -6,6 +6,7 @@ import ReportTaskDone from './Layouts/Report/ReportTaskDone';
 import ReportTaskForm from './Layouts/Report/ReportTaskForm';
 import axios from 'axios';
 import SummaryReport from './Layouts/Report/SummaryReport';
+import SummaryReportForm from './Layouts/Report/SummaryReportForm';
 
 export default function Report({ auth }) {
     const [projects, setProjects] = useState([]);
@@ -36,6 +37,14 @@ export default function Report({ auth }) {
 
     const handleProjectClick = (project) => {
         setSelectProject(project);
+    };
+
+    //SummaryReportForm logic
+    const [isOpenFormSummary,setIsOpenFormSummary] = useState(false);
+
+     // Hàm mở form
+     const handleOpenForm = () => {
+        setIsOpenFormSummary(!isOpenFormSummary);
     };
 
     return (
@@ -80,7 +89,7 @@ export default function Report({ auth }) {
                                     </div>
                                 </div>
                             
-                                <div   div className=" h-full report-content relative report-task-done rounded-md md:w-1/2">
+                                <div className=" h-full report-content relative report-task-done rounded-md md:w-1/2">
                                     <h2 className="text-header text-report-done shadow-sm">Task Completed</h2>
                                     {/* Hiển thị task của project đã chọn */}
                                     <ReportTaskDone project_id = {selectProject.project_id} onOpenReportTaskForm={openFormReportToTask}/>
@@ -97,7 +106,7 @@ export default function Report({ auth }) {
                         <div className='w-full h-full flex flex-row lg:w-1/2'>
                             <div className="w-full report-content report-summary p-2 rounded-md shadow-md  relative">
                                 <h2 className="text-header">Summary Report</h2>
-                                <SummaryReport/>
+                                <SummaryReport auth={auth} handleOpenForm = {handleOpenForm}/>
                             </div>
                         </div>
                     </div>
@@ -106,6 +115,7 @@ export default function Report({ auth }) {
                 )}
             </div>
             {isOpenShowReportToTask && <ReportTaskForm auth={auth} onClose={openFormReportToTask} task={selectTask} />}
+            {isOpenFormSummary && <SummaryReportForm auth={auth} handleOpenForm = {handleOpenForm}/>}
         </section>
     );
 }

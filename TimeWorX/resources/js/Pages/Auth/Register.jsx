@@ -6,6 +6,7 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { useFormValidation } from "./hooks/useFormValidation";
+import './css/login.css';
 
 export default function Register() {
     const { data, setData, post, processing, errors: serverErrors, reset } = useForm({

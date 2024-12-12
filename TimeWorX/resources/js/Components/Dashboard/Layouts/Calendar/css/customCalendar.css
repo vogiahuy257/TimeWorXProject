@@ -27,6 +27,11 @@
   color: var(--color-light-blue);
 }
 
+.fc-view-harness{
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1.2px solid rgba(var(--color-black-rgb), 0.5);
+}
 /* Thêm màu sắc tùy chỉnh cho sự kiện */
 .fc-event.todo {
   background-color: #117add;

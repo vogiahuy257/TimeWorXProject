@@ -1,0 +1,20 @@
+
+.custom-sumary-report .btn-create{
+    background-color: #000000;
+    padding: 0.3rem 0.375rem;
+    color: #ffffff;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.custom-sumary-report .btn-create:hover
+{
+    background-color: var(--color-light-blue);
+    color: #fff;
+}
+
+.custom-sumary-report .btn-create:active
+{
+    transition: background-color 0s ease-in-out;
+    background-color: #ffffff;
+    color: var(--color-light-blue);
+}

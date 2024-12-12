@@ -15,7 +15,6 @@ import axios from 'axios';
 
 export default function Dashboard({ auth ,token}) {
 
-        
         const [isTokenReady, setIsTokenReady] = useState(false); // Trạng thái kiểm tra token
 
         const callCreateToken = (savedToken) => {
@@ -24,9 +23,7 @@ export default function Dashboard({ auth ,token}) {
                 axios.defaults.headers.common['Authorization'] = `Bearer ${tokenToUse}`;
                 localStorage.setItem('authToken', tokenToUse); // Lưu token vào localStorage
                 setIsTokenReady(true); // Token đã sẵn sàng
-            } else {
-                console.error("Token is undefined or expired");
-            }
+            } 
         };
 
         useEffect(() => {

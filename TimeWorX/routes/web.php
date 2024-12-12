@@ -17,17 +17,24 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function (Request $request) {
 
-    $token = $request->session()->get('sanctum_token');
-    
-    // Nếu token không tồn tại, chuyển hướng người dùng đến trang đăng nhập
-    if (!$token) {
-        return redirect()->route('login'); // Đảm bảo có route login
+    //lấy ngườ dùng từ xác thực auth của middleware
+    $user = $request->user();
+
+    if (!$user) {
+        return redirect()->route('login');
     }
 
-    return Inertia::render('Dashboard',[
-        'token' => $token,
+     if ($user->tokens->isEmpty()) {
+        $token = $user->createToken('timeworx')->plainTextToken;
+    }
+
+    //gọi vào trang dashboard và gửi token xác thực đi
+    return Inertia::render('Dashboard', [
+        'token' => $token ?? null,
     ]);
+
 })->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -38,12 +45,5 @@ Route::middleware('auth')->group(function () {
 Route::get('/dashboard/{any}', function () {
     return Inertia::render('Dashboard');
 })->where('any', '.*');
-
-// Route::middleware('auth')->get('/api/token', function (Request $request) {
-//     $token = $request->session()->get('sanctum_token');
-//     return response()->json([
-//         'token' => $token
-//     ]);
-// });
 
 require __DIR__.'/auth.php';

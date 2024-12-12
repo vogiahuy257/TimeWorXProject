@@ -234,7 +234,7 @@ export default function Authenticated({ user, header, children }) {
                                 >
                                     <a>
                                         <svg></svg>
-                                        <p>Dark mode</p>
+                                        <p>{darkMode ? 'Dark' : 'Light'}</p>
                                     </a>
                                 </li>
                                 <li>

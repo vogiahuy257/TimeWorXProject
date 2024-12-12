@@ -136,6 +136,15 @@ function FullCalendarComponent({ auth , callCreateToken}) {
     callCreateToken();
   }, [auth.user]);
 
+  useEffect(() => {
+    fetchProjects()
+  }, [])
+
+  useEffect(() => {
+    fetchEvents(selectedProjectId)
+  }, [selectedProjectId])
+
+
   const fetchEvents = async (projectId) => {
     if (projectId === 'allproject') {
       return fetchProjects()
@@ -172,15 +181,6 @@ function FullCalendarComponent({ auth , callCreateToken}) {
       }
     }
 }
-
-  useEffect(() => {
-    fetchProjects()
-  }, [])
-
-  useEffect(() => {
-    fetchEvents(selectedProjectId)
-  }, [selectedProjectId])
-
   const handleEventDrop = useCallback((info) => {
     const { event } = info
 

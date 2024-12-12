@@ -30,9 +30,10 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-        $token = Auth::user()->createToken('timeworx')->plainTextToken;
 
-        $request->session()->put('sanctum_token', $token);
+        // loại bỏ dòng này vì sẽ tạo mới token mỗi khi người dùng đăng nhập vào dashbroad
+        // $token = Auth::user()->createToken('timeworx')->plainTextToken;
+        // $request->session()->put('sanctum_token', $token);
 
         $request->session()->regenerate();
 
@@ -46,20 +47,18 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $request->session()->forget('sanctum_token');
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
+        // Xóa tất cả token của user
         if(Auth::user()->tokens())
         {
             Auth::user()->tokens()->delete();
         }
-        
-        Auth::guard('web')->logout();
-        
-       
 
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+        
         return redirect('/');
     }
 }

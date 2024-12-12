@@ -6,6 +6,7 @@ import TextInput from '@/Components/TextInput';
 import { Head, useForm } from '@inertiajs/react';
 import { useState } from 'react';
 import { useFormValidation } from './hooks/useFormValidation'; 
+import './css/login.css';
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, reset } = useForm({
