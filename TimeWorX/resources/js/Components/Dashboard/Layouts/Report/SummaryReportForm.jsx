@@ -1,10 +1,13 @@
 import React, { useState,useRef,useEffect } from 'react';
+import FileSelection from './SummaryReportForm/FileSelection';
+import Dropdown from './SummaryReportForm/Dropdown';
 import './css/SummaryReportForm.css';
 
-export default function SummaryReportForm({ auth, handleOpenForm }) {
+export default function SummaryReportForm({ auth, handleOpenForm,projectIdChange }) {
     // Khai báo các state cho các trường trong form
     const [reportName, setReportName] = useState('');
     const [project, setProject] = useState('');
+    const [projects, setProjects] = useState([]);
     const [reportDate, setReportDate] = useState('');
     const [summary, setSummary] = useState('');
     const [completedTasks, setCompletedTasks] = useState('');
@@ -15,24 +18,24 @@ export default function SummaryReportForm({ auth, handleOpenForm }) {
     const [isAtBottom, setIsAtBottom] = useState(true); // Trạng thái nút cuộn
     const formRef = useRef(null);
 
-    // Hàm xử lý thay đổi khi người dùng nhập liệu
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        if (type === 'checkbox') {
-            setSelectedFiles((prevState) =>
-                checked ? [...prevState, value] : prevState.filter((file) => file !== value)
-            );
-        } else {
-            // Cập nhật trực tiếp giá trị của các state
-            if (name === 'reportName') setReportName(value);
-            if (name === 'project') setProject(value);
-            if (name === 'reportDate') setReportDate(value);
-            if (name === 'summary') setSummary(value);
-            if (name === 'completedTasks') setCompletedTasks(value);
-            if (name === 'upcomingTasks') setUpcomingTasks(value);
-            if (name === 'projectIssues') setProjectIssues(value);
-        }
-    };
+      // Handle input changes
+      const handleReportNameChange = (e) => setReportName(e.target.value);
+      const handleProjectChange = (projectId) => setProject(projectId);
+      const handleReportDateChange = (e) => setReportDate(e.target.value);
+      const handleSummaryChange = (e) => setSummary(e.target.value);
+      const handleCompletedTasksChange = (e) => setCompletedTasks(e.target.value);
+      const handleUpcomingTasksChange = (e) => setUpcomingTasks(e.target.value);
+      const handleProjectIssuesChange = (e) => setProjectIssues(e.target.value);
+  
+      // Handle file selection change
+      const handleFileSelectionChange = (e) => {
+        const { value, checked } = e.target;
+        setSelectedFiles((prevState) =>
+          checked
+            ? [...prevState, value] // Add the file if checked
+            : prevState.filter((file) => file !== value) // Remove the file if unchecked
+        );
+      };      
 
     // Hàm gửi form
     const handleSubmit = async (e) => {
@@ -51,28 +54,8 @@ export default function SummaryReportForm({ auth, handleOpenForm }) {
             selectedFiles,
         };
 
-        console.log(`submit: ${formData.reportName}`);
-        // try {
-        //     const response = await fetch('/api/submit-report', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Authorization': `Bearer ${auth}`, // Nếu bạn cần gửi token
-        //         },
-        //         body: JSON.stringify(formData),
-        //     });
+        console.log('Form Data:', JSON.stringify(formData, null, 2));
 
-        //     if (response.ok) {
-        //         const result = await response.json();
-        //         console.log('Form submitted successfully:', result);
-        //         // Xử lý sau khi gửi thành công, ví dụ: thông báo, đóng form, v.v.
-        //     } else {
-        //         console.error('Error submitting form:', response.status);
-        //         // Xử lý lỗi gửi form
-        //     }
-        // } catch (error) {
-        //     console.error('An error occurred:', error);
-        // }
     };
 
     // Hàm kiểm tra xem đã cuộn đến cuối chưa
@@ -114,7 +97,22 @@ export default function SummaryReportForm({ auth, handleOpenForm }) {
                 }
             };
         }, []);
-    
+
+    // Hàm gọi API lấy danh sách project
+    const fetchProjects = async () => {
+        try {
+            const response = await axios.get(`/api/projects/${auth.user.id}`);
+            setProjects(response.data);
+        } catch (error) {
+            console.error('Error fetching projects:', error);
+        }
+    };
+
+    // Gọi API khi component được render
+    useEffect(() => {
+        fetchProjects();
+        setProject(projectIdChange);    
+    }, []);
 
     return (
         <section id='SummaryReportForm' className='fixed top-0 left-0 w-full h-full z-50'>
@@ -146,29 +144,18 @@ export default function SummaryReportForm({ auth, handleOpenForm }) {
                                 name="reportName"
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 value={reportName}
-                                onChange={handleChange}
+                                onChange={handleReportNameChange}
                                 placeholder="Enter report name"
                             />
                         </div>
 
                         {/* Project Select */}
-                        <div>
-                            <label htmlFor="project" className=" text-sm font-medium mb-1">
-                                Project
-                            </label>
-                            <select
-                                id="project"
-                                name="project"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                value={project}
-                                onChange={handleChange}
-                            >
-                                <option value="">Select a project</option>
-                                <option value="project1">Project 1</option>
-                                <option value="project2">Project 2</option>
-                                <option value="project3">Project 3</option>
-                            </select>
-                        </div>
+                        <Dropdown
+                            label="Select a Project"
+                            options={projects}
+                            value={project}
+                            onChange={handleProjectChange}
+                        />
 
                         {/* Report Date */}
                         <div>
@@ -181,7 +168,7 @@ export default function SummaryReportForm({ auth, handleOpenForm }) {
                                 name="reportDate"
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 value={reportDate}
-                                onChange={handleChange}
+                                onChange={handleReportDateChange}
                             />
                         </div>
 
@@ -196,7 +183,7 @@ export default function SummaryReportForm({ auth, handleOpenForm }) {
                                 rows={4}
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 value={summary}
-                                onChange={handleChange}
+                                onChange={handleSummaryChange}
                                 placeholder="Provide a brief summary of the report"
                             ></textarea>
                         </div>
@@ -212,7 +199,7 @@ export default function SummaryReportForm({ auth, handleOpenForm }) {
                                 rows={4}
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 value={completedTasks}
-                                onChange={handleChange}
+                                onChange={handleCompletedTasksChange}
                                 placeholder="List completed tasks"
                             ></textarea>
                         </div>
@@ -228,7 +215,7 @@ export default function SummaryReportForm({ auth, handleOpenForm }) {
                                 rows={4}
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 value={upcomingTasks}
-                                onChange={handleChange}
+                                onChange={handleUpcomingTasksChange}
                                 placeholder="List upcoming tasks"
                             ></textarea>
                         </div>
@@ -244,33 +231,23 @@ export default function SummaryReportForm({ auth, handleOpenForm }) {
                                 rows={4}
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 value={projectIssues}
-                                onChange={handleChange}
+                                onChange={handleProjectIssuesChange}
                                 placeholder="Describe any project issues"
                             ></textarea>
                         </div>
                         {/* File Selection */}
-                        <div>
-                            <span className="text-sm font-medium mb-2">
-                                Select Files to Include in ZIP
-                            </span>
-                            <div className="space-y-4 p-2">
-                                {[{ id: "overview", label: "Project_Overview.docx" }, { id: "budget", label: "Budget_Report.xlsx" }, { id: "team", label: "Team_Photo.jpg" }, { id: "feedback", label: "Client_Feedback.pdf" }, { id: "timeline", label: "Timeline.xlsx" }, { id: "design", label: "Design_Mockup.png" }].map((file) => (
-                                    <div key={file.id} className="flex items-center rounded-md shadow-md p-4">
-                                        <input
-                                            type="checkbox"
-                                            id={file.id}
-                                            name="selectedFiles"
-                                            value={file.id}
-                                            className="h-4 w-4 custom-checkbox cursor-pointer text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                                            onChange={handleChange}
-                                        />
-                                        <label htmlFor={file.id} className="ml-2 text-sm cursor-pointer">
-                                            {file.label}
-                                        </label>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+                        <FileSelection
+                            files={[
+                                { id: "overview", label: "Project_Overview.docx", taskName: "task1", type: 'docx' },
+                                { id: "budget", label: "Budget_Report.xlsx", taskName: "task1", type: 'xlsx' },
+                                { id: "team", label: "Team_Photo.jpg", taskName: "task1", type: 'jpg' },
+                                { id: "feedback", label: "Client_Feedback.pdf", taskName: "task1", type: 'pdf' },
+                                { id: "timeline", label: "Timeline.xlsx", type: 'xlsx' },
+                                { id: "design", label: "Design_Mockup.png", taskName: "task1", type: 'png' }
+                            ]}
+                            selectedFiles={selectedFiles}
+                            onChange={handleFileSelectionChange}
+                        />
 
                         {/* Nút cuộn xuống */}
                         {!isAtBottom && (

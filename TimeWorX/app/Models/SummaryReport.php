@@ -53,7 +53,8 @@ class SummaryReport extends Model
      */
     public static function createWithZip(array $data, ReportZipper $zipper): SummaryReport
     {
-        return DB::transaction(function () use ($data, $zipper) {
+        return DB::transaction(function () use ($data, $zipper) 
+        {
             // Tạo báo cáo
             $summaryReport = self::create([
                 'project_id' => $data['project_id'],
@@ -66,20 +67,25 @@ class SummaryReport extends Model
                 'project_issues' => $data['project_issues'] ?? null,
             ]);
 
-            // Tạo file ZIP từ danh sách file
-            $zipFileName = "summary_report_{$summaryReport->summary_report_id}.zip";
-            $files = [];
-            foreach ($data['report_files'] as $filePath) {
-                $files[$filePath] = basename($filePath);
+            // Kiểm tra xem có danh sách file không
+            if (!empty($data['report_files']) && is_array($data['report_files'])) 
+            {
+                // Tạo file ZIP từ danh sách file
+                $zipFileName = "summary_report_{$summaryReport->summary_report_id}.zip";
+                $files = [];
+                foreach ($data['report_files'] as $filePath) 
+                {
+                    $files[$filePath] = basename($filePath);
+                }
+
+                $zipPath = $zipper->createZip($zipFileName, $files);
+
+                // Cập nhật thông tin ZIP
+                $summaryReport->update([
+                    'zip_name' => $zipFileName,
+                    'zip_file_path' => $zipPath,
+                ]);
             }
-
-            $zipPath = $zipper->createZip($zipFileName, $files);
-
-            // Cập nhật thông tin ZIP
-            $summaryReport->update([
-                'zip_name' => $zipFileName,
-                'zip_file_path' => $zipPath,
-            ]);
 
             return $summaryReport;
         });

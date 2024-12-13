@@ -115,7 +115,7 @@ export default function Report({ auth }) {
                 )}
             </div>
             {isOpenShowReportToTask && <ReportTaskForm auth={auth} onClose={openFormReportToTask} task={selectTask} />}
-            {isOpenFormSummary && <SummaryReportForm auth={auth} handleOpenForm = {handleOpenForm}/>}
+            {isOpenFormSummary && <SummaryReportForm auth={auth} projectIdChange={selectProject.project_id} handleOpenForm = {handleOpenForm}/>}
         </section>
     );
 }

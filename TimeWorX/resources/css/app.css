@@ -90,8 +90,8 @@ li
 @layer utilities {
 
     .custom-scrollbar::-webkit-scrollbar {
-        width: 5px; 
-        display: none;
+        width: 4px;
+        display: block;
     }
   
     .custom-scrollbar::-webkit-scrollbar-track {

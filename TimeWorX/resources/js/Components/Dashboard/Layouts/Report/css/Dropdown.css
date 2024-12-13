@@ -1,0 +1,112 @@
+
+:root{
+    --color-yellow: #f1c21b; 
+    --color-yellow-rgb: 241, 194, 27;
+    --color-cream: #FEF8E8;
+    --color-black: #000000; 
+    --color-black-rgb: 0, 0, 0;
+    --color-black-gray: #30393E; 
+    --color-gray: #D9D9D9;
+    --color-white: rgb(255, 255, 255);
+    --color-white-rgb: 255, 255, 255; 
+    --color-whiteGray:rgb(240, 240, 240);
+    --color-light-gray: #F9F9F9;
+    --color-light-blue: rgb(17, 122, 221);
+    --color-light-blue-rgb: 17, 122, 221;
+    --color-blue:rgba(45, 106, 185, 0.9);
+    --color-blue-rgb: 45, 106, 185;
+    --color-red: rgb(218, 30, 40);
+    --color-red-rgb: 218, 30, 40;
+    --color-green: #25a249;
+    --background-y-p: linear-gradient(135deg, #f7d7ff,#fbfcdb);
+    --background: linear-gradient(135deg, #F2F8FC,#e6f7ff);
+    --background-blue: linear-gradient(135deg, rgba(45, 106, 185, 0.9), rgba(77, 144, 214, 0.9));
+    --bg-color-blue-while: #F2F8FC;
+    --color-shadow:rgba(68, 68, 68, 0.418);
+
+    /* Font Sizes */
+    --font-size-2sSSmall: 0.675rem;
+    --font-size-sSSmall: 0.75rem;
+    --font-size-sSmall: 0.8rem;
+    --font-size-small: 0.875rem;
+    --font-size-medium: 0.9rem;
+    --font-size-large: 1rem;
+    --font-size-xlarge: 1.25rem;
+    
+    /* Font Weights */
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 550;
+
+    /* Border Radius */
+    
+    --border-radius-sSmall: 8px;
+    --border-radius-small: 10px;
+    --border-radius-medium: 16px;
+    --border-radius-large: 18px;
+}
+
+/* Define the animation */
+@keyframes slideIn {
+    0% {
+      opacity: 0;
+      height: 0rem; 
+    }
+    100% {
+      opacity: 1;
+      height: 14rem;
+    }
+  }
+  
+  /* Apply the animation to the .custom-ul */
+.custom-ul {
+    background-color: var(--color-white);
+    color: var(--color-black);
+    height: auto;
+    animation: slideIn 0.3s ease-in-out; /* Trigger the animation */
+    box-shadow: inset 0 0px 2px #000000;
+}
+  
+.custom-ul li{
+    cursor: pointer;
+}
+.custom-ul li:hover,
+.custom-ul li.active
+{
+    background-color: #000;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(var(--color-black-rgb), 0.8);
+    transition: background-color .15s ease-in,color .15s ease-in;
+}
+
+.custom_button svg{
+    transform: rotate(0deg);
+    transition: transform .2s ease-in;
+}
+
+.custom_button svg.active{
+    transform: rotate(180deg);
+}
+
+.custom_drop_down .to-do{
+    background-color: var(--color-light-blue);
+}
+
+.custom_drop_down .in-progress
+{
+    background-color: var(--color-yellow);
+}
+
+.custom_drop_down .verify{
+    background-color: var(--color-red);
+}
+
+.custom_drop_down .done{
+    background-color: var(--color-green);
+}
+
+.custom_completed_task svg
+{
+    color: #34cf60;
+}

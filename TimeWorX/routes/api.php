@@ -32,6 +32,7 @@ Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'showCookie']);
 // Route::middleware(['auth:sanctum'])->group(function () {
     // Route Project
     Route::apiResource('projects', ProjectController::class)->except(['index']);
+    
     Route::get('/projects/{user_id}/projects-tasks', [ProjectController::class, 'index']);
 
     Route::get('/projects/deleted/{user_id}', [ProjectController::class, 'getDeletedProjects']);
