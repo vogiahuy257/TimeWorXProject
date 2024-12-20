@@ -1,6 +1,6 @@
 import React, { useState,useRef,useEffect } from 'react';
-import FileSelection from './SummaryReportForm/FileSelection';
-import Dropdown from './SummaryReportForm/Dropdown';
+import FileSelection from './ComponentsSummaryReportForm/FileSelection';
+import Dropdown from './ComponentsSummaryReportForm/Dropdown';
 import './css/SummaryReportForm.css';
 
 export default function SummaryReportForm({ auth, handleOpenForm,projectIdChange }) {
@@ -119,8 +119,8 @@ export default function SummaryReportForm({ auth, handleOpenForm,projectIdChange
             <div className='custom-form rounded-lg shadow-xl w-full max-w-2xl'>
                 <div className="relative p-4">
                     
-                    <h2 className="text-2xl font-semibold mb-1">Summary Report</h2>
-                    <p className=" mb-3 text-gray-600">Create a new summary report for your project</p>
+                    <h2 className="text-2xl font-semibold">Summary Report</h2>
+                    <p className=" mb-2 text-sm font-light">Create a new summary report for your project</p>
 
                     <button
                         onClick={handleOpenForm}
@@ -132,7 +132,7 @@ export default function SummaryReportForm({ auth, handleOpenForm,projectIdChange
                         </svg>
                     </button>
 
-                    <form ref={formRef} className="space-y-4 max-h-[70vh]  px-1 overflow-y-auto scrollbar-hide w-full mb-4">
+                    <form ref={formRef} className="custom-form-main rounded-md max-h-[70vh] p-4 pt-2 overflow-y-auto scrollbar-hide w-full">
                          {/* Report Name */}
                          <div>
                             <label htmlFor="reportName" className="text-sm font-medium mb-1">
@@ -254,22 +254,30 @@ export default function SummaryReportForm({ auth, handleOpenForm,projectIdChange
                             <button
                                 type="button"
                                 onClick={scrollToBottom}
-                                className="absolute btn-scroll bottom-16 right-5 p-2 rounded-full shadow-xl"
+                                className="absolute btn-scroll bottom-20 right-[50%] translate-x-1/2 p-2 rounded-full shadow-xl"
                                 aria-label="Scroll to bottom"
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                                 </svg>
                             </button>
                         )}
                     </form>
-                    <button
-                        onClick={handleSubmit}
-                        type="submit"
-                        className="w-full btn-submit py-1 px-3 rounded-md"
+                    
+                    <div className='relative pt-3'>
+                        <span 
+                            className='custom-selectedFiles text-center flex justify-end items-end text-sm absolute right-0 -top-[35px]'
                         >
-                        Submit
-                    </button>
+                            <p className='text-center flex justify-center items-center rounded-md'>{selectedFiles.length} files selected</p>
+                        </span>
+                        <button
+                            onClick={handleSubmit}
+                            type="submit"
+                            className="w-full text-sm btn-submit py-2 px-4 rounded-md"
+                            >
+                            Create Report Summary
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>

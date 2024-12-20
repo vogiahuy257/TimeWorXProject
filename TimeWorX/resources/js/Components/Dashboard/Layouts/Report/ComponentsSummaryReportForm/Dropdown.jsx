@@ -55,7 +55,7 @@ const Dropdown = ({ label, options, value, onChange }) => {
               options.map((project) => (
                 <li
                   key={project.project_id}
-                  className={`cursor-default select-none my-2 mx-2 rounded-sm relative py-2 pl-3 ${
+                  className={`cursor-default select-none my-2 mx-2 rounded-lg relative py-2 pl-3 ${
                     project.project_id === value ? 'active' : ''
                   }`}
                   onClick={() => handleSelect(project.project_id)}
